@@ -1223,7 +1223,7 @@ const TEMPLATES=[
   {id:"actu",t:"📰 Actualité du club",d:"Infos & nouveautés",
    body:"📰 ACTUALITÉ ADN MUAY-THAÏ 2.0\n\n[Titre de l'actualité]\n\n[Détails ici...]\n\n📆 [Date si besoin]\n\nPour toute question : 0692 37 48 16 🥊"},
   {id:"fiches",t:"📋 Fiches d'inscription",d:"Envoi des formulaires en ligne",
-   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne. Remplissez-les directement depuis votre téléphone :\n\n1️⃣ Dossier d'inscription (OBLIGATOIRE pour tous) :\nhttps://application.adnmuaythai2-0.workers.dev/ADN_Inscription_2026-2027.html\n\n2️⃣ Questionnaire Santé AFMT (OBLIGATOIRE pour les mineurs) :\nhttps://application.adnmuaythai2-0.workers.dev/ADN_Sante_AFMT_Mineurs.html\n\n3️⃣ Questionnaire Parents & Enfant (pour les 8-11 ans) :\nhttps://application.adnmuaythai2-0.workers.dev/ADN_Parents_Enfant_Jeunes.html\n\n📌 Après envoi du formulaire, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil (- de 6 mois)\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ très bientôt sur le tatami ! 🥊\nL'équipe ADN Muay-Thaï 2.0"}
+   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne. Remplissez-les directement depuis votre téléphone :\n\n1️⃣ Dossier d'inscription (OBLIGATOIRE pour tous) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Inscription_2026-2027.html\n\n2️⃣ Questionnaire Santé AFMT (OBLIGATOIRE pour les mineurs) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Sante_AFMT_Mineurs.html\n\n3️⃣ Questionnaire Parents & Enfant (pour les 8-11 ans) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Parents_Enfant_Jeunes.html\n\n📌 Après envoi du formulaire, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil (- de 6 mois)\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ très bientôt sur le tatami ! 🥊\nL'équipe ADN Muay-Thaï 2.0"}
 ];
 let selTpl=TEMPLATES[0].id, msgDest="box", msgCustom=null;
 function pgMessages(m){
@@ -1317,15 +1317,15 @@ function pgInscriptions(m){
      <p class="muted" style="margin-bottom:12px">Partagez ce lien aux adhérents — ils s'inscrivent directement et apparaissent automatiquement dans l'app !</p>
      <div style="background:#f8f9fb;border:1px solid var(--bd);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--deep);margin-bottom:8px">
        <div style="font-weight:700;margin-bottom:4px">📋 Dossier d'inscription (tous les adhérents) :</div>
-       <div style="word-break:break-all;color:var(--blue)">🔗 https://application.adnmuaythai2-0.workers.dev/inscription-adherent.html</div>
+       <div style="word-break:break-all;color:var(--blue)">🔗 https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent.html</div>
      </div>
      <div style="background:#f8f9fb;border:1px solid var(--bd);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--deep);margin-bottom:8px">
        <div style="font-weight:700;margin-bottom:4px">🏥 Questionnaire Santé AFMT (mineurs uniquement) :</div>
-       <div style="word-break:break-all;color:var(--blue)">🔗 https://application.adnmuaythai2-0.workers.dev/sante-afmt-mineurs.html</div>
+       <div style="word-break:break-all;color:var(--blue)">🔗 https://adnmuaythai20-create.github.io/-adn-muay-thai/sante-afmt-mineurs.html</div>
      </div>
      <div style="background:#f8f9fb;border:1px solid var(--bd);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--deep);margin-bottom:10px">
        <div style="font-weight:700;margin-bottom:4px">👨‍👩‍👧 Questionnaire Parents & Enfant (8-11 ans) :</div>
-       <div style="word-break:break-all;color:var(--blue)">🔗 https://application.adnmuaythai2-0.workers.dev/parents-enfant-jeunes.html</div>
+       <div style="word-break:break-all;color:var(--blue)">🔗 https://adnmuaythai20-create.github.io/-adn-muay-thai/parents-enfant-jeunes.html</div>
      </div>
      <div style="background:#f0f5ff;border-radius:8px;padding:8px 14px;font-size:13px;margin-bottom:12px">
        🔑 Code d'accès : <strong style="font-size:16px;color:var(--blue);letter-spacing:3px">ADN2026</strong>
@@ -1420,7 +1420,7 @@ function pgInscriptions(m){
    </div>`;
 }
 function downloadFiche(type){
-  const BASE='https://application.adnmuaythai2-0.workers.dev/';
+  const BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   const urls={
     inscription:BASE+'ADN_Inscription_2026-2027.html',
     sante:BASE+'ADN_Sante_AFMT_Mineurs.html',
@@ -1430,7 +1430,7 @@ function downloadFiche(type){
   toast("Ouverture de la fiche dans un nouvel onglet.");
 }
 function mailFiche(type){
-  const BASE='https://application.adnmuaythai2-0.workers.dev/';
+  const BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   const urls={
     inscription:BASE+'ADN_Inscription_2026-2027.html',
     sante:BASE+'ADN_Sante_AFMT_Mineurs.html',
@@ -1458,7 +1458,7 @@ function sendInscriptionMail(){
   toast("Application mail ouverte — ajoutez le PDF en pièce jointe.");
 }
 function shareEspaceAdherent(plat, groupe){
-  var url='https://application.adnmuaythai2-0.workers.dev/inscription-adherent.html';
+  var url='https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent.html';
   var msg='ADN MUAY-THAI 2.0 - Inscription Saison 2026/2027\n\nBonjour !\n\nPour vous inscrire cliquez sur ce lien :\n'+url+'\n\nCode acces : ADN2026\n\nRemplissez depuis votre telephone !\nQuestions : 0692 37 48 16';
   try{if(navigator.clipboard)navigator.clipboard.writeText(msg);}catch(e){}
   var link='';
@@ -1468,7 +1468,7 @@ function shareEspaceAdherent(plat, groupe){
   toast('Message copie - collez dans le groupe !');
 }
 function copyEspaceLink(){
-  var BASE='https://application.adnmuaythai2-0.workers.dev/';
+  var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var t='ADN MUAY-THAI 2.0 - Inscriptions Saison 2026/2027\n\nCode acces : ADN2026\n\n';
   t+='1. Dossier inscription : '+BASE+'inscription-adherent.html\n';
   t+='2. Sante AFMT Mineurs : '+BASE+'sante-afmt-mineurs.html\n';
@@ -1476,7 +1476,7 @@ function copyEspaceLink(){
   try{if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast('3 liens copies !')});}catch(e){}
 }
 function shareInscriptions(plat, groupe){
-  var BASE='https://application.adnmuaythai2-0.workers.dev/';
+  var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var msg='📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d\'inscription sont disponibles en ligne :\n\n';
   msg+='1️⃣ Dossier d\'inscription (OBLIGATOIRE) :\n'+BASE+'ADN_Inscription_2026-2027.html\n\n';
   msg+='2️⃣ Questionnaire Santé AFMT (mineurs) :\n'+BASE+'ADN_Sante_AFMT_Mineurs.html\n\n';
@@ -1494,7 +1494,7 @@ function shareInscriptions(plat, groupe){
   toast('✅ Message copié ! Collez-le dans le groupe.');
 }
 function copyInscriptionLinks(){
-  var BASE='https://application.adnmuaythai2-0.workers.dev/';
+  var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var txt='📋 Fiches d\'inscription ADN Muay-Thaï 2.0 :\n';
   txt+='• Inscription : '+BASE+'ADN_Inscription_2026-2027.html\n';
   txt+='• Santé AFMT : '+BASE+'ADN_Sante_AFMT_Mineurs.html\n';
