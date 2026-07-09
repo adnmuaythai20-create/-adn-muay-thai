@@ -462,39 +462,6 @@ function editMember(id){
       <div class="field"><label>Montant (€)</label><input id="f_montant" value="${esc(x.montant)}"></div>
     </div>
     <div class="field"><label>Notes</label><textarea id="f_notes" rows="2">${esc(x.notes)}</textarea></div>
-
-    <!-- INFORMATIONS COMPLÉMENTAIRES -->
-    <div style="border-top:1.4px solid var(--bd);margin:12px 0;padding-top:12px">
-      <div style="font-weight:700;color:var(--deep);margin-bottom:10px">📋 Dossier complet</div>
-      <div class="grid2">
-        <div class="field"><label>Adresse</label><input id="f_adresse" value="${esc(x.adresse||'')}"></div>
-        <div class="field"><label>Ville</label><input id="f_ville" value="${esc(x.ville||'')}"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>Code postal</label><input id="f_cp" value="${esc(x.cp||'')}"></div>
-        <div class="field"><label>Profession</label><input id="f_prof" value="${esc(x.prof||'')}"></div>
-      </div>
-      <div class="grid2">
-        <div class="field"><label>Poids (kg)</label><input id="f_poids" type="number" value="${esc(x.poids||'')}"></div>
-        <div class="field"><label>Taille (cm)</label><input id="f_taille" type="number" value="${esc(x.taille||'')}"></div>
-      </div>
-      <div class="field"><label>Créneaux</label><input id="f_creneaux" value="${esc(x.creneaux||'')}"></div>
-      <div class="field"><label>Niveau visé</label><input id="f_niveau" value="${esc(x.niveau||'')}"></div>
-      <div class="field"><label>Objectif saison</label><input id="f_objectif" value="${esc(x.objectif||'')}"></div>
-      <div class="field"><label>Moyen de paiement</label><input id="f_paiement" value="${esc(x.paiement||'')}"></div>
-      <div class="field"><label>Allergies / Médical</label><textarea id="f_allergies" rows="2">${esc(x.allergies||'')}</textarea></div>
-      <div class="grid2">
-        <div class="field"><label>WhatsApp boxeur</label><input id="f_wabox" value="${esc(x.wabox||'')}"></div>
-        <div class="field"><label>WhatsApp parent</label><input id="f_wafam" value="${esc(x.wafam||'')}"></div>
-      </div>
-      <div class="field"><label>Tuteur légal</label><input id="f_tuteur" value="${esc(x.tuteur||'')}"></div>
-      <div class="field"><label>Droit à l'image</label><input id="f_droit_image" value="${esc(x.droit_image||'')}"></div>
-      <div class="grid2">
-        <div class="field"><label>Sponsor / Entreprise</label><input id="f_spo_rs" value="${esc(x.spo_rs||'')}"></div>
-        <div class="field"><label>SIRET</label><input id="f_spo_siret" value="${esc(x.spo_siret||'')}"></div>
-      </div>
-    </div>
-
     <div style="border-top:1.4px solid var(--bd);margin:12px 0;padding-top:12px">
       <div style="font-weight:700;color:var(--deep);margin-bottom:10px">🏅 Rôles au sein du club</div>
       <div class="grid2">
@@ -552,9 +519,7 @@ function editMember(id){
     const nom=val('f_nom').trim(),prenom=val('f_prenom').trim();
     if(!nom&&!prenom){toast("Indiquez au moins un nom.");return false;}
     let num=val('f_num').trim();if(!num)num=numAdh(prenom,nom);
-    const obj={id:x.id||uid(),nom,prenom,ddn:(function(){var v=val('f_ddn').trim();if(!v)return'';if(v.indexOf('-')>=0)return v;var p=v.split('/');return(p.length===3&&p[2].length===4)?(p[2]+'-'+p[1]+'-'+p[0]):''})(),cat:val('f_cat'),tel:val('f_tel').trim(),email:val('f_email').trim(),num,paid:val('f_paid')==='none'?'none':val('f_paid')==='1',montant:val('f_montant').trim(),inscrit:x.inscrit||today(),notes:val('f_notes').trim(),bureau:val('f_bureau').trim(),coach:document.getElementById('f_coach').checked,drive:val('f_drive').trim(),docId:document.getElementById('f_docId').checked,docPhoto:document.getElementById('f_docPhoto').checked,docCertif:document.getElementById('f_docCertif').checked,docInscrit:document.getElementById('f_docInscrit').checked,
-    // Dossier complet
-    adresse:val('f_adresse').trim()||x.adresse||'',ville:val('f_ville').trim()||x.ville||'',cp:val('f_cp').trim()||x.cp||'',prof:val('f_prof').trim()||x.prof||'',poids:val('f_poids')||x.poids||'',taille:val('f_taille')||x.taille||'',creneaux:val('f_creneaux').trim()||x.creneaux||'',niveau:val('f_niveau').trim()||x.niveau||'',objectif:val('f_objectif').trim()||x.objectif||'',paiement:val('f_paiement').trim()||x.paiement||'',allergies:val('f_allergies').trim()||x.allergies||'',wabox:val('f_wabox').trim()||x.wabox||'',wafam:val('f_wafam').trim()||x.wafam||'',tuteur:val('f_tuteur').trim()||x.tuteur||'',droit_image:val('f_droit_image').trim()||x.droit_image||'',spo_rs:val('f_spo_rs').trim()||x.spo_rs||'',spo_siret:val('f_spo_siret').trim()||x.spo_siret||''};
+    const obj={id:x.id||uid(),nom,prenom,ddn:(function(){var v=val('f_ddn').trim();if(!v)return'';if(v.indexOf('-')>=0)return v;var p=v.split('/');return(p.length===3&&p[2].length===4)?(p[2]+'-'+p[1]+'-'+p[0]):''})(),cat:val('f_cat'),tel:val('f_tel').trim(),email:val('f_email').trim(),num,paid:val('f_paid')==='none'?'none':val('f_paid')==='1',montant:val('f_montant').trim(),inscrit:x.inscrit||today(),notes:val('f_notes').trim(),bureau:val('f_bureau').trim(),coach:document.getElementById('f_coach').checked,drive:val('f_drive').trim(),docId:document.getElementById('f_docId').checked,docPhoto:document.getElementById('f_docPhoto').checked,docCertif:document.getElementById('f_docCertif').checked,docInscrit:document.getElementById('f_docInscrit').checked};
     if(x.id){const i=DB.members.findIndex(m=>m.id===x.id);DB.members[i]=obj;}else DB.members.push(obj);
     save();renderMembers();toast(id?"Adhérent modifié.":"Adhérent ajouté.");return true;
   });
