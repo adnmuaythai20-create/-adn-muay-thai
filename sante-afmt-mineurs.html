@@ -240,21 +240,24 @@ function submitSante(){
   var tuteur=document.getElementById('f_tuteur').value.trim();
   var signature=document.getElementById('f_signature').value.trim();
   if(!nom||!prenom){alert('Veuillez saisir le nom et prénom de l\'enfant.');return;}
+  var j=document.getElementById('f_j').value;
+  var m=document.getElementById('f_m').value;
+  var a=document.getElementById('f_a').value;
+  if(!j||!m||!a){alert('Veuillez saisir la date de naissance complète.');return;}
   if(!tuteur){alert('Veuillez saisir le nom du représentant légal.');return;}
   if(!signature){alert('Veuillez signer numériquement.');return;}
   var btn=document.getElementById('btn-submit');
   btn.disabled=true;btn.textContent='Envoi en cours...';
-  var j=document.getElementById('f_j').value;
-  var m=document.getElementById('f_m').value;
-  var a=document.getElementById('f_a').value;
-  var ddn=a&&m&&j?(a+'-'+m+'-'+j):'';
+  var ddn=a+'-'+m+'-'+j;
+  var ini=(prenom[0]||'X')+(nom[0]||'X');
+  var num_adherent=j+'/'+m+'/'+a+'-'+ini.toUpperCase();
   var reponses={};
   for(var i=0;i<9;i++){
     var r=document.querySelector('input[name="sq'+i+'"]:checked');
     reponses['q'+(i+1)]=r?r.value:'';
   }
   var data={
-    id:uid(),nom:nom,prenom:prenom,ddn:ddn,cat:'jeunes',
+    id:uid(),num:num_adherent,nom:nom,prenom:prenom,ddn:ddn,cat:'jeunes',
     tuteur:tuteur,signature:signature,
     fait_a:document.getElementById('f_fait_a').value.trim(),
     result_questionnaire:getRadio('f_result'),

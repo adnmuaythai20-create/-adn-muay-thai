@@ -247,7 +247,7 @@ function submitParents(){
   var temp=Array.from(document.querySelectorAll('.f_temp:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', ');
   var aide=Array.from(document.querySelectorAll('.f_aide:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', ');
   var data={
-    id:uid(),nom:nom,prenom:prenom,ddn:ddn,cat:'jeunes',
+    id:uid(),num:num_adherent,nom:nom,prenom:prenom,ddn:ddn,cat:'jeunes',
     tuteur:tuteur,
     lien:document.getElementById('f_lien').value.trim(),
     motivations:motiv,

@@ -451,44 +451,61 @@ function submitForm(){
     cat:getCat(),
     tel:tel,
     email:email,
+    // État civil
     adresse:document.getElementById('f_adresse').value.trim(),
     cp:document.getElementById('f_cp').value.trim(),
     ville:document.getElementById('f_ville').value.trim(),
     prof:document.getElementById('f_prof').value.trim(),
     ecole:document.getElementById('f_ecole').value.trim(),
+    // Profil sportif
     objectif:document.getElementById('f_objectif').value.trim(),
     poids:document.getElementById('f_poids').value,
     taille:document.getElementById('f_taille').value,
+    niveau:getRadio('f_niv'),
+    categorie_age:getRadio('f_cat'),
+    // Médical
     allergies:document.getElementById('f_allergies').value.trim(),
     palmares:document.getElementById('f_palmares').value.trim(),
+    kine:getRadio('f_kine'),
     kine_det:document.getElementById('f_kine_det').value.trim(),
+    compet:getRadio('f_compet'),
+    autresport:getRadio('f_autresport'),
     autresport_det:document.getElementById('f_autresport_det').value.trim(),
+    // Équipements
+    equipement:getRadio('f_equip'),
     equip_det:document.getElementById('f_equip_det').value.trim(),
-    tuteur:document.getElementById('f_tuteur').value.trim(),
-    signature:signature,
-    fait_a:document.getElementById('f_fait_a').value.trim(),
-    fait_le:document.getElementById('f_fait_le').value,
+    // Communication
+    comm:document.getElementById('f_comm').checked?'Oui':'Non',
     wabox:document.getElementById('f_wabox').value.trim(),
     msbox:document.getElementById('f_msbox').value.trim(),
     wafam:document.getElementById('f_wafam').value.trim(),
     msfam:document.getElementById('f_msfam').value.trim(),
+    // Créneaux
+    creneaux:Array.from(document.querySelectorAll('.f_cren:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', '),
+    // Situation pro
+    situation_pro:getRadio('f_sitpro'),
+    type_demande:getRadio('f_type'),
+    // Paiement
+    paiement:getRadio('f_pay'),
+    // Droits
+    droit_image:getRadio('f_image'),
+    tuteur:document.getElementById('f_tuteur').value.trim(),
+    autorise_mineur:document.getElementById('f_autorise_min').checked?'Oui':'Non',
+    // Documents
+    doc_photo:document.getElementById('f_doc_photo').checked?'Oui':'Non',
+    doc_certif:document.getElementById('f_doc_certif').checked?'Oui':'Non',
+    // Signature
+    signature:signature,
+    fait_a:document.getElementById('f_fait_a').value.trim(),
+    fait_le:document.getElementById('f_fait_le').value,
+    // Sponsor
     don:document.getElementById('f_don').value,
     don_email:document.getElementById('f_don_email').value.trim(),
     spo_rs:document.getElementById('f_spo_rs').value.trim(),
     spo_siret:document.getElementById('f_spo_siret').value.trim(),
     spo_montant:document.getElementById('f_spo_montant').value,
-    creneaux:creneaux,
-    type_demande:getRadio('f_type'),
-    niveau:getRadio('f_niv'),
-    categorie_age:getRadio('f_cat'),
-    situation_pro:getRadio('f_sitpro'),
-    paiement:getRadio('f_pay'),
-    droit_image:getRadio('f_image'),
-    kine:getRadio('f_kine'),
-    compet:getRadio('f_compet'),
-    autresport:getRadio('f_autresport'),
-    equipement:getRadio('f_equip'),
     paiement_spo:getRadio('f_pay_spo'),
+    // Métadonnées
     paid:false,
     montant:'200',
     inscrit:new Date().toISOString().split('T')[0],
@@ -496,7 +513,7 @@ function submitForm(){
     source:'espace_adherent'
   };
 
-  db.collection('clubs').doc('main').get().then(function(snap){
+    db.collection('clubs').doc('main').get().then(function(snap){
     var root;
     if(snap.exists && snap.data().root){
       root=JSON.parse(snap.data().root);
