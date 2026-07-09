@@ -434,8 +434,16 @@ function submitForm(){
 
   var creneaux=Array.from(document.querySelectorAll('.f_cren:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', ');
 
+  // Générer le numéro adhérent automatiquement
+  var j2=document.getElementById('f_j').value||'00';
+  var m2=document.getElementById('f_m').value||'00';
+  var a2=document.getElementById('f_a').value||'0000';
+  var ini=(prenom[0]||'')+(nom[0]||'');
+  var num_adherent=j2+'/'+m2+'/'+a2+'-'+ini.toUpperCase();
+
   var membre={
     id:uid(),
+    num:num_adherent,
     nom:nom,
     prenom:prenom,
     ddn:ddn,
