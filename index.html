@@ -1223,7 +1223,7 @@ const TEMPLATES=[
   {id:"actu",t:"📰 Actualité du club",d:"Infos & nouveautés",
    body:"📰 ACTUALITÉ ADN MUAY-THAÏ 2.0\n\n[Titre de l'actualité]\n\n[Détails ici...]\n\n📆 [Date si besoin]\n\nPour toute question : 0692 37 48 16 🥊"},
   {id:"fiches",t:"📋 Fiches d'inscription",d:"Envoi des formulaires en ligne",
-   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne. Remplissez-les directement depuis votre téléphone :\n\n1️⃣ Dossier d'inscription (OBLIGATOIRE pour tous) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Inscription_2026-2027.html\n\n2️⃣ Questionnaire Santé AFMT (OBLIGATOIRE pour les mineurs) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Sante_AFMT_Mineurs.html\n\n3️⃣ Questionnaire Parents & Enfant (pour les 8-11 ans) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Parents_Enfant_Jeunes.html\n\n📌 Après envoi du formulaire, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil (- de 6 mois)\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ très bientôt sur le tatami ! 🥊\nL'équipe ADN Muay-Thaï 2.0"}
+   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne. Remplissez-les directement depuis votre téléphone :\n\n1️⃣ Dossier d'inscription (OBLIGATOIRE pour tous) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adulte-public.html\n\n2️⃣ Questionnaire Santé AFMT (OBLIGATOIRE pour les mineurs) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Sante_AFMT_Mineurs.html\n\n3️⃣ Questionnaire Parents & Enfant (pour les 8-11 ans) :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/ADN_Parents_Enfant_Jeunes.html\n\n📌 Après envoi du formulaire, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil (- de 6 mois)\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ très bientôt sur le tatami ! 🥊\nL'équipe ADN Muay-Thaï 2.0"}
 ];
 let selTpl=TEMPLATES[0].id, msgDest="box", msgCustom=null;
 function pgMessages(m){
@@ -1411,7 +1411,7 @@ function pgInscriptions(m){
 function downloadFiche(type){
   const BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   const urls={
-    inscription:BASE+'ADN_Inscription_2026-2027.html',
+    inscription:BASE+'inscription-adulte-public.html',
     sante:BASE+'ADN_Sante_AFMT_Mineurs.html',
     parents:BASE+'ADN_Parents_Enfant_Jeunes.html'
   };
@@ -1421,7 +1421,7 @@ function downloadFiche(type){
 function mailFiche(type){
   const BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   const urls={
-    inscription:BASE+'ADN_Inscription_2026-2027.html',
+    inscription:BASE+'inscription-adulte-public.html',
     sante:BASE+'ADN_Sante_AFMT_Mineurs.html',
     parents:BASE+'ADN_Parents_Enfant_Jeunes.html'
   };
@@ -1470,7 +1470,7 @@ function copyEspaceLink(){
 function shareInscriptions(plat, groupe){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var msg='📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d\'inscription sont disponibles en ligne :\n\n';
-  msg+='1️⃣ Dossier d\'inscription (OBLIGATOIRE) :\n'+BASE+'ADN_Inscription_2026-2027.html\n\n';
+  msg+='1️⃣ Dossier d\'inscription (OBLIGATOIRE) :\n'+BASE+'inscription-adulte-public.html\n\n';
   msg+='2️⃣ Dossier Enfant / Jeune (inscription + santé + parents) :\n'+BASE+'inscription-enfant.html\n\n';
   msg+='📌 Après envoi, joignez par mail : photo d\'identité + certificat médical\n';
   msg+='📧 accueil@adn-muay-thai.org · 📞 0692 37 48 16\n\nÀ bientôt ! 🥊';
@@ -1487,7 +1487,7 @@ function shareInscriptions(plat, groupe){
 function copyInscriptionLinks(){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var txt='📋 Fiches d\'inscription ADN Muay-Thaï 2.0 :\n';
-  txt+='• Inscription : '+BASE+'ADN_Inscription_2026-2027.html\n';
+  txt+='• Inscription : '+BASE+'inscription-adulte-public.html\n';
   txt+='• Santé AFMT : '+BASE+'ADN_Sante_AFMT_Mineurs.html\n';
   txt+='• Parents/Enfant : '+BASE+'ADN_Parents_Enfant_Jeunes.html';
   try{navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){toast('✅ Liens copiés ! Collez-les où vous voulez.');});}catch(e){toast('Copiez manuellement les liens.');}
