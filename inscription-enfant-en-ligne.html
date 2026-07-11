@@ -213,8 +213,8 @@ body{
 .onglet:not(.actif):hover{background:var(--bleu-clair);color:var(--bleu)}
 
 /* SECTIONS */
-.section{display:none}
-.section.actif{display:block}
+.section{display:none!important}
+.section.actif{display:block!important}
 
 /* CARTES */
 .carte{
@@ -1081,8 +1081,14 @@ function initDates(){
    ONGLETS
    ============================================================ */
 function allerOnglet(i){
-  document.querySelectorAll('.onglet').forEach((o,idx)=>o.classList.toggle('actif',idx===i));
-  document.querySelectorAll('.section').forEach((s,idx)=>s.classList.toggle('actif',idx===i));
+  document.querySelectorAll('.onglet').forEach((o,idx)=>{
+    o.classList.toggle('actif',idx===i);
+  });
+  document.querySelectorAll('.section').forEach((s,idx)=>{
+    s.classList.toggle('actif',idx===i);
+    // Forcer display via style inline pour éviter conflits CSS
+    s.style.display = (idx===i) ? 'block' : 'none';
+  });
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -1102,6 +1108,14 @@ function calculerAge(){
   document.getElementById('enfant-age').value=age+' ans';
   syncChamps();
 }
+
+// Init sections et âge au chargement
+document.addEventListener('DOMContentLoaded', function(){
+  var secs = document.querySelectorAll('.section');
+  secs.forEach(function(s,i){ s.style.display = i===0?'block':'none'; });
+  if(typeof calculerAge==='function') calculerAge();
+});
+
 
 function getDDN(){
   const j=document.getElementById('ddn-j').value;
