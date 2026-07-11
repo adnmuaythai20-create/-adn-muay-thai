@@ -409,11 +409,14 @@ var CODE_ACCES = "ADN2026";
 function verifyCode(){
   var code = document.getElementById('code-input').value.trim().toUpperCase();
   if(code === CODE_ACCES){
-    document.getElementById('screen-code').style.display = 'none';
-    document.getElementById('screen-form').style.display = 'block';
+    var sc = document.getElementById('screen-code');
+    var sf = document.getElementById('screen-form');
+    if(sc) sc.style.setProperty('display','none','important');
+    if(sf) sf.style.setProperty('display','block','important');
     window.scrollTo({top:0,behavior:'smooth'});
   } else {
-    document.getElementById('code-error').style.display = 'block';
+    var err = document.getElementById('code-error');
+    if(err) err.style.display = 'block';
   }
 }
 

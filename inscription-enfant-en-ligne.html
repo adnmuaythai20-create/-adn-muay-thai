@@ -1057,13 +1057,16 @@ const QUESTIONS_SANTE = [
 function validerCode(){
   const v = document.getElementById('input-code').value.trim().toUpperCase();
   if(v==='ADN2026'){
-    document.getElementById('ecran-code').style.display='none';
-    document.getElementById('app').style.display='block';
+    var ec = document.getElementById('ecran-code');
+    var ap = document.getElementById('app');
+    if(ec) ec.style.setProperty('display','none','important');
+    if(ap) ap.style.setProperty('display','block','important');
     initDates();
   } else {
-    document.getElementById('err-code').style.display='block';
-    document.getElementById('input-code').value='';
-    document.getElementById('input-code').focus();
+    var err = document.getElementById('err-code');
+    if(err) err.style.display='block';
+    var inp = document.getElementById('input-code');
+    if(inp){inp.value='';inp.focus();}
   }
 }
 
