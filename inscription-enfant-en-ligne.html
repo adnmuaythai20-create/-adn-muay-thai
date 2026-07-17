@@ -1820,19 +1820,45 @@ async function envoyerDossier(){
       try { genererPDFEnfant(d); } catch(e){ console.warn('PDF non généré:', e); }
       // Firebase optionnel
       try{
-        let existant={};
-        try{
-          const r=await fetch(`${FB_URL}?key=${FB_KEY}`);
-          if(r.ok){const j=await r.json();if(j.fields?.champ?.stringValue) existant=JSON.parse(j.fields.champ.stringValue);}
-        }catch(e){}
-        const membres=existant.membres||[];
-        membres.push({id:'ENF_'+Date.now(),...d});
-        existant.membres=membres;
-        await fetch(`${FB_URL}?key=${FB_KEY}&updateMask.fieldPaths=champ`,{
-          method:'PATCH',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({fields:{champ:{stringValue:JSON.stringify(existant)}}})
+        // Lire le root actuel
+        const rGet = await fetch(`${FB_URL}?key=${FB_KEY}`);
+        let root = {version:2, current:'2026/2027', seasons:{'2026/2027':{members:[],sessions:[],events:[]}}};
+        if(rGet.ok){
+          const j = await rGet.json();
+          if(j.fields && j.fields.root && j.fields.root.stringValue){
+            try{ root = JSON.parse(j.fields.root.stringValue); }catch(e){}
+          }
+        }
+        // S'assurer que la structure existe
+        if(!root.seasons) root.seasons = {};
+        if(!root.seasons['2026/2027']) root.seasons['2026/2027'] = {members:[],sessions:[],events:[]};
+        if(!root.seasons['2026/2027'].members) root.seasons['2026/2027'].members = [];
+        // Ajouter le membre enfant
+        const membreEnfant = {
+          id: 'ENF_' + Date.now(),
+          nom: d.nom, prenom: d.prenom,
+          ddn: d.dateNaissance, age: d.age,
+          cat: d.catAge, niveau: d.niveau,
+          tel: d.tel, email: d.adresse_email||'',
+          adresse: d.adresse, cp: d.cp, ville: d.ville,
+          paiement: d.paiement, droitImage: d.droitImage,
+          type: 'enfant', saison: '2026/2027',
+          inscrit: new Date().toISOString().split('T')[0],
+          source: 'espace_enfant'
+        };
+        const existe = root.seasons['2026/2027'].members.find(function(x){ return x.nom===membreEnfant.nom && x.prenom===membreEnfant.prenom; });
+        if(existe){ Object.assign(existe, membreEnfant); }
+        else { root.seasons['2026/2027'].members.push(membreEnfant); }
+        // Écrire dans Firebase avec la bonne structure
+        await fetch(`${FB_URL}?key=${FB_KEY}&updateMask.fieldPaths=root&updateMask.fieldPaths=_at&updateMask.fieldPaths=_by`,{
+          method:'PATCH', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({fields:{
+            root:{stringValue: JSON.stringify(root)},
+            _at:{stringValue: new Date().toISOString()},
+            _by:{stringValue: 'espace_enfant'}
+          }})
         });
-      }catch(e){}
+      }catch(e){ console.warn('Firebase sync:', e); }
       document.getElementById('succes-nom').textContent=d.prenom+' '+d.nom;
       document.getElementById('succes').classList.add('show');
     } else {
