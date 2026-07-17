@@ -1313,8 +1313,7 @@ function submitForm(){
   .catch(function(err){
     btn.disabled=false;
     btn.textContent='✅ Valider mon inscription';
-    alert('Erreur de connexion. Vérifiez votre connexion internet et réessayez.');
-    console.error(err);
+    alert('ERREUR TECHNIQUE: ' + err.name + ' - ' + err.message);
   });
 }
 </script>
