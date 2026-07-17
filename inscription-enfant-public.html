@@ -1482,6 +1482,13 @@ function validerOnglet0(){
   if(!document.getElementById('resp-nom-complet').value.trim())
     erreurs.push("Nom du responsable légal");
 
+  var emailEnfantP = document.getElementById('enfant-email').value.trim();
+  if(!emailEnfantP){
+    erreurs.push("Email");
+  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnfantP)){
+    erreurs.push("Email invalide (ex: nom@exemple.com)");
+  }
+
   if(!document.getElementById('signature-1').value.trim())
     erreurs.push("Signature numérique");
 

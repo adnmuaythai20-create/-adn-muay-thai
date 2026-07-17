@@ -1046,8 +1046,13 @@ function submitForm(){
   if(!document.getElementById('f_tel').value.trim())
     errChamp('f_tel', "Téléphone");
 
-  if(!document.getElementById('f_email').value.trim())
-    errChamp('f_email', "Email");
+  var emailAdh = document.getElementById('f_email').value.trim();
+  if(!emailAdh){
+    errChamp('f_email', "Email obligatoire");
+  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailAdh)){
+    errChamp('f_email', "Email invalide");
+    erreurs.push("Email invalide (ex: nom@exemple.com)");
+  }
 
   if(!document.querySelector('input[name="f_pay"]:checked'))
     errRadio('f_pay', "Moyen de paiement");

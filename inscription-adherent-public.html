@@ -577,7 +577,13 @@ function submitToFirebase(){
   if(!document.getElementById('i_cp').value.trim()) errChamp('i_cp','Code postal');
   if(!document.getElementById('i_ville').value.trim()) errChamp('i_ville','Ville');
   if(!document.getElementById('i_tel').value.trim()) errChamp('i_tel','Téléphone');
-  if(!document.getElementById('i_email').value.trim()) errChamp('i_email','Email');
+  var emailValP = document.getElementById('i_email').value.trim();
+  if(!emailValP){
+    errChamp('i_email','Email');
+  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailValP)){
+    erreurs.push("Email invalide (ex: nom@exemple.com)");
+    errChamp('i_email','Email invalide');
+  }
   if(!document.querySelector('input[name="i_sitpro"]:checked')) errRadio('i_sitpro','Situation socio-professionnelle');
   if(!document.querySelector('input[name="i_pay"]:checked')) errRadio('i_pay','Moyen de paiement');
   if(!document.querySelector('input[name="i_image"]:checked')) errRadio('i_image',"Droit à l'image");

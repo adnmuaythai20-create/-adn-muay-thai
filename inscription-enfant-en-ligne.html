@@ -1518,6 +1518,12 @@ function validerOnglet0(){
     erreurs.push("Droit à l'image");
   if(!document.getElementById('resp-nom-complet').value.trim())
     erreurs.push("Nom du responsable légal");
+  var emailEnf = document.getElementById('enfant-email').value.trim();
+  if(!emailEnf){
+    erreurs.push("Email obligatoire");
+  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){
+    erreurs.push("Email invalide (ex: nom@exemple.com)");
+  }
   if(!document.getElementById('signature-1').value.trim())
     erreurs.push("Signature numérique");
   if(erreurs.length > 0){
