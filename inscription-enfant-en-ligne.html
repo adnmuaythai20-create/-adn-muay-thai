@@ -1648,7 +1648,7 @@ function getData(){
     cp:document.getElementById('enfant-cp').value,
     ville:document.getElementById('enfant-ville').value,
     tel:document.getElementById('enfant-tel').value,
-    email:document.getElementById('enfant-email').value,
+    adresse_email:document.getElementById('enfant-email').value,
     scolarite:document.getElementById('scolarite').value,
     nationalite:document.getElementById('nationalite').value,
     sportCombat:document.querySelector('input[name="combat"]:checked')?.value||'',
@@ -1802,7 +1802,7 @@ async function envoyerDossier(){
     // Formspree
     const formData = new FormData();
     formData.append('_subject', 'Nouveau dossier enfant — ' + d.prenom + ' ' + d.nom);
-    formData.append('_replyto', d.email||'');
+    formData.append('_replyto', d.adresse_email||'');
     const flatData = {...d, santeReponses: JSON.stringify(d.santeReponses||{})};
     for(const key in flatData){
       if(flatData.hasOwnProperty(key)){
