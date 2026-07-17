@@ -1305,7 +1305,9 @@ function submitForm(){
     } else {
       btn.disabled=false;
       btn.textContent='✅ Valider mon inscription';
-      alert('Erreur d\'envoi. Vérifiez votre connexion internet et réessayez.');
+      resp.json().then(function(data){
+        alert('Erreur envoi (' + resp.status + ') : ' + JSON.stringify(data));
+      }).catch(function(){ alert('Erreur envoi (' + resp.status + ')'); });
     }
   })
   .catch(function(err){
