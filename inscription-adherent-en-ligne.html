@@ -1269,9 +1269,13 @@ function submitForm(){
   }
 
   // ── ENVOI FORMSPREE ─────────────────────────────────────────────
-  var payload = { _subject: 'Nouvelle inscription adhérent — ' + membre.prenom + ' ' + membre.nom, _replyto: membre.email };
+  var payload = {
+    _subject: 'Nouvelle inscription adhérent — ' + membre.prenom + ' ' + membre.nom,
+    _replyto: membre.email,
+    email: membre.email
+  };
   for(var key in membre){
-    if(membre.hasOwnProperty(key) && key !== 'signature'){
+    if(membre.hasOwnProperty(key) && key !== 'signature' && key !== 'email'){
       payload[key] = membre[key] || '';
     }
   }
