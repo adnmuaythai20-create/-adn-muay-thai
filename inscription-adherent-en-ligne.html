@@ -1311,6 +1311,11 @@ function submitForm(){
       document.getElementById('screen-form').style.display='none';
       document.getElementById('screen-success').style.display='block';
       window.scrollTo({top:0,behavior:'smooth'});
+      var numVal = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
+      var numEl = document.getElementById('display-num');
+      var exEl = document.getElementById('exemple-nom');
+      if(numEl && numVal) numEl.textContent = numVal;
+      if(exEl && numVal) exEl.textContent = numVal;
     } else {
       btn.disabled=false;
       btn.textContent='✅ Valider mon inscription';
