@@ -571,6 +571,7 @@ function editMember(id){
           📋 Fiche d'inscription signée reçue
         </label>
       </div>
+      ${x.drive ? `<a href="${esc(x.drive)}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:10px 16px;background:#1a73e8;color:#fff;border-radius:10px;font-weight:600;font-size:13px;text-decoration:none;">📁 Ouvrir le dossier Drive</a>` : ''}
       <div style="margin-top:10px;font-size:12px;color:var(--grey)">
         📸 La photo peut être prise depuis le téléphone : ouvrez Google Drive → Nouveau → Scanner ou Appareil photo
       </div>
