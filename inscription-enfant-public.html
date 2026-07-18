@@ -1827,7 +1827,12 @@ async function envoyerDossier(){
         });
       }catch(e){}
       document.getElementById('succes-nom').textContent=d.prenom+' '+d.nom;
+      var numValEnfP = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
       document.getElementById('succes').classList.add('show');
+      var numElEnfP = document.getElementById('display-num');
+      var exElEnfP = document.getElementById('exemple-nom');
+      if(numElEnfP && numValEnfP) { numElEnfP.textContent = numValEnfP; }
+      if(exElEnfP && numValEnfP) { exElEnfP.textContent = numValEnfP; }
     var numVal = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
     var numEl = document.getElementById('display-num');
     var exEl = document.getElementById('exemple-nom');

@@ -1309,13 +1309,15 @@ function submitForm(){
         }).catch(function(){});
       } catch(e){}
       document.getElementById('screen-form').style.display='none';
+      // Sauvegarder le N° AVANT de cacher le formulaire
+      var numVal = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
+      document.getElementById('screen-form').style.cssText='display:none!important';
       document.getElementById('screen-success').style.display='block';
       window.scrollTo({top:0,behavior:'smooth'});
-      var numVal = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
       var numEl = document.getElementById('display-num');
       var exEl = document.getElementById('exemple-nom');
-      if(numEl && numVal) numEl.textContent = numVal;
-      if(exEl && numVal) exEl.textContent = numVal;
+      if(numEl && numVal) { numEl.textContent = numVal; }
+      if(exEl && numVal) { exEl.textContent = numVal; }
     } else {
       btn.disabled=false;
       btn.textContent='✅ Valider mon inscription';

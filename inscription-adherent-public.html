@@ -512,8 +512,13 @@ function submitForm(formspreeUrl, formId, successId){
   }).then(function(r){
     if(r.ok){
       document.getElementById(formId).style.display='none';
+      var numValPub = document.getElementById('i_num') ? document.getElementById('i_num').value : '';
       document.getElementById(successId).style.display='block';
       window.scrollTo({top:0,behavior:'smooth'});
+      var numElPub = document.getElementById('display-num');
+      var exElPub = document.getElementById('exemple-nom');
+      if(numElPub && numValPub) { numElPub.textContent = numValPub; }
+      if(exElPub && numValPub) { exElPub.textContent = numValPub; }
     } else {
       alert('Erreur lors de l\'envoi. Veuillez réessayer.');
       if(btn){btn.disabled=false;btn.textContent='📧 Envoyer mon dossier';}

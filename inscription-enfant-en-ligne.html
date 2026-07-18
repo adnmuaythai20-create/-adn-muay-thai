@@ -1879,7 +1879,12 @@ async function envoyerDossier(){
         });
       }catch(e){ console.warn('Firebase sync:', e); }
       document.getElementById('succes-nom').textContent=d.prenom+' '+d.nom;
+      var numValEnf = document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : '';
       document.getElementById('succes').classList.add('show');
+      var numElEnf = document.getElementById('display-num');
+      var exElEnf = document.getElementById('exemple-nom');
+      if(numElEnf && numValEnf) { numElEnf.textContent = numValEnf; }
+      if(exElEnf && numValEnf) { exElEnf.textContent = numValEnf; }
     } else {
       throw new Error('Erreur envoi ('+resp.status+')');
     }
