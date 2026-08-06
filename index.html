@@ -327,8 +327,8 @@ syncDB();
   });
   if(modif)save();
 })();
-let SAVE_OK=true;
-let _saveCount=0;
+var SAVE_OK=true;
+var _saveCount=0;
 function autoBackupCheck(){
   _saveCount++;
   if(_saveCount%15===0){
