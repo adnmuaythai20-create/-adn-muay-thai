@@ -950,11 +950,11 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
         <div class="champ gc">
           <label>Date de naissance <span class="req">*</span></label>
           <div class="date-trio">
-            <select id="ddn-j" onchange="calculerAge();syncChamps()">
+            <select id="ddn-j" onchange="genererNumAdherent();calculerAge();syncChamps()">
               <option value="">Jour</option>
               <script>for(let j=1;j<=31;j++){document.write(`<option value="${String(j).padStart(2,'0')}">${String(j).padStart(2,'0')}</option>`)}</script>
             </select>
-            <select id="ddn-m" onchange="calculerAge();syncChamps()">
+            <select id="ddn-m" onchange="genererNumAdherent();calculerAge();syncChamps()">
               <option value="">Mois</option>
               <option value="01">Janvier</option><option value="02">Février</option>
               <option value="03">Mars</option><option value="04">Avril</option>
@@ -963,7 +963,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
               <option value="09">Septembre</option><option value="10">Octobre</option>
               <option value="11">Novembre</option><option value="12">Décembre</option>
             </select>
-            <select id="ddn-a" onchange="calculerAge();syncChamps()">
+            <select id="ddn-a" onchange="genererNumAdherent();calculerAge();syncChamps()">
               <option value="">Année</option>
               <script>for(let a=2025;a>=2008;a--){document.write(`<option value="${a}">${a}</option>`)}</script>
             </select>
