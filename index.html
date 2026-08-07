@@ -1584,13 +1584,28 @@ function sendInscriptionMail(){
   const nom=(document.getElementById('ins_nom')||{}).value.trim();
   const fiche=(document.getElementById('ins_fiche')||{}).value;
   const noms={adherent_public:'Inscription Adhérent Public',adherent_enligne:'Inscription Adhérent En Ligne',enfant_public:'Inscription Enfant Public',enfant_enligne:'Inscription Enfant En Ligne'};
+  const liens={
+    adherent_public:'https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent-public.html',
+    adherent_enligne:'https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent-en-ligne.html',
+    enfant_public:'https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-enfant-public.html',
+    enfant_enligne:'https://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-enfant-en-ligne.html'
+  };
   if(!email){toast("Indiquez une adresse mail.");return;}
   const club=ROOT.settings.email||"accueil@adn-muay-thai.org";
   const ccFinal=[cc,club].filter(Boolean).join(",");
+  const lienFiche=liens[fiche];
   const sujet=encodeURIComponent("ADN Muay-Thaï 2.0 — "+noms[fiche]+(nom?" — "+nom:""));
-  const corps=encodeURIComponent("Bonjour"+(nom?" "+nom:"")+",\n\nVeuillez trouver en pièce jointe le document : "+noms[fiche]+"\n\nMerci de le remplir et de nous le retourner par mail à : "+club+"\n\nPour toute question, contactez-nous au 0692 37 48 16.\n\nCordialement,\nL'équipe ADN Muay-Thaï 2.0\n📍 5 Rue de l'Océan, 97425 Les Avirons");
+  const corps=encodeURIComponent(
+    "Bonjour"+(nom?" "+nom:"")+",\n\n"+
+    "Veuillez remplir votre fiche d'inscription en ligne en cliquant sur le lien ci-dessous :\n\n"+
+    "👉 "+lienFiche+"\n\n"+
+    "Une fois remplie, la fiche sera transmise directement au club.\n\n"+
+    "Pour toute question, contactez-nous au 0692 37 48 16.\n\n"+
+    "Cordialement,\nL'équipe ADN Muay-Thaï 2.0\n"+
+    "📍 5 Rue de l'Océan, 97425 Les Avirons"
+  );
   window.location.href="mailto:"+email+"?cc="+ccFinal+"&subject="+sujet+"&body="+corps;
-  toast("Application mail ouverte — ajoutez le PDF en pièce jointe.");
+  toast("Application mail ouverte ✅");
 }
 function shareEspaceAdherent(plat, groupe){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
