@@ -1794,13 +1794,12 @@ function allerOngletProtege(i){
 }
 
 function allerOnglet(i){
-  document.querySelectorAll('.onglet').forEach((o,idx)=>{
+  document.querySelectorAll('.onglet').forEach(function(o,idx){
     o.classList.toggle('actif',idx===i);
   });
-  document.querySelectorAll('.section').forEach((s,idx)=>{
+  document.querySelectorAll('.section').forEach(function(s,idx){
     s.classList.toggle('actif',idx===i);
-    // Forcer display via style inline pour éviter conflits CSS
-    s.style.display = (idx===i) ? 'block' : 'none';
+    s.style.setProperty('display', (idx===i)?'block':'none', 'important');
   });
   window.scrollTo({top:0,behavior:'smooth'});
 }
