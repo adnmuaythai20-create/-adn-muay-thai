@@ -23,6 +23,8 @@ function validerCode(){
 document.addEventListener('DOMContentLoaded', function(){
   var inp = document.getElementById('input-code');
   if(inp) inp.addEventListener('keypress', function(e){ if(e.key==='Enter') validerCode(); });
+  // Initialiser les sections
+  allerOnglet(0);
 });
 </script>
 
@@ -1794,13 +1796,20 @@ function allerOngletProtege(i){
 }
 
 function allerOnglet(i){
-  document.querySelectorAll('.onglet').forEach(function(o,idx){
-    o.classList.toggle('actif',idx===i);
-  });
-  document.querySelectorAll('.section').forEach(function(s,idx){
-    s.classList.toggle('actif',idx===i);
-    s.style.setProperty('display', (idx===i)?'block':'none', 'important');
-  });
+  var onglets = document.querySelectorAll('.onglet');
+  var sections = document.querySelectorAll('.section');
+  for(var a=0;a<onglets.length;a++){
+    onglets[a].classList.toggle('actif', a===i);
+  }
+  for(var b=0;b<sections.length;b++){
+    if(b===i){
+      sections[b].style.cssText='display:block!important';
+      sections[b].classList.add('actif');
+    } else {
+      sections[b].style.cssText='display:none!important';
+      sections[b].classList.remove('actif');
+    }
+  }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
