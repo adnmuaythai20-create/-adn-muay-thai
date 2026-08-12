@@ -853,40 +853,35 @@ function allerOngletProtege(i){
   return true;
 }
 function validerOnglet0(){
-  var erreurs = [];
-  if(!document.querySelector('input[name="type-demande"]:checked'))
-    erreurs.push("Type de demande");
-  if(!document.querySelector('input[name="cat-age"]:checked'))
-    erreurs.push("Catégorie d'âge");
-  if(!document.querySelector('input[name="niveau"]:checked'))
-    erreurs.push("Niveau visé");
-  if(!document.getElementById('enfant-nom').value.trim())
-    erreurs.push("Nom de famille");
-  if(!document.getElementById('enfant-prenom').value.trim())
-    erreurs.push("Prénom");
-  if(!document.getElementById('ddn-j').value || !document.getElementById('ddn-m').value || !document.getElementById('ddn-a').value)
-    erreurs.push("Date de naissance");
-  if(!document.getElementById('enfant-adresse').value.trim())
-    erreurs.push("Adresse postale");
-  if(!document.querySelector('input[name="paiement"]:checked'))
-    erreurs.push("Moyen de paiement");
-  if(!document.querySelector('input[name="image"]:checked'))
-    erreurs.push("Droit à l'image");
-  if(!document.getElementById('resp-nom-complet').value.trim())
-    erreurs.push("Nom du responsable légal");
-  var emailEnf = document.getElementById('enfant-email').value.trim();
-  if(!emailEnf){
-    erreurs.push("Email obligatoire");
-  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){
-    erreurs.push("Email invalide (ex: nom@exemple.com)");
-  }
-  if(!document.getElementById('signature-1').value.trim())
-    erreurs.push("Signature numérique");
-  if(erreurs.length > 0){
-    alert('⚠️ Champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
+  try {
+    var erreurs = [];
+    function chk(name){ return !!document.querySelector('input[name="'+name+'"]:checked'); }
+    function val(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
+
+    if(!chk('type-demande')) erreurs.push("Type de demande");
+    if(!chk('cat-age')) erreurs.push("Catégorie d'âge");
+    if(!chk('niveau')) erreurs.push("Niveau visé");
+    if(!val('enfant-nom')) erreurs.push("Nom de famille");
+    if(!val('enfant-prenom')) erreurs.push("Prénom");
+    if(!val('ddn-j')||!val('ddn-m')||!val('ddn-a')) erreurs.push("Date de naissance");
+    if(!val('enfant-adresse')) erreurs.push("Adresse postale");
+    if(!chk('paiement')) erreurs.push("Moyen de paiement");
+    if(!chk('image')) erreurs.push("Droit à l'image");
+    if(!val('resp-nom-complet')) erreurs.push("Nom du responsable légal");
+    var emailEnf = val('enfant-email');
+    if(!emailEnf){ erreurs.push("Email obligatoire"); }
+    else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){ erreurs.push("Email invalide"); }
+    if(!val('signature-1')) erreurs.push("Signature numérique");
+
+    if(erreurs.length > 0){
+      alert('⚠️ Champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
+      return false;
+    }
+    return true;
+  } catch(e) {
+    alert('Erreur validation: ' + e.message);
     return false;
   }
-  return true;
 }
 function allerOngletProtege(i){
   if(i >= 1){
@@ -1746,27 +1741,37 @@ function validerOnglet0(){
   if(!document.querySelector('input[name="type-demande"]:checked'))
     erreurs.push("Type de demande");
   if(!document.querySelector('input[name="cat-age"]:checked'))
-    erreurs.push("Catégorie d'âge");
-  if(!document.querySelector('input[name="niveau"]:checked'))
-    erreurs.push("Niveau visé");
-  if(!document.getElementById('enfant-nom').value.trim())
-    erreurs.push("Nom de famille");
-  if(!document.getElementById('enfant-prenom').value.trim())
-    erreurs.push("Prénom");
-  if(!document.getElementById('ddn-j').value || !document.getElementById('ddn-m').value || !document.getElementById('ddn-a').value)
-    erreurs.push("Date de naissance");
-  if(!document.getElementById('enfant-adresse').value.trim())
-    erreurs.push("Adresse postale");
-  if(!document.querySelector('input[name="paiement"]:checked'))
-    erreurs.push("Moyen de paiement");
-  if(!document.querySelector('input[name="image"]:checked'))
-    erreurs.push("Droit à l'image");
-  if(!document.getElementById('resp-nom-complet').value.trim())
-    erreurs.push("Nom du responsable légal");
-  var emailEnf = document.getElementById('enfant-email').value.trim();
-  if(!emailEnf){
-    erreurs.push("Email obligatoire");
-  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){
+    erreurs.push("Catégorie d'function validerOnglet0(){
+  try {
+    var erreurs = [];
+    function chk(name){ return !!document.querySelector('input[name="'+name+'"]:checked'); }
+    function val(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
+
+    if(!chk('type-demande')) erreurs.push("Type de demande");
+    if(!chk('cat-age')) erreurs.push("Catégorie d'âge");
+    if(!chk('niveau')) erreurs.push("Niveau visé");
+    if(!val('enfant-nom')) erreurs.push("Nom de famille");
+    if(!val('enfant-prenom')) erreurs.push("Prénom");
+    if(!val('ddn-j')||!val('ddn-m')||!val('ddn-a')) erreurs.push("Date de naissance");
+    if(!val('enfant-adresse')) erreurs.push("Adresse postale");
+    if(!chk('paiement')) erreurs.push("Moyen de paiement");
+    if(!chk('image')) erreurs.push("Droit à l'image");
+    if(!val('resp-nom-complet')) erreurs.push("Nom du responsable légal");
+    var emailEnf = val('enfant-email');
+    if(!emailEnf){ erreurs.push("Email obligatoire"); }
+    else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){ erreurs.push("Email invalide"); }
+    if(!val('signature-1')) erreurs.push("Signature numérique");
+
+    if(erreurs.length > 0){
+      alert('⚠️ Champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
+      return false;
+    }
+    return true;
+  } catch(e) {
+    alert('Erreur validation: ' + e.message);
+    return false;
+  }
+} else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){
     erreurs.push("Email invalide (ex: nom@exemple.com)");
   }
   if(!document.getElementById('signature-1').value.trim())
