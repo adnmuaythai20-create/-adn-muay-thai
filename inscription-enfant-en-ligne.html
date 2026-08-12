@@ -1759,7 +1759,7 @@ function syncChamps(){
 /* ============================================================
    COLLECTE DONNÉES
    ============================================================ */
-window.getData = function getData(){
+function getData(){
   const santeReponses={};
   QUESTIONS_SANTE.forEach((_,i)=>{
     const n=i+1;
@@ -1822,7 +1822,7 @@ window.getData = function getData(){
 /* ============================================================
    GÉNÉRATION PDF
    ============================================================ */
-window.genererPDFEnfant = function genererPDFEnfant(d){
+function genererPDFEnfant(d){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
   let y = 15;
@@ -1922,6 +1922,9 @@ window.genererPDFEnfant = function genererPDFEnfant(d){
 
   doc.save('ADN_Dossier_Enfant_' + d.nom + '_' + d.prenom + '.pdf');
 }
+window.genererPDFEnfant = genererPDFEnfant;
+window.getData = getData;
+
 
 /* ============================================================
    ENVOI FORMSPREE + PDF

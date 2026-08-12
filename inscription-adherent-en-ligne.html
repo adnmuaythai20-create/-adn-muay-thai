@@ -1275,7 +1275,7 @@ function submitForm(){
 
 
   // ── GÉNÉRATION PDF ──────────────────────────────────────────────
-  window.construireMembre = function construireMembre(){
+  function construireMembre(){
   function v(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
   function vc(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
   var j=v('f_j'), m=v('f_m'), a=v('f_a');
@@ -1335,7 +1335,7 @@ function telechargerPDF(){
   }
 }
 
-window.genererPDF = function genererPDF(m){
+function genererPDF(m){
     var { jsPDF } = window.jspdf;
     var doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
     var y = 15;
@@ -1443,6 +1443,9 @@ window.genererPDF = function genererPDF(m){
 
     doc.save('ADN_Inscription_' + m.nom + '_' + m.prenom + '.pdf');
   }
+window.genererPDF = genererPDF;
+window.construireMembre = construireMembre;
+
 
   // ── ENVOI FORMSPREE ─────────────────────────────────────────────
   var payload = {
