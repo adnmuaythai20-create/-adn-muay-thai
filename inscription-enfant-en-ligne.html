@@ -1246,10 +1246,107 @@ function calculerAge(){
     </div>
 
     <div class="nav-bas">
-      <button class="btn-nav primaire" onclick="
+      <script>
+function getDDN(){
+  const j=document.getElementById('ddn-j').value;
+  const m=document.getElementById('ddn-m').value;
+  const a=document.getElementById('ddn-a').value;
+  if(!j||!m||!a) return '';
+  const mois=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  return `${j} ${mois[parseInt(m)-1]} ${a}`;
+}
+function syncChamps(){
+  const nom    = document.getElementById('enfant-nom').value;
+  const prenom = document.getElementById('enfant-prenom').value;
+  const age    = document.getElementById('enfant-age').value;
+  const sexe   = document.getElementById('enfant-sexe').value;
+  const ddn    = getDDN();
+  const resp   = document.getElementById('resp-nom-complet').value;
+  const lien   = document.getElementById('resp-lien').value;
+  const tel    = document.getElementById('resp-tel').value;
+
+  // Onglet 2 — Santé
+  document.getElementById('s2-nom').value    = nom;
+  document.getElementById('s2-prenom').value = prenom;
+  document.getElementById('s2-ddn').value    = ddn;
+  document.getElementById('s2-age').value    = age;
+  document.getElementById('s2-sexe').value   = sexe;
+  document.getElementById('s2-tel').value    = tel;
+  document.getElementById('s2-resp').value   = resp;
+
+  // Onglet 3 — Parents
+  document.getElementById('s3-nom').value    = nom;
+  document.getElementById('s3-prenom').value = prenom;
+  document.getElementById('s3-ddn').value    = ddn;
+  document.getElementById('s3-age').value    = age;
+  document.getElementById('s3-resp').value   = resp;
+  document.getElementById('s3-lien').value   = lien;
+}
+function getData(){
+  const santeReponses={};
+  QUESTIONS_SANTE.forEach((_,i)=>{
+    const n=i+1;
+    const r=document.querySelector(`input[name="sq${n}"]:checked`);
+    santeReponses[`Q${n}`]=r?r.value:'NON';
+  });
+  return {
+    type:'enfant',saison:'2026-2027',
+    dateEnvoi:new Date().toISOString(),
+    typeDemande:document.querySelector('input[name="type-demande"]:checked')?.value||'',
+    cotisationStatut:document.getElementById('cotisation-statut').value,
+    communicationAcceptee:document.getElementById('comm-accept').checked,
+    telEnfantWA:document.getElementById('comm-tel-enfant').value,
+    fbEnfant:document.getElementById('comm-fb-enfant').value,
+    telParent:document.getElementById('resp-tel').value,
+    fbParent:document.getElementById('comm-fb-parent').value,
+    catAge:document.querySelector('input[name="cat-age"]:checked')?.value||'',
+    niveau:document.querySelector('input[name="niveau"]:checked')?.value||'',
+    objectif:document.getElementById('objectif').value,
+    poids:document.getElementById('poids').value,
+    taille:document.getElementById('taille').value,
+    catPoids:document.getElementById('cat-poids').value,
+    nom:document.getElementById('enfant-nom').value,
+    prenom:document.getElementById('enfant-prenom').value,
+    dateNaissance:getDDN(),
+    age:document.getElementById('enfant-age').value,
+    sexe:document.getElementById('enfant-sexe').value,
+    adresse:document.getElementById('enfant-adresse').value,
+    cp:document.getElementById('enfant-cp').value,
+    ville:document.getElementById('enfant-ville').value,
+    tel:document.getElementById('enfant-tel').value,
+    adresse_email:document.getElementById('enfant-email').value,
+    scolarite:document.getElementById('scolarite').value,
+    nationalite:document.getElementById('nationalite').value,
+    sportCombat:document.querySelector('input[name="combat"]:checked')?.value||'',
+    sportCombatDetail:document.getElementById('combat-detail').value,
+    autreSport:document.querySelector('input[name="autre-sport"]:checked')?.value||'',
+    autreSportDetail:document.getElementById('autre-sport-detail').value,
+    paiement:document.querySelector('input[name="paiement"]:checked')?.value||'',
+    droitImage:document.querySelector('input[name="image"]:checked')?.value||'',
+    respNomComplet:document.getElementById('resp-nom-complet').value,
+    respLien:document.getElementById('resp-lien').value,
+    signature1:document.getElementById('signature-1').value,
+    dateSig1:document.getElementById('date-sig-1').value,
+    santeReponses,
+    s2Taille:document.getElementById('s2-taille').value,
+    s2Poids:document.getElementById('s2-poids').value,
+    s2CatPoids:document.getElementById('s2-cat-poids').value,
+    resultatSante:document.querySelector('input[name="resultat-sante"]:checked')?.value||'',
+    s2Signature:document.getElementById('s2-signature').value,
+    dateSig2:document.getElementById('date-sig-2').value,
+    s3SportAvant:document.getElementById('s3-sport-avant').value,
+    s3Particularites:document.getElementById('s3-particularites').value,
+    s3SanteChronique:document.getElementById('s3-sante-chrono').value,
+    s3Signature:document.getElementById('s3-signature').value,
+    dateSig3:document.getElementById('date-sig-3').value,
+  };
+}
+</script>
+<button class="btn-nav primaire" onclick="
   try {
     var r = validerOnglet0();
     if(r){
+      if(typeof syncChamps==='function') syncChamps();
       var onglets=document.querySelectorAll('.onglet');
       var sections=document.querySelectorAll('.section');
       for(var a=0;a<onglets.length;a++) onglets[a].classList.toggle('actif',a===1);
