@@ -1333,112 +1333,155 @@ function telechargerPDF(){
 }
 
 function genererPDF(m){
-    var { jsPDF } = window.jspdf;
-    var doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
-    var y = 15;
-    var marge = 15;
-    var larg = 180;
+    var jsPDFLib = window.jspdf ? window.jspdf.jsPDF : jsPDF;
+    var doc = new jsPDFLib({orientation:'portrait', unit:'mm', format:'a4'});
+    var y = 0;
+    var marge = 12;
+    var larg = 186;
+    var pair = false;
 
-    // En-tête
-    doc.setFillColor(14, 58, 107);
-    doc.rect(0, 0, 210, 30, 'F');
+    // ===== EN-TÊTE =====
+    doc.setFillColor(10, 40, 90);
+    doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255,255,255);
-    doc.setFontSize(16); doc.setFont('helvetica','bold');
-    doc.text('ADN MUAY-THAÏ 2.0', 105, 12, {align:'center'});
-    doc.setFontSize(10); doc.setFont('helvetica','normal');
-    doc.text('FICHE ADHÉRENT — SAISON 2026/2027', 105, 20, {align:'center'});
-    doc.text('5 Rue de l\'Océan, 97425 Les Avirons | Tél: 0692 37 48 16', 105, 27, {align:'center'});
+    doc.setFontSize(18); doc.setFont('helvetica','bold');
+    doc.text('ADN MUAY-THAÏ 2.0', 105, 13, {align:'center'});
+    doc.setFontSize(9); doc.setFont('helvetica','normal');
+    doc.text('FICHE ADHÉRENT — SAISON 2026/2027', 105, 21, {align:'center'});
+    doc.setFontSize(8);
+    doc.text('5 rue de l\'Océan, Source Marcel 2 — 97425 Les Avirons  |  Tél: 0692 37 48 16  |  accueil@adn-muay-thai.org', 105, 28, {align:'center'});
 
-    y = 38;
+    // Bande dorée
+    doc.setFillColor(220, 160, 20);
+    doc.rect(0, 32, 210, 2, 'F');
+
+    y = 40;
     doc.setTextColor(0,0,0);
 
-    function section(titre){
+    function section(titre, emoji){
+      y += 2;
       doc.setFillColor(23, 99, 192);
-      doc.rect(marge, y, larg, 7, 'F');
+      doc.rect(marge, y, larg, 8, 'F');
+      doc.setFillColor(10, 40, 90);
+      doc.rect(marge, y, 3, 8, 'F');
       doc.setTextColor(255,255,255);
       doc.setFontSize(9); doc.setFont('helvetica','bold');
-      doc.text(titre, marge+2, y+5);
+      doc.text((emoji?emoji+' ':'')+titre, marge+6, y+5.5);
       doc.setTextColor(0,0,0); doc.setFont('helvetica','normal');
-      y += 9;
+      y += 10;
+      pair = false;
+    }
+
+    function champ(label, valeur, x, w, h){
+      h = h || 6;
+      if(y + h > 272){ doc.addPage(); y = 15; pair = false; }
+      // Fond alternant
+      if(pair){ doc.setFillColor(240, 245, 255); doc.rect(x, y, w, h, 'F'); }
+      else { doc.setFillColor(252, 252, 252); doc.rect(x, y, w, h, 'F'); }
+      // Bordure légère
+      doc.setDrawColor(210, 220, 235);
+      doc.rect(x, y, w, h);
+      // Label
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(label, x+2, y+4);
+      // Valeur
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      var txt = String(valeur||'—');
+      var maxW = w - 50;
+      var lines = doc.splitTextToSize(txt, maxW);
+      doc.text(lines, x+48, y+4);
+      return lines.length;
     }
 
     function ligne(label, valeur){
-      if(y > 270){ doc.addPage(); y = 15; }
-      doc.setFontSize(8); doc.setFont('helvetica','bold');
-      doc.text(label+':', marge, y);
-      doc.setFont('helvetica','normal');
-      var texte = String(valeur||'—');
-      var lignes = doc.splitTextToSize(texte, larg - 55);
-      doc.text(lignes, marge+55, y);
-      y += (lignes.length * 5) + 1;
-    }
-
-    function deuxCol(l1,v1,l2,v2){
-      if(y > 270){ doc.addPage(); y = 15; }
-      doc.setFontSize(8); doc.setFont('helvetica','bold');
-      doc.text(l1+':', marge, y);
-      doc.setFont('helvetica','normal');
-      doc.text(String(v1||'—'), marge+40, y);
-      doc.setFont('helvetica','bold');
-      doc.text(l2+':', 115, y);
-      doc.setFont('helvetica','normal');
-      doc.text(String(v2||'—'), 115+35, y);
+      var n = champ(label, valeur, marge, larg, 6);
+      if(n > 1) y += (n-1)*4;
       y += 6;
+      pair = !pair;
     }
 
-    section('IDENTITÉ');
-    deuxCol('N° Adhérent', m.num, 'Date inscription', m.inscrit);
-    deuxCol('Nom', m.nom, 'Prénom', m.prenom);
-    deuxCol('Date de naissance', m.ddn, 'Catégorie', m.cat);
-    ligne('Adresse', m.adresse + (m.cp?' — '+m.cp:'') + (m.ville?' '+m.ville:''));
-    deuxCol('Téléphone', m.tel, 'Email', m.email);
-    deuxCol('Situation', m.situation_pro, 'École/Profession', m.ecole||m.prof);
-    y += 3;
+    function deuxCol(l1, v1, l2, v2){
+      var w = larg/2 - 1;
+      if(y + 6 > 272){ doc.addPage(); y = 15; pair = false; }
+      if(pair){ doc.setFillColor(240,245,255); } else { doc.setFillColor(252,252,252); }
+      doc.rect(marge, y, larg, 6, 'F');
+      doc.setDrawColor(210,220,235);
+      doc.rect(marge, y, larg, 6);
+      // Col 1
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(l1, marge+2, y+4);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      doc.text(String(v1||'—'), marge+40, y+4);
+      // Séparateur
+      doc.setDrawColor(190,205,230);
+      doc.line(marge+w+1, y+1, marge+w+1, y+5);
+      // Col 2
+      doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(l2, marge+w+4, y+4);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      doc.text(String(v2||'—'), marge+w+44, y+4);
+      y += 6;
+      pair = !pair;
+    }
 
-    section('PROFIL SPORTIF');
-    deuxCol('Objectif', m.objectif, 'Niveau', m.niveau);
+    // ===== CONTENU =====
+    section('IDENTITÉ', '👤');
+    deuxCol('N° Adhérent', m.num||'—', 'Date inscription', m.inscrit||'—');
+    deuxCol('Nom', (m.nom||'—').toUpperCase(), 'Prénom', m.prenom||'—');
+    deuxCol('Date de naissance', m.ddn||'—', 'Catégorie', m.cat||'—');
+    deuxCol('Téléphone', m.tel||'—', 'Email', m.email||'—');
+    ligne('Adresse', (m.adresse||'—')+(m.cp?' '+m.cp:'')+(m.ville?' '+m.ville:''));
+    deuxCol('Situation', m.situation_pro||'—', 'École / Profession', m.ecole||m.prof||'—');
+
+    section('PROFIL SPORTIF', '🥊');
+    deuxCol('Type de demande', m.type_demande||'—', 'Niveau visé', m.niveau||'—');
     deuxCol('Poids', m.poids?m.poids+' kg':'—', 'Taille', m.taille?m.taille+' cm':'—');
-    ligne('Créneaux choisis', m.creneaux);
-    deuxCol('Type demande', m.type_demande, 'Équipement', m.equipement);
-    y += 3;
+    ligne('Créneaux choisis', m.creneaux||'—');
+    ligne('Objectif', m.objectif||'—');
+    ligne('Équipement', m.equipement||'—');
 
-    section('MÉDICAL');
-    ligne('Allergies/Asthme', m.allergies);
-    ligne('Kinésithérapie', m.kine + (m.kine_det?' – '+m.kine_det:''));
-    ligne('Compétition box', m.compet + (m.palmares?' – '+m.palmares:''));
-    ligne('Autre sport', m.autresport + (m.autresport_det?' – '+m.autresport_det:''));
-    y += 3;
+    section('ANTÉCÉDENTS MÉDICAUX', '⚕️');
+    ligne('Allergies / Asthme', m.allergies||'Aucune déclarée');
+    ligne('Kinésithérapie', m.kine+(m.kine_det?' – '+m.kine_det:''));
+    ligne('Compétition boxe', m.compet+(m.palmares?' – Palmarès: '+m.palmares:''));
+    ligne('Autre sport pratiqué', m.autresport+(m.autresport_det?' – '+m.autresport_det:''));
 
-    section('COMMUNICATION & PAIEMENT');
-    deuxCol('WhatsApp boxeur', m.wabox, 'Messenger', m.msbox);
-    deuxCol('WhatsApp famille', m.wafam, 'Messenger fam.', m.msfam);
-    deuxCol('Paiement', m.paiement, 'Montant', m.montant+'€');
-    deuxCol('Droit image', m.droit_image, 'Tuteur (mineur)', m.tuteur||'—');
-    y += 3;
+    section('COMMUNICATION & PAIEMENT', '💬');
+    deuxCol('WhatsApp (boxeur)', m.wabox||'—', 'Messenger (boxeur)', m.msbox||'—');
+    deuxCol('WhatsApp (famille)', m.wafam||'—', 'Messenger (famille)', m.msfam||'—');
+    deuxCol('Mode de paiement', m.paiement||'—', 'Montant cotisation', (m.montant||'200')+' €');
+    deuxCol('Droit à l\'image', m.droit_image||'—', 'Tuteur (si mineur)', m.tuteur||'—');
 
-    section('DOCUMENTS & SIGNATURE');
-    deuxCol('Photo ID fournie', m.doc_photo, 'Certificat médical', m.doc_certif);
-    ligne('Fait à / le', (m.fait_a||'—') + '  —  ' + (m.fait_le||'—'));
-    y += 5;
+    section('DOCUMENTS & SIGNATURE', '✍️');
+    deuxCol('Photo d\'identité', m.doc_photo||'—', 'Certificat médical', m.doc_certif||'—');
+    deuxCol('Fait à', m.fait_a||'—', 'Le', m.fait_le||'—');
 
-    // Signature numérique
-    if(m.signature && m.signature.startsWith('data:image')){
-      try {
-        doc.setFontSize(8); doc.setFont('helvetica','bold');
-        doc.text('Signature numérique :', marge, y); y += 3;
-        doc.addImage(m.signature, 'PNG', marge, y, 60, 20);
-        y += 23;
-      } catch(e){}
+    // Signature
+    y += 4;
+    if(y > 250){ doc.addPage(); y = 15; }
+    doc.setFillColor(245, 248, 255);
+    doc.rect(marge, y, larg, 20, 'F');
+    doc.setDrawColor(23,99,192);
+    doc.rect(marge, y, larg, 20);
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(23,99,192);
+    doc.text('Signature numérique (nom et prénom) :', marge+3, y+5);
+    doc.setFont('helvetica','italic'); doc.setFontSize(11); doc.setTextColor(0,0,0);
+    doc.text(m.signature||'—', marge+3, y+14);
+
+    // ===== PIED DE PAGE =====
+    var totalPages = doc.internal.getNumberOfPages();
+    for(var p=1; p<=totalPages; p++){
+      doc.setPage(p);
+      doc.setFillColor(10,40,90);
+      doc.rect(0,286,210,12,'F');
+      doc.setFillColor(220,160,20);
+      doc.rect(0,286,210,1.5,'F');
+      doc.setTextColor(255,255,255); doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text('ADN MUAY-THAÏ 2.0  —  SIREN 995 347 135  —  RNA W9R2011553  —  accueil@adn-muay-thai.org', 105, 291, {align:'center'});
+      doc.text('Page '+p+'/'+totalPages, 105, 295, {align:'center'});
     }
 
-    // Pied de page
-    doc.setFillColor(14, 58, 107);
-    doc.rect(0, 287, 210, 10, 'F');
-    doc.setTextColor(255,255,255);
-    doc.setFontSize(7);
-    doc.text('ADN MUAY-THAÏ 2.0 — SIREN 995 347 135 — RNA W9R2011553 — accueil@adn-muay-thai.org', 105, 293, {align:'center'});
-
-    doc.save('ADN_Inscription_' + m.nom + '_' + m.prenom + '.pdf');
+    doc.save('ADN_Inscription_'+(m.nom||'adherent')+'_'+(m.prenom||'')+'.pdf');
   }
 window.genererPDF = genererPDF;
 window.construireMembre = construireMembre;

@@ -1820,105 +1820,145 @@ function getData(){
    GÉNÉRATION PDF
    ============================================================ */
 function genererPDFEnfant(d){
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
-  let y = 15;
-  const marge = 15;
-  const larg = 180;
+    var jsPDFLib = window.jspdf ? window.jspdf.jsPDF : jsPDF;
+    var doc = new jsPDFLib({orientation:'portrait', unit:'mm', format:'a4'});
+    var y = 0;
+    var marge = 12;
+    var larg = 186;
+    var pair = false;
 
-  // En-tête
-  doc.setFillColor(14, 58, 107);
-  doc.rect(0, 0, 210, 30, 'F');
-  doc.setTextColor(255,255,255);
-  doc.setFontSize(16); doc.setFont('helvetica','bold');
-  doc.text('ADN MUAY-THAÏ 2.0', 105, 12, {align:'center'});
-  doc.setFontSize(10); doc.setFont('helvetica','normal');
-  doc.text('DOSSIER INSCRIPTION ENFANT/JEUNE — SAISON 2026/2027', 105, 20, {align:'center'});
-  doc.text('5 Rue de l\'Océan, 97425 Les Avirons | Tél: 0692 37 48 16', 105, 27, {align:'center'});
-
-  y = 38;
-  doc.setTextColor(0,0,0);
-
-  function section(titre){
-    doc.setFillColor(23, 99, 192);
-    doc.rect(marge, y, larg, 7, 'F');
+    // ===== EN-TÊTE =====
+    doc.setFillColor(10, 40, 90);
+    doc.rect(0, 0, 210, 32, 'F');
     doc.setTextColor(255,255,255);
-    doc.setFontSize(9); doc.setFont('helvetica','bold');
-    doc.text(titre, marge+2, y+5);
-    doc.setTextColor(0,0,0); doc.setFont('helvetica','normal');
-    y += 9;
+    doc.setFontSize(18); doc.setFont('helvetica','bold');
+    doc.text('ADN MUAY-THAÏ 2.0', 105, 13, {align:'center'});
+    doc.setFontSize(9); doc.setFont('helvetica','normal');
+    doc.text('FICHE INSCRIPTION ENFANT — SAISON 2026/2027', 105, 21, {align:'center'});
+    doc.setFontSize(8);
+    doc.text('5 rue de l\'Océan, Source Marcel 2 — 97425 Les Avirons  |  Tél: 0692 37 48 16  |  accueil@adn-muay-thai.org', 105, 28, {align:'center'});
+    doc.setFillColor(220, 160, 20);
+    doc.rect(0, 32, 210, 2, 'F');
+
+    y = 40;
+    doc.setTextColor(0,0,0);
+
+    function section(titre){
+      y += 2;
+      doc.setFillColor(23, 99, 192);
+      doc.rect(marge, y, larg, 8, 'F');
+      doc.setFillColor(10, 40, 90);
+      doc.rect(marge, y, 3, 8, 'F');
+      doc.setTextColor(255,255,255);
+      doc.setFontSize(9); doc.setFont('helvetica','bold');
+      doc.text(titre, marge+6, y+5.5);
+      doc.setTextColor(0,0,0); doc.setFont('helvetica','normal');
+      y += 10; pair = false;
+    }
+
+    function ligne(label, valeur){
+      if(y + 6 > 272){ doc.addPage(); y = 15; pair = false; }
+      if(pair){ doc.setFillColor(240,245,255); } else { doc.setFillColor(252,252,252); }
+      doc.rect(marge, y, larg, 6, 'F');
+      doc.setDrawColor(210,220,235); doc.rect(marge, y, larg, 6);
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(label, marge+2, y+4);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      var txt = String(valeur||'—');
+      var lines = doc.splitTextToSize(txt, larg-52);
+      doc.text(lines, marge+50, y+4);
+      if(lines.length > 1) y += (lines.length-1)*4;
+      y += 6; pair = !pair;
+    }
+
+    function deuxCol(l1,v1,l2,v2){
+      if(y + 6 > 272){ doc.addPage(); y = 15; pair = false; }
+      var w = larg/2 - 1;
+      if(pair){ doc.setFillColor(240,245,255); } else { doc.setFillColor(252,252,252); }
+      doc.rect(marge, y, larg, 6, 'F');
+      doc.setDrawColor(210,220,235); doc.rect(marge, y, larg, 6);
+      doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(l1, marge+2, y+4);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      doc.text(String(v1||'—'), marge+40, y+4);
+      doc.setDrawColor(190,205,230); doc.line(marge+w+1, y+1, marge+w+1, y+5);
+      doc.setFont('helvetica','bold'); doc.setTextColor(60,80,120);
+      doc.text(l2, marge+w+4, y+4);
+      doc.setFont('helvetica','normal'); doc.setTextColor(0,0,0);
+      doc.text(String(v2||'—'), marge+w+44, y+4);
+      y += 6; pair = !pair;
+    }
+
+    // Santé questions
+    var santeObj = {};
+    try { santeObj = typeof d.santeReponses === 'string' ? JSON.parse(d.santeReponses) : (d.santeReponses||{}); } catch(e){}
+
+    // ===== CONTENU =====
+    section('📋 INSCRIPTION');
+    deuxCol('N° Adhérent', d.num||document.getElementById(\'display-num\')?document.getElementById(\'display-num\').textContent:\'—\', 'Date', new Date().toLocaleDateString(\'fr-FR\'));
+    deuxCol('Type de demande', d.typeDemande||'—', 'Cotisation', d.cotisationStatut||'—');
+
+    section('👤 ÉTAT CIVIL ENFANT');
+    deuxCol('Nom', (d.nom||'—').toUpperCase(), 'Prénom', d.prenom||'—');
+    deuxCol('Date de naissance', d.dateNaissance||'—', 'Âge', d.age||'—');
+    deuxCol('Sexe', d.sexe||'—', 'Nationalité', d.nationalite||'—');
+    ligne('Adresse', (d.adresse||'—')+(d.cp?' '+d.cp:'')+(d.ville?' '+d.ville:''));
+    deuxCol('Téléphone enfant (WA)', d.telEnfantWA||'—', 'Messenger enfant', d.fbEnfant||'—');
+    deuxCol('Téléphone parent (WA)', d.telParent||'—', 'Messenger parent', d.fbParent||'—');
+    ligne('Email', d.email||'—');
+    ligne('Scolarité', d.scolarite||'—');
+
+    section('🥊 PROFIL SPORTIF');
+    deuxCol('Catégorie âge', d.catAge||'—', 'Niveau visé', d.niveau||'—');
+    deuxCol('Poids', d.poids?d.poids+' kg':'—', 'Taille', d.taille?d.taille+' cm':'—');
+    ligne('Objectif', d.objectif||'—');
+    deuxCol('Sport de combat', d.sportCombat||'—', 'Détail', d.sportCombatDetail||'—');
+    deuxCol('Autre sport', d.autreSport||'—', 'Détail', d.autreSportDetail||'—');
+
+    section('⚕️ QUESTIONNAIRE SANTÉ AFMT');
+    ligne('Résultat questionnaire', d.resultatSante||'—');
+    var santeKeys = Object.keys(santeObj);
+    if(santeKeys.length > 0){
+      santeKeys.forEach(function(k){
+        ligne(k, santeObj[k]);
+      });
+    }
+    ligne('Sport pratiqué avant', d.s3SportAvant||'—');
+    ligne('Particularités', d.s3Particularites||'—');
+    ligne('Santé chronique', d.s3SanteChronique||'—');
+
+    section('💳 PAIEMENT & DROITS');
+    deuxCol('Mode de paiement', d.paiement||'—', 'Droit à l\'image', d.droitImage||'—');
+
+    section('👨‍👩‍👧 RESPONSABLE LÉGAL');
+    deuxCol('Nom & Prénom', d.respNomComplet||'—', 'Lien', d.respLien||'—');
+
+    section('✍️ SIGNATURES');
+    y += 2;
+    // Signature 1
+    doc.setFillColor(245,248,255); doc.rect(marge, y, larg, 16, 'F');
+    doc.setDrawColor(23,99,192); doc.rect(marge, y, larg, 16);
+    doc.setFontSize(7.5); doc.setFont('helvetica','bold'); doc.setTextColor(23,99,192);
+    doc.text('Signature :', marge+3, y+5);
+    doc.setFont('helvetica','italic'); doc.setFontSize(10); doc.setTextColor(0,0,0);
+    doc.text(d.signature1||'—', marge+3, y+12);
+    doc.setFontSize(7.5); doc.setFont('helvetica','normal'); doc.setTextColor(100,100,100);
+    doc.text('Le: '+(d.dateSig1||'—'), marge+larg-30, y+12);
+    y += 18;
+
+    // ===== PIED DE PAGE =====
+    var totalPages = doc.internal.getNumberOfPages();
+    for(var p=1; p<=totalPages; p++){
+      doc.setPage(p);
+      doc.setFillColor(10,40,90); doc.rect(0,286,210,12,'F');
+      doc.setFillColor(220,160,20); doc.rect(0,286,210,1.5,'F');
+      doc.setTextColor(255,255,255); doc.setFontSize(7); doc.setFont('helvetica','normal');
+      doc.text('ADN MUAY-THAÏ 2.0  —  SIREN 995 347 135  —  RNA W9R2011553  —  accueil@adn-muay-thai.org', 105, 291, {align:'center'});
+      doc.text('Page '+p+'/'+totalPages, 105, 295, {align:'center'});
+    }
+
+    doc.save('ADN_Inscription_Enfant_'+(d.nom||'enfant')+'_'+(d.prenom||'')+'.pdf');
   }
-
-  function ligne(label, valeur){
-    if(y > 270){ doc.addPage(); y = 15; }
-    doc.setFontSize(8); doc.setFont('helvetica','bold');
-    doc.text(label+':', marge, y);
-    doc.setFont('helvetica','normal');
-    const texte = String(valeur||'—');
-    const lignes = doc.splitTextToSize(texte, larg - 55);
-    doc.text(lignes, marge+55, y);
-    y += (lignes.length * 5) + 1;
-  }
-
-  function deuxCol(l1,v1,l2,v2){
-    if(y > 270){ doc.addPage(); y = 15; }
-    doc.setFontSize(8); doc.setFont('helvetica','bold');
-    doc.text(l1+':', marge, y);
-    doc.setFont('helvetica','normal');
-    doc.text(String(v1||'—'), marge+40, y);
-    doc.setFont('helvetica','bold');
-    doc.text(l2+':', 115, y);
-    doc.setFont('helvetica','normal');
-    doc.text(String(v2||'—'), 115+35, y);
-    y += 6;
-  }
-
-  section('ONGLET 1 — INSCRIPTION');
-  deuxCol('Type demande', d.typeDemande, 'Cotisation', d.cotisationStatut);
-  deuxCol('Catégorie âge', d.catAge, 'Niveau', d.niveau);
-  ligne('Objectif', d.objectif);
-  deuxCol('Poids', d.poids?d.poids+' kg':'—', 'Taille', d.taille?d.taille+' cm':'—');
-  section('IDENTITÉ ENFANT');
-  deuxCol('Nom', d.nom, 'Prénom', d.prenom);
-  deuxCol('Date naissance', d.dateNaissance, 'Âge', d.age);
-  deuxCol('Sexe', d.sexe, 'Nationalité', d.nationalite);
-  ligne('Adresse', (d.adresse||'—') + ' — ' + (d.cp||'') + ' ' + (d.ville||''));
-  deuxCol('Téléphone', d.tel, 'Email', d.email);
-  ligne('Scolarité', d.scolarite);
-  section('RESPONSABLE LÉGAL');
-  deuxCol('Nom complet', d.respNomComplet, 'Lien', d.respLien);
-  deuxCol('Tél parent', d.telParent, 'WhatsApp enfant', d.telEnfantWA);
-  deuxCol('FB enfant', d.fbEnfant||'—', 'FB parent', d.fbParent||'—');
-  section('SPORTS & ANTÉCÉDENTS');
-  deuxCol('Sport combat', d.sportCombat, 'Autre sport', d.autreSport);
-  ligne('Détail sport combat', d.sportCombatDetail);
-  ligne('Détail autre sport', d.autreSportDetail);
-  section('PAIEMENT & DROITS');
-  deuxCol('Mode paiement', d.paiement, 'Droit image', d.droitImage);
-  section('ONGLET 2 — QUESTIONNAIRE SANTÉ');
-  if(d.santeReponses){
-    const qs = d.santeReponses;
-    Object.keys(qs).forEach(function(k){ ligne(k, qs[k]); });
-  }
-  deuxCol('Résultat santé', d.resultatSante, 'Signature parent (O2)', d.s2Signature||'—');
-  section('ONGLET 3 — QUESTIONNAIRE PARENTS');
-  ligne('Sport pratiqué avant', d.s3SportAvant);
-  ligne('Particularités', d.s3Particularites);
-  ligne('Santé chronique', d.s3SanteChronique);
-  y += 3;
-  ligne('Signature onglet 1', d.signature1 ? '✓ Signé le ' + d.dateSig1 : '—');
-  ligne('Signature onglet 2', d.s2Signature ? '✓ Signé le ' + d.dateSig2 : '—');
-  ligne('Signature onglet 3', d.s3Signature ? '✓ Signé le ' + d.dateSig3 : '—');
-
-  // Pied de page
-  doc.setFillColor(14, 58, 107);
-  doc.rect(0, 287, 210, 10, 'F');
-  doc.setTextColor(255,255,255);
-  doc.setFontSize(7);
-  doc.text('ADN MUAY-THAÏ 2.0 — SIREN 995 347 135 — RNA W9R2011553 — accueil@adn-muay-thai.org', 105, 293, {align:'center'});
-
-  doc.save('ADN_Dossier_Enfant_' + d.nom + '_' + d.prenom + '.pdf');
-}
 window.genererPDFEnfant = genererPDFEnfant;
 window.getData = getData;
 
