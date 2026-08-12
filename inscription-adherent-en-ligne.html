@@ -1275,7 +1275,67 @@ function submitForm(){
 
 
   // ── GÉNÉRATION PDF ──────────────────────────────────────────────
-  function genererPDF(m){
+  function construireMembre(){
+  function v(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
+  function vc(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
+  var j=v('f_j'), m=v('f_m'), a=v('f_a');
+  var ddn=a&&m&&j?(a+'-'+m.replace(/^0/,'')+'-'+j.replace(/^0/,'')):'';
+  var num=document.getElementById('display-num')?document.getElementById('display-num').textContent:'';
+  return {
+    num: num,
+    nom: v('f_nom'),
+    prenom: v('f_prenom'),
+    ddn: ddn,
+    cat: vc('f_cat'),
+    tel: v('f_tel'),
+    email: v('f_email'),
+    adresse: v('f_adresse'),
+    cp: v('f_cp'),
+    ville: v('f_ville'),
+    situation_pro: vc('f_sitpro'),
+    prof: v('f_prof'),
+    ecole: v('f_ecole'),
+    objectif: v('f_objectif'),
+    poids: v('f_poids'),
+    taille: v('f_taille'),
+    niveau: vc('f_niv'),
+    creneaux: Array.from(document.querySelectorAll('.f_cren:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', '),
+    type_demande: vc('f_type'),
+    equipement: v('f_equip'),
+    allergies: v('f_allergies'),
+    kine: vc('f_kine'),
+    kine_det: v('f_kine_det'),
+    compet: vc('f_compet'),
+    palmares: v('f_palmares'),
+    autresport: vc('f_autresport'),
+    autresport_det: v('f_autresport_det'),
+    wabox: v('f_wabox'),
+    msbox: v('f_msbox'),
+    wafam: v('f_wafam'),
+    msfam: v('f_msfam'),
+    paiement: vc('f_pay'),
+    montant: v('f_montant')||'200',
+    droit_image: vc('f_image'),
+    tuteur: v('f_tuteur'),
+    doc_photo: v('f_doc_photo'),
+    doc_certif: v('f_doc_certif'),
+    fait_a: v('f_fait_a'),
+    fait_le: v('f_fait_le'),
+    inscrit: new Date().toISOString().split('T')[0],
+    source: 'espace_adherent'
+  };
+}
+function telechargerPDF(){
+  try{
+    // Récupérer toutes les données du membre comme lors de l'envoi
+    var membre = construireMembre();
+    genererPDF(membre);
+  } catch(e) {
+    alert('Erreur PDF : ' + e.message);
+  }
+}
+
+function genererPDF(m){
     var { jsPDF } = window.jspdf;
     var doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
     var y = 15;
@@ -1442,65 +1502,6 @@ function submitForm(){
     btn.textContent='✅ Valider mon inscription';
     alert('ERREUR TECHNIQUE: ' + err.name + ' - ' + err.message);
   });
-}
-function telechargerPDF(){
-  try{
-    // Récupérer toutes les données du membre comme lors de l'envoi
-    var membre = construireMembre();
-    genererPDF(membre);
-  } catch(e) {
-    alert('Erreur PDF : ' + e.message);
-  }
-}
-function construireMembre(){
-  function v(id){ var el=document.getElementById(id); return el?el.value.trim():''; }
-  function vc(name){ var el=document.querySelector('input[name="'+name+'"]:checked'); return el?el.value:''; }
-  var j=v('f_j'), m=v('f_m'), a=v('f_a');
-  var ddn=a&&m&&j?(a+'-'+m.replace(/^0/,'')+'-'+j.replace(/^0/,'')):'';
-  var num=document.getElementById('display-num')?document.getElementById('display-num').textContent:'';
-  return {
-    num: num,
-    nom: v('f_nom'),
-    prenom: v('f_prenom'),
-    ddn: ddn,
-    cat: vc('f_cat'),
-    tel: v('f_tel'),
-    email: v('f_email'),
-    adresse: v('f_adresse'),
-    cp: v('f_cp'),
-    ville: v('f_ville'),
-    situation_pro: vc('f_sitpro'),
-    prof: v('f_prof'),
-    ecole: v('f_ecole'),
-    objectif: v('f_objectif'),
-    poids: v('f_poids'),
-    taille: v('f_taille'),
-    niveau: vc('f_niv'),
-    creneaux: Array.from(document.querySelectorAll('.f_cren:checked')).map(function(e){return e.parentElement.textContent.trim();}).join(', '),
-    type_demande: vc('f_type'),
-    equipement: v('f_equip'),
-    allergies: v('f_allergies'),
-    kine: vc('f_kine'),
-    kine_det: v('f_kine_det'),
-    compet: vc('f_compet'),
-    palmares: v('f_palmares'),
-    autresport: vc('f_autresport'),
-    autresport_det: v('f_autresport_det'),
-    wabox: v('f_wabox'),
-    msbox: v('f_msbox'),
-    wafam: v('f_wafam'),
-    msfam: v('f_msfam'),
-    paiement: vc('f_pay'),
-    montant: v('f_montant')||'200',
-    droit_image: vc('f_image'),
-    tuteur: v('f_tuteur'),
-    doc_photo: v('f_doc_photo'),
-    doc_certif: v('f_doc_certif'),
-    fait_a: v('f_fait_a'),
-    fait_le: v('f_fait_le'),
-    inscrit: new Date().toISOString().split('T')[0],
-    source: 'espace_adherent'
-  };
 }
 function envoyerMailClub(){
   var nom = document.getElementById('f_nom') ? document.getElementById('f_nom').value : '';
