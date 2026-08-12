@@ -991,7 +991,36 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
           <label>Prénom <span class="req">*</span></label>
           <input type="text" id="enfant-prenom" placeholder="Prénom" oninput="genererNumAdherent();syncChamps()">
         </div>
-        <div class="champ gc">
+        <script>
+function genererNumAdherent(){
+  var j = document.getElementById('ddn-j').value;
+  var m = document.getElementById('ddn-m').value;
+  var a = document.getElementById('ddn-a').value;
+  var nom = document.getElementById('enfant-nom').value.trim();
+  var prenom = document.getElementById('enfant-prenom').value.trim();
+  if(!j || !m || !a) return;
+  var initiales = '';
+  if(nom) initiales += nom.charAt(0).toUpperCase();
+  if(prenom) initiales += prenom.charAt(0).toUpperCase();
+  var num = j + '/' + m + '/' + a + (initiales ? '-' + initiales : '');
+  document.getElementById('num-adherent').value = num;
+}
+function calculerAge(){
+  const j=document.getElementById('ddn-j').value;
+  const m=document.getElementById('ddn-m').value;
+  const a=document.getElementById('ddn-a').value;
+  if(!j||!m||!a) return;
+  const naissance=new Date(a,m-1,j);
+  const auj=new Date();
+  let age=auj.getFullYear()-naissance.getFullYear();
+  const dm=auj.getMonth()-naissance.getMonth();
+  if(dm<0||(dm===0&&auj.getDate()<naissance.getDate())) age--;
+  document.getElementById('enfant-age').value=age+' ans';
+  genererNumAdherent();
+  syncChamps();
+}
+</script>
+<div class="champ gc">
           <label>Date de naissance <span class="req">*</span></label>
           <div class="date-trio">
             <select id="ddn-j" onchange="calculerAge();genererNumAdherent();syncChamps()">
@@ -1187,7 +1216,36 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
           <label>Prénom</label>
           <input type="text" id="s2-prenom" readonly class="auto" placeholder="Automatique">
         </div>
-        <div class="champ">
+        <script>
+function genererNumAdherent(){
+  var j = document.getElementById('ddn-j').value;
+  var m = document.getElementById('ddn-m').value;
+  var a = document.getElementById('ddn-a').value;
+  var nom = document.getElementById('enfant-nom').value.trim();
+  var prenom = document.getElementById('enfant-prenom').value.trim();
+  if(!j || !m || !a) return;
+  var initiales = '';
+  if(nom) initiales += nom.charAt(0).toUpperCase();
+  if(prenom) initiales += prenom.charAt(0).toUpperCase();
+  var num = j + '/' + m + '/' + a + (initiales ? '-' + initiales : '');
+  document.getElementById('num-adherent').value = num;
+}
+function calculerAge(){
+  const j=document.getElementById('ddn-j').value;
+  const m=document.getElementById('ddn-m').value;
+  const a=document.getElementById('ddn-a').value;
+  if(!j||!m||!a) return;
+  const naissance=new Date(a,m-1,j);
+  const auj=new Date();
+  let age=auj.getFullYear()-naissance.getFullYear();
+  const dm=auj.getMonth()-naissance.getMonth();
+  if(dm<0||(dm===0&&auj.getDate()<naissance.getDate())) age--;
+  document.getElementById('enfant-age').value=age+' ans';
+  genererNumAdherent();
+  syncChamps();
+}
+</script>
+<div class="champ">
           <label>Date de naissance</label>
           <input type="text" id="s2-ddn" readonly class="auto" placeholder="Automatique">
         </div>
