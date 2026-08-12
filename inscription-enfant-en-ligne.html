@@ -846,951 +846,8 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     <span>✉️ accueil@adn-muay-thai.org</span>
   </div>
 
-  <script>
-function allerOngletProtege(i){
-  if(i >= 1){
-    if(!validerOnglet0()) return false;
-  }
-  allerOnglet(i);
-  return true;
-}
-function validerOnglet0(){
-  var erreurs = [];
-  if(!document.querySelector('input[name="type-demande"]:checked'))
-    erreurs.push("Type de demande");
-  if(!document.querySelector('input[name="cat-age"]:checked'))
-    erreurs.push("Catégorie d'âge");
-  if(!document.querySelector('input[name="niveau"]:checked'))
-    erreurs.push("Niveau visé");
-  if(!document.getElementById('enfant-nom').value.trim())
-    erreurs.push("Nom de famille");
-  if(!document.getElementById('enfant-prenom').value.trim())
-    erreurs.push("Prénom");
-  if(!document.getElementById('ddn-j').value || !document.getElementById('ddn-m').value || !document.getElementById('ddn-a').value)
-    erreurs.push("Date de naissance");
-  if(!document.getElementById('enfant-adresse').value.trim())
-    erreurs.push("Adresse postale");
-  if(!document.querySelector('input[name="paiement"]:checked'))
-    erreurs.push("Moyen de paiement");
-  if(!document.querySelector('input[name="image"]:checked'))
-    erreurs.push("Droit à l'image");
-  if(!document.getElementById('resp-nom-complet').value.trim())
-    erreurs.push("Nom du responsable légal");
-  var emailEnf = document.getElementById('enfant-email').value.trim();
-  if(!emailEnf){
-    erreurs.push("Email obligatoire");
-  } else if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(emailEnf)){
-    erreurs.push("Email invalide (ex: nom@exemple.com)");
-  }
-  if(!document.getElementById('signature-1').value.trim())
-    erreurs.push("Signature numérique");
-  if(erreurs.length > 0){
-    alert('⚠️ Champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
-    return false;
-  }
-  return true;
-}
-function allerOngletProtege(i){
-  if(i >= 1){
-    if(!validerOnglet0()) return false;
-  }
-  allerOnglet(i);
-  return true;
-}
-</script>
+  
 <!-- ===== ONGLETS ===== -->
-  <div class="onglets">
-    <button class="onglet actif" onclick="allerOnglet(0)" id="ong-0">
-      <span class="ico">📋</span>Inscription
-    </button>
-    <button class="onglet" onclick="allerOngletProtege(1)" id="ong-1">
-      <span class="ico">🏥</span>Santé AFMT
-    </button>
-    <button class="onglet" onclick="allerOngletProtege(2)" id="ong-2">
-      <span class="ico">👨‍👩‍👧</span>Parents &amp; Enfant
-    </button>
-  </div>
-
-  <!-- ================================================================
-       ONGLET 1 — INSCRIPTION
-       ================================================================ -->
-  <div class="section actif" id="tab-0">
-
-    <div class="carte">
-      <div class="carte-titre">🏛 A — Cadre réservé à l'association</div>
-      <div class="champ" style="margin-bottom:12px;">
-        <label>N° Adhérent <span style="font-size:0.8em;color:#888;">(généré automatiquement)</span></label>
-        <input type="text" id="num-adherent" readonly style="background:#f0f4ff;color:#1a3a6b;font-weight:bold;font-size:1.05em;letter-spacing:1px;" placeholder="JJ/MM/AAAA-Initiales">
-      </div>
-      <div class="g2">
-        <div class="champ">
-          <label>Type de demande <span class="req">*</span></label>
-          <div class="radio-groupe horizontal">
-            <label class="radio-opt"><input type="radio" name="type-demande" value="Nouvelle inscription" checked> Nouvelle inscription</label>
-            <label class="radio-opt"><input type="radio" name="type-demande" value="Renouvellement"> Renouvellement</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Cotisation</label>
-          <select id="cotisation-statut">
-            <option value="— Sans cotisation —">— Sans cotisation —</option>
-            <option value="⚠️ En attente">⚠️ En attente</option>
-            <option value="✅ Réglée">✅ Réglée</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">📱 1 — Communication interne (obligatoire)</div>
-      <div class="note-carte">L'adhésion implique l'intégration aux groupes WhatsApp et Messenger du club.</div>
-      <div class="champ" style="margin-bottom:14px">
-        <label class="check-opt">
-          <input type="checkbox" id="comm-accept">
-          J'accepte d'être intégré(e) aux groupes WhatsApp et Messenger du club (Conformité RGPD)
-        </label>
-      </div>
-      <div class="g2">
-        <div class="champ">
-          <label>N° téléphone boxeur (WhatsApp)</label>
-          <input type="tel" id="comm-tel-enfant" placeholder="0692 00 00 00" oninput="syncChamps()">
-        </div>
-        <div class="champ">
-          <label>Profil Facebook/Messenger boxeur</label>
-          <input type="text" id="comm-fb-enfant" placeholder="Nom du profil">
-        </div>
-        <div class="champ">
-          <label>N° téléphone parent/représentant</label>
-          <input type="tel" id="resp-tel" placeholder="0692 00 00 00" oninput="syncChamps()">
-        </div>
-        <div class="champ">
-          <label>Profil Facebook/Messenger parent</label>
-          <input type="text" id="comm-fb-parent" placeholder="Nom du profil">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">📅 2 — Créneaux horaires &amp; lieu d'entraînement</div>
-      <div class="note-carte">Gymnase des Avirons — Cochez la ou les sections souhaitées :</div>
-      <div class="check-groupe">
-        <label class="check-opt"><input type="checkbox" value="Vendredi 18h00–19h00 — Section Jeunes (dès 8 ans)"> Vendredi 18h00–19h00 — Section Jeunes (dès 8 ans)</label>
-        <label class="check-opt"><input type="checkbox" value="Lundi 19h00–21h00 — Débutants &amp; Compétiteurs"> Lundi 19h00–21h00 — Débutants &amp; Compétiteurs</label>
-        <label class="check-opt"><input type="checkbox" value="Mercredi 20h00–21h30 — Cours spécial compétiteur"> Mercredi 20h00–21h30 — Cours spécial compétiteur (validation coach requise)</label>
-        <label class="check-opt"><input type="checkbox" value="Vendredi 19h00–21h00 — Débutants &amp; Compétiteurs"> Vendredi 19h00–21h00 — Débutants &amp; Compétiteurs</label>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🥊 3 — Équipements individuels requis</div>
-      <div class="note-carte">
-        <strong>Obligatoire pour TOUS :</strong> short de boxe-thaï, protège-dents, coudières, protège-tibias.<br>
-        Compétiteurs : casque homologué, genouillères, chevillères.
-      </div>
-      <div class="check-groupe">
-        <label class="check-opt"><input type="checkbox" value="Dispose de tout l'équipement"> Je dispose déjà de la totalité de mes équipements conformes</label>
-        <label class="check-opt"><input type="checkbox" value="Équipement partiel — commande groupée partielle"> J'ai une partie de mon équipement et souhaite compléter via la commande groupée</label>
-        <label class="check-opt"><input type="checkbox" value="Commande groupée complète"> Je souhaite être intégré(e) à la commande groupée complète du club</label>
-      </div>
-      <div class="champ" style="margin-top:12px">
-        <label>Précisez ce qu'il vous manque</label>
-        <input type="text" id="equip-manque" placeholder="Ex : protège-dents, protège-tibias...">
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🎯 4 — Profil athlétique &amp; objectifs</div>
-      <div class="g2">
-        <div class="champ">
-          <label>Catégorie d'âge <span class="req">*</span></label>
-          <div class="radio-groupe">
-            <label class="radio-opt"><input type="radio" name="cat-age" value="Enfant (8–11 ans)"> Enfant (8–11 ans)</label>
-            <label class="radio-opt"><input type="radio" name="cat-age" value="Ado (12–17 ans)"> Ado (12–17 ans)</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Niveau visé <span class="req">*</span></label>
-          <div class="radio-groupe">
-            <label class="radio-opt"><input type="radio" name="niveau" value="Pratique loisir / Entretien de la forme"> Pratique loisir / Entretien de la forme</label>
-            <label class="radio-opt"><input type="radio" name="niveau" value="Championnat de la Réunion (Assaut / Combat)"> Championnat de la Réunion (Assaut / Combat)</label>
-            <label class="radio-opt"><input type="radio" name="niveau" value="Niveau international / Stages extérieurs"> Niveau international / Stages extérieurs (Maurice, Thaïlande)</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Objectif sportif pour la saison</label>
-          <input type="text" id="objectif" placeholder="Ex : progresser, passer une compétition...">
-        </div>
-        <div class="champ">
-          <label>Poids actuel (kg)</label>
-          <input type="number" id="poids" placeholder="Ex : 35">
-        </div>
-        <div class="champ">
-          <label>Taille (cm)</label>
-          <input type="number" id="taille" placeholder="Ex : 140">
-        </div>
-        <div class="champ">
-          <label>Catégorie de poids</label>
-          <input type="text" id="cat-poids" placeholder="Ex : -35 kg">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">👤 5 — État civil &amp; coordonnées</div>
-      <div class="g2">
-        <div class="champ">
-          <label>Nom de famille <span class="req">*</span></label>
-          <input type="text" id="enfant-nom" placeholder="NOM" oninput="genererNumAdherent();syncChamps()" style="text-transform:uppercase">
-        </div>
-        <div class="champ">
-          <label>Prénom <span class="req">*</span></label>
-          <input type="text" id="enfant-prenom" placeholder="Prénom" oninput="genererNumAdherent();syncChamps()">
-        </div>
-        <script>
-function genererNumAdherent(){
-  var j = document.getElementById('ddn-j').value;
-  var m = document.getElementById('ddn-m').value;
-  var a = document.getElementById('ddn-a').value;
-  var nom = document.getElementById('enfant-nom').value.trim();
-  var prenom = document.getElementById('enfant-prenom').value.trim();
-  if(!j || !m || !a) return;
-  var initiales = '';
-  if(nom) initiales += nom.charAt(0).toUpperCase();
-  if(prenom) initiales += prenom.charAt(0).toUpperCase();
-  var num = j + '/' + m + '/' + a + (initiales ? '-' + initiales : '');
-  document.getElementById('num-adherent').value = num;
-}
-function calculerAge(){
-  const j=document.getElementById('ddn-j').value;
-  const m=document.getElementById('ddn-m').value;
-  const a=document.getElementById('ddn-a').value;
-  if(!j||!m||!a) return;
-  const naissance=new Date(a,m-1,j);
-  const auj=new Date();
-  let age=auj.getFullYear()-naissance.getFullYear();
-  const dm=auj.getMonth()-naissance.getMonth();
-  if(dm<0||(dm===0&&auj.getDate()<naissance.getDate())) age--;
-  document.getElementById('enfant-age').value=age+' ans';
-  genererNumAdherent();
-  syncChamps();
-}
-</script>
-<div class="champ gc">
-          <label>Date de naissance <span class="req">*</span></label>
-          <div class="date-trio">
-            <select id="ddn-j" onchange="calculerAge();genererNumAdherent();syncChamps()">
-              <option value="">Jour</option>
-              <script>for(let j=1;j<=31;j++){document.write(`<option value="${String(j).padStart(2,'0')}">${String(j).padStart(2,'0')}</option>`)}</script>
-            </select>
-            <select id="ddn-m" onchange="calculerAge();genererNumAdherent();syncChamps()">
-              <option value="">Mois</option>
-              <option value="01">Janvier</option><option value="02">Février</option>
-              <option value="03">Mars</option><option value="04">Avril</option>
-              <option value="05">Mai</option><option value="06">Juin</option>
-              <option value="07">Juillet</option><option value="08">Août</option>
-              <option value="09">Septembre</option><option value="10">Octobre</option>
-              <option value="11">Novembre</option><option value="12">Décembre</option>
-            </select>
-            <select id="ddn-a" onchange="calculerAge();genererNumAdherent();syncChamps()">
-              <option value="">Année</option>
-              <script>for(let a=2025;a>=2008;a--){document.write(`<option value="${a}">${a}</option>`)}</script>
-            </select>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Âge (calculé automatiquement)</label>
-          <input type="text" id="enfant-age" readonly class="auto" placeholder="Sélectionnez la date de naissance">
-        </div>
-        <div class="champ">
-          <label>Sexe</label>
-          <select id="enfant-sexe" onchange="syncChamps()">
-            <option value="">-- Choisir --</option>
-            <option value="Masculin">Masculin</option>
-            <option value="Féminin">Féminin</option>
-          </select>
-        </div>
-        <div class="champ gc">
-          <label>Adresse postale complète <span class="req">*</span></label>
-          <input type="text" id="enfant-adresse" placeholder="Adresse complète">
-        </div>
-        <div class="champ">
-          <label>Code postal</label>
-          <input type="text" id="enfant-cp" placeholder="97xxx">
-        </div>
-        <div class="champ">
-          <label>Ville</label>
-          <input type="text" id="enfant-ville" placeholder="Ville">
-        </div>
-        <div class="champ">
-          <label>Téléphone enfant</label>
-          <input type="tel" id="enfant-tel" placeholder="0692 00 00 00">
-        </div>
-        <div class="champ">
-          <label>Email <span class="req">*</span></label>
-          <input type="email" id="enfant-email" placeholder="email@exemple.com">
-        </div>
-        <div class="champ">
-          <label>Scolarité — établissement &amp; classe</label>
-          <input type="text" id="scolarite" placeholder="Ex : Collège des Avirons, 5ème B">
-        </div>
-        <div class="champ">
-          <label>Nationalité</label>
-          <input type="text" id="nationalite" value="Française">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🏅 6 — Antécédents sportifs</div>
-      <div class="g2">
-        <div class="champ">
-          <label>A-t-il/elle déjà pratiqué un sport de combat ?</label>
-          <div class="radio-groupe horizontal">
-            <label class="radio-opt"><input type="radio" name="combat" value="NON"> NON</label>
-            <label class="radio-opt"><input type="radio" name="combat" value="OUI"> OUI</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Si oui, discipline et niveau</label>
-          <input type="text" id="combat-detail" placeholder="Ex : Judo, débutant...">
-        </div>
-        <div class="champ">
-          <label>Autre sport en club ?</label>
-          <div class="radio-groupe horizontal">
-            <label class="radio-opt"><input type="radio" name="autre-sport" value="NON"> NON</label>
-            <label class="radio-opt"><input type="radio" name="autre-sport" value="OUI"> OUI</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Si oui, quel sport et niveau ?</label>
-          <input type="text" id="autre-sport-detail" placeholder="Ex : Football, école de foot...">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">💳 7 — Tarification &amp; conditions de règlement</div>
-      <div class="prix-bloc">
-        <div class="prix-montant">200 €</div>
-        <div class="prix-detail">
-          Cotisation annuelle — saison complète<br>
-          Adhésion club 10 € + Licence AFMT 50 € + Cotisation 140 €<br>
-          Un t-shirt du club offert selon les stocks disponibles
-        </div>
-      </div>
-      <div class="champ">
-        <label>Moyen de paiement <span class="req">*</span></label>
-        <div class="radio-groupe">
-          <label class="radio-opt"><input type="radio" name="paiement" value="Chèque(s)"> Par chèque(s) bancaire(s)</label>
-          <label class="radio-opt"><input type="radio" name="paiement" value="Virement bancaire"> Par virement bancaire</label>
-          <label class="radio-opt"><input type="radio" name="paiement" value="Prélèvement SEPA"> Par prélèvement automatique SEPA</label>
-        </div>
-      </div>
-      <div class="alerte or" style="margin-top:14px">
-        💶 Paiement en espèces : à déposer directement au <strong>Crédit Agricole le plus proche</strong> sur le compte du club. Un RIB vous sera fourni sur demande.
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">📸 8 — Droits &amp; autorisations</div>
-      <div class="champ">
-        <label>Droit à l'image <span class="req">*</span></label>
-        <div class="radio-groupe">
-          <label class="radio-opt"><input type="radio" name="image" value="Autorisé"> J'AUTORISE l'association à utiliser les photos/vidéos dans le cadre strict de la promotion du club</label>
-          <label class="radio-opt"><input type="radio" name="image" value="Refusé"> Je REFUSE l'utilisation des photos/vidéos</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">✍️ 9 — Validation &amp; signature</div>
-      <div class="champ" style="margin-bottom:14px">
-        <label class="check-opt">
-          <input type="checkbox" id="certif-honneur">
-          Je certifie sur l'honneur l'exactitude des renseignements et m'engage à respecter le règlement intérieur d'ADN Muay-Thaï 2.0 <span class="req">*</span>
-        </label>
-      </div>
-      <div class="g2">
-        <div class="champ">
-          <label>Nom &amp; prénom du responsable légal <span class="req">*</span></label>
-          <input type="text" id="resp-nom-complet" placeholder="NOM Prénom" oninput="syncChamps()">
-        </div>
-        <div class="champ">
-          <label>Lien avec l'enfant</label>
-          <select id="resp-lien" onchange="syncChamps()">
-            <option value="Père">Père</option>
-            <option value="Mère">Mère</option>
-            <option value="Tuteur légal">Tuteur légal</option>
-            <option value="Autre">Autre</option>
-          </select>
-        </div>
-        <div class="champ">
-          <label>Signature numérique (nom et prénom) <span class="req">*</span></label>
-          <input type="text" id="signature-1" placeholder="Saisissez votre nom complet">
-        </div>
-        <div class="champ">
-          <label>Fait à</label>
-          <input type="text" id="fait-a-1" value="Les Avirons">
-        </div>
-        <div class="champ">
-          <label>Le (date)</label>
-          <input type="date" id="date-sig-1">
-        </div>
-      </div>
-    </div>
-
-    <div class="alerte or">
-      📎 <strong>Documents à envoyer par mail après inscription :</strong><br>
-      📸 Photo d'identité (format numérique accepté — depuis votre Galerie ou Google Drive)<br>
-      🏥 Certificat médical annuel (conforme AFMT — moins de 6 mois)
-    </div>
-
-    <div class="nav-bas">
-      <script>
-function getDDN(){
-  const j=document.getElementById('ddn-j').value;
-  const m=document.getElementById('ddn-m').value;
-  const a=document.getElementById('ddn-a').value;
-  if(!j||!m||!a) return '';
-  const mois=['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
-  return `${j} ${mois[parseInt(m)-1]} ${a}`;
-}
-function syncChamps(){
-  const nom    = document.getElementById('enfant-nom').value;
-  const prenom = document.getElementById('enfant-prenom').value;
-  const age    = document.getElementById('enfant-age').value;
-  const sexe   = document.getElementById('enfant-sexe').value;
-  const ddn    = getDDN();
-  const resp   = document.getElementById('resp-nom-complet').value;
-  const lien   = document.getElementById('resp-lien').value;
-  const tel    = document.getElementById('resp-tel').value;
-
-  // Onglet 2 — Santé
-  document.getElementById('s2-nom').value    = nom;
-  document.getElementById('s2-prenom').value = prenom;
-  document.getElementById('s2-ddn').value    = ddn;
-  document.getElementById('s2-age').value    = age;
-  document.getElementById('s2-sexe').value   = sexe;
-  document.getElementById('s2-tel').value    = tel;
-  document.getElementById('s2-resp').value   = resp;
-
-  // Onglet 3 — Parents
-  document.getElementById('s3-nom').value    = nom;
-  document.getElementById('s3-prenom').value = prenom;
-  document.getElementById('s3-ddn').value    = ddn;
-  document.getElementById('s3-age').value    = age;
-  document.getElementById('s3-resp').value   = resp;
-  document.getElementById('s3-lien').value   = lien;
-}
-function getData(){
-  const santeReponses={};
-  QUESTIONS_SANTE.forEach((_,i)=>{
-    const n=i+1;
-    const r=document.querySelector(`input[name="sq${n}"]:checked`);
-    santeReponses[`Q${n}`]=r?r.value:'NON';
-  });
-  return {
-    type:'enfant',saison:'2026-2027',
-    dateEnvoi:new Date().toISOString(),
-    typeDemande:document.querySelector('input[name="type-demande"]:checked')?.value||'',
-    cotisationStatut:document.getElementById('cotisation-statut').value,
-    communicationAcceptee:document.getElementById('comm-accept').checked,
-    telEnfantWA:document.getElementById('comm-tel-enfant').value,
-    fbEnfant:document.getElementById('comm-fb-enfant').value,
-    telParent:document.getElementById('resp-tel').value,
-    fbParent:document.getElementById('comm-fb-parent').value,
-    catAge:document.querySelector('input[name="cat-age"]:checked')?.value||'',
-    niveau:document.querySelector('input[name="niveau"]:checked')?.value||'',
-    objectif:document.getElementById('objectif').value,
-    poids:document.getElementById('poids').value,
-    taille:document.getElementById('taille').value,
-    catPoids:document.getElementById('cat-poids').value,
-    nom:document.getElementById('enfant-nom').value,
-    prenom:document.getElementById('enfant-prenom').value,
-    dateNaissance:getDDN(),
-    age:document.getElementById('enfant-age').value,
-    sexe:document.getElementById('enfant-sexe').value,
-    adresse:document.getElementById('enfant-adresse').value,
-    cp:document.getElementById('enfant-cp').value,
-    ville:document.getElementById('enfant-ville').value,
-    tel:document.getElementById('enfant-tel').value,
-    adresse_email:document.getElementById('enfant-email').value,
-    scolarite:document.getElementById('scolarite').value,
-    nationalite:document.getElementById('nationalite').value,
-    sportCombat:document.querySelector('input[name="combat"]:checked')?.value||'',
-    sportCombatDetail:document.getElementById('combat-detail').value,
-    autreSport:document.querySelector('input[name="autre-sport"]:checked')?.value||'',
-    autreSportDetail:document.getElementById('autre-sport-detail').value,
-    paiement:document.querySelector('input[name="paiement"]:checked')?.value||'',
-    droitImage:document.querySelector('input[name="image"]:checked')?.value||'',
-    respNomComplet:document.getElementById('resp-nom-complet').value,
-    respLien:document.getElementById('resp-lien').value,
-    signature1:document.getElementById('signature-1').value,
-    dateSig1:document.getElementById('date-sig-1').value,
-    santeReponses,
-    s2Taille:document.getElementById('s2-taille').value,
-    s2Poids:document.getElementById('s2-poids').value,
-    s2CatPoids:document.getElementById('s2-cat-poids').value,
-    resultatSante:document.querySelector('input[name="resultat-sante"]:checked')?.value||'',
-    s2Signature:document.getElementById('s2-signature').value,
-    dateSig2:document.getElementById('date-sig-2').value,
-    s3SportAvant:document.getElementById('s3-sport-avant').value,
-    s3Particularites:document.getElementById('s3-particularites').value,
-    s3SanteChronique:document.getElementById('s3-sante-chrono').value,
-    s3Signature:document.getElementById('s3-signature').value,
-    dateSig3:document.getElementById('date-sig-3').value,
-  };
-}
-</script>
-<button class="btn-nav primaire" onclick="
-  try {
-    var r = validerOnglet0();
-    if(r){
-      if(typeof syncChamps==='function') syncChamps();
-      var onglets=document.querySelectorAll('.onglet');
-      var sections=document.querySelectorAll('.section');
-      for(var a=0;a<onglets.length;a++) onglets[a].classList.toggle('actif',a===1);
-      for(var b=0;b<sections.length;b++){
-        if(b===1){sections[b].style.cssText='display:block!important';sections[b].classList.add('actif');}
-        else{sections[b].style.cssText='display:none!important';sections[b].classList.remove('actif');}
-      }
-      window.scrollTo({top:0,behavior:'smooth'});
-    }
-  } catch(e) {
-    alert('ERREUR: ' + e.message);
-  }
-">Suivant : Santé AFMT →</button>
-    </div>
-  </div>
-
-
-  <!-- ================================================================
-       ONGLET 2 — SANTÉ AFMT
-       ================================================================ -->
-  <div class="section" id="tab-1">
-
-    <div class="alerte rouge">
-      📋 <strong>Important :</strong> Ce questionnaire dispense le mineur de certificat médical <strong>À CONDITION</strong> de répondre NON à toutes les questions. Si une seule case OUI est cochée, un certificat médical de moins de 6 mois sera obligatoirement exigé.
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">👤 1 — Identification du mineur (rempli automatiquement)</div>
-      <div class="g3">
-        <div class="champ">
-          <label>Nom</label>
-          <input type="text" id="s2-nom" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Prénom</label>
-          <input type="text" id="s2-prenom" readonly class="auto" placeholder="Automatique">
-        </div>
-        <script>
-function genererNumAdherent(){
-  var j = document.getElementById('ddn-j').value;
-  var m = document.getElementById('ddn-m').value;
-  var a = document.getElementById('ddn-a').value;
-  var nom = document.getElementById('enfant-nom').value.trim();
-  var prenom = document.getElementById('enfant-prenom').value.trim();
-  if(!j || !m || !a) return;
-  var initiales = '';
-  if(nom) initiales += nom.charAt(0).toUpperCase();
-  if(prenom) initiales += prenom.charAt(0).toUpperCase();
-  var num = j + '/' + m + '/' + a + (initiales ? '-' + initiales : '');
-  document.getElementById('num-adherent').value = num;
-}
-function calculerAge(){
-  const j=document.getElementById('ddn-j').value;
-  const m=document.getElementById('ddn-m').value;
-  const a=document.getElementById('ddn-a').value;
-  if(!j||!m||!a) return;
-  const naissance=new Date(a,m-1,j);
-  const auj=new Date();
-  let age=auj.getFullYear()-naissance.getFullYear();
-  const dm=auj.getMonth()-naissance.getMonth();
-  if(dm<0||(dm===0&&auj.getDate()<naissance.getDate())) age--;
-  document.getElementById('enfant-age').value=age+' ans';
-  genererNumAdherent();
-  syncChamps();
-}
-</script>
-<div class="champ">
-          <label>Date de naissance</label>
-          <input type="text" id="s2-ddn" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Âge</label>
-          <input type="text" id="s2-age" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Sexe</label>
-          <input type="text" id="s2-sexe" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Tél. responsable</label>
-          <input type="text" id="s2-tel" readonly class="auto" placeholder="Automatique">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🔬 2 — État de santé durant les 12 derniers mois</div>
-      <div class="note-carte">Cochez <strong>OUI</strong> ou <strong>NON</strong> pour chacune des questions. En l'absence de réponse, NON sera retenu.</div>
-      <div style="overflow-x:auto">
-        <table class="tableau-sante">
-          <thead>
-            <tr>
-              <th>Question</th>
-              <th>OUI</th>
-              <th>NON</th>
-            </tr>
-          </thead>
-          <tbody id="tbody-sante"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🏋️ Données physiques</div>
-      <div class="g3">
-        <div class="champ">
-          <label>Taille (cm)</label>
-          <input type="number" id="s2-taille" placeholder="Ex : 140">
-        </div>
-        <div class="champ">
-          <label>Poids (kg)</label>
-          <input type="number" id="s2-poids" placeholder="Ex : 35">
-        </div>
-        <div class="champ">
-          <label>Catégorie de poids</label>
-          <input type="text" id="s2-cat-poids" placeholder="Ex : -35 kg">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">✍️ 3 — Attestation du responsable légal</div>
-      <div class="g2">
-        <div class="champ gc">
-          <label>Je soussigné(e) — Nom &amp; prénom du responsable <span class="req">*</span></label>
-          <input type="text" id="s2-resp" readonly class="auto" placeholder="Automatique — rempli depuis l'onglet 1">
-        </div>
-        <div class="champ gc">
-          <label>Résultat du questionnaire <span class="req">*</span></label>
-          <div class="radio-groupe">
-            <label class="radio-opt"><input type="radio" name="resultat-sante" value="TOUTES LES CASES SONT NON"> ✅ TOUTES LES CASES SONT « NON » — je dispense mon enfant de fournir un certificat médical</label>
-            <label class="radio-opt"><input type="radio" name="resultat-sante" value="AU MOINS UNE CASE EST OUI"> ⚠️ AU MOINS UNE CASE EST « OUI » — je m'engage à fournir un certificat médical d'aptitude conforme AFMT</label>
-          </div>
-        </div>
-        <div class="champ">
-          <label>Signature numérique <span class="req">*</span></label>
-          <input type="text" id="s2-signature" placeholder="Saisissez votre nom complet">
-        </div>
-        <div class="champ">
-          <label>Fait à</label>
-          <input type="text" id="s2-fait-a" value="Les Avirons">
-        </div>
-        <div class="champ">
-          <label>Le (date)</label>
-          <input type="date" id="date-sig-2">
-        </div>
-      </div>
-      <div class="alerte rouge" style="margin-top:14px">
-        ⚠️ Toute fausse déclaration engage la responsabilité du représentant légal et invalide la licence fédérale émise par ADN Muay-Thaï 2.0.
-      </div>
-    </div>
-
-    <div class="nav-bas">
-      <button class="btn-nav" onclick="allerOnglet(0)">← Retour</button>
-      <button class="btn-nav primaire" onclick="allerOnglet(2)">Suivant : Parents &amp; Enfant →</button>
-    </div>
-  </div>
-
-
-  <!-- ================================================================
-       ONGLET 3 — PARENTS & ENFANT
-       ================================================================ -->
-  <div class="section" id="tab-2">
-
-    <div class="alerte bleu">
-      💡 Ce questionnaire nous permet de mieux connaître votre enfant et d'adapter notre pédagogie. Remplissez-le <strong>avec votre enfant</strong>.
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">👤 1 — Identification (rempli automatiquement)</div>
-      <div class="g3">
-        <div class="champ">
-          <label>Nom de l'enfant</label>
-          <input type="text" id="s3-nom" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Prénom</label>
-          <input type="text" id="s3-prenom" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Date de naissance</label>
-          <input type="text" id="s3-ddn" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Âge</label>
-          <input type="text" id="s3-age" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Responsable légal</label>
-          <input type="text" id="s3-resp" readonly class="auto" placeholder="Automatique">
-        </div>
-        <div class="champ">
-          <label>Lien avec l'enfant</label>
-          <input type="text" id="s3-lien" readonly class="auto" placeholder="Automatique">
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">💡 2 — Attentes &amp; motivations (avec l'enfant)</div>
-      <div class="champ">
-        <label>Pourquoi votre enfant souhaite-t-il pratiquer le Muay-Thaï ? <em style="color:var(--texte-muted);font-size:11px">(plusieurs choix possibles)</em></label>
-        <div class="check-groupe" style="margin-top:8px">
-          <label class="check-opt"><input type="checkbox" value="Découvrir un nouveau sport"> Découvrir un nouveau sport</label>
-          <label class="check-opt"><input type="checkbox" value="Apprendre à se défendre"> Apprendre à se défendre</label>
-          <label class="check-opt"><input type="checkbox" value="Canaliser son énergie"> Canaliser son énergie</label>
-          <label class="check-opt"><input type="checkbox" value="Gagner en confiance en soi"> Gagner en confiance en soi</label>
-          <label class="check-opt"><input type="checkbox" value="Faire de la compétition à terme"> Faire de la compétition (à terme)</label>
-          <label class="check-opt"><input type="checkbox" value="Rejoindre des copains"> Rejoindre des copains déjà membres</label>
-        </div>
-      </div>
-      <div class="champ" style="margin-top:12px">
-        <label>A-t-il déjà pratiqué un sport en club ?</label>
-        <input type="text" id="s3-sport-avant" placeholder="Ex : Judo, Football...">
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🧠 3 — Comportement &amp; socialisation</div>
-      <div class="champ">
-        <label>Tempérament de votre enfant en groupe :</label>
-        <div class="check-groupe" style="margin-top:8px">
-          <label class="check-opt"><input type="checkbox" value="Plutôt timide / réservé"> Plutôt timide / réservé</label>
-          <label class="check-opt"><input type="checkbox" value="Dynamique / énergique"> Dynamique / énergique</label>
-          <label class="check-opt"><input type="checkbox" value="Très compétiteur"> Très compétiteur</label>
-          <label class="check-opt"><input type="checkbox" value="Distrait / a du mal à se concentrer"> Distrait / a du mal à se concentrer</label>
-        </div>
-      </div>
-      <div class="champ" style="margin-top:12px">
-        <label>Particularités que le coach doit connaître (peurs, difficultés, besoin d'attention...)</label>
-        <textarea id="s3-particularites" placeholder="Toute information utile pour l'encadrement..."></textarea>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🏥 4 — Santé &amp; aptitudes physiques</div>
-      <div class="check-groupe">
-        <label class="check-opt"><input type="checkbox" value="Porte des lunettes"> 👓 Votre enfant porte des lunettes</label>
-        <label class="check-opt"><input type="checkbox" value="Porte un appareil dentaire"> 🦷 Votre enfant porte un appareil dentaire</label>
-      </div>
-      <div class="champ" style="margin-top:12px">
-        <label>Problèmes de santé chroniques (asthme, allergies, douleurs...)</label>
-        <textarea id="s3-sante-chrono" placeholder="Décrivez tout problème de santé important..."></textarea>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">🤝 5 — Accompagnement &amp; vie du club (ADN Family)</div>
-      <div class="champ">
-        <label>Seriez-vous prêt(e) à donner un coup de main ponctuel au cours de la saison ?</label>
-        <div class="check-groupe" style="margin-top:8px">
-          <label class="check-opt"><input type="checkbox" value="Transport compétitions/stages"> Oui, pour le transport lors des déplacements (compétitions / stages)</label>
-          <label class="check-opt"><input type="checkbox" value="Organisation événements"> Oui, pour aider à l'organisation d'événements du club</label>
-          <label class="check-opt"><input type="checkbox" value="Compétences particulières (photos, vidéos, secourisme, sponsoring)"> Oui, je dispose de compétences particulières (photos, vidéos, secourisme, sponsoring...)</label>
-          <label class="check-opt"><input type="checkbox" value="Non disponible"> Non, mon emploi du temps ne me le permet pas pour le moment</label>
-        </div>
-      </div>
-    </div>
-
-    <div class="carte">
-      <div class="carte-titre">✍️ 6 — Signature du parent / responsable légal</div>
-      <div class="g2">
-        <div class="champ">
-          <label>Signature numérique <span class="req">*</span></label>
-          <input type="text" id="s3-signature" placeholder="Saisissez votre nom complet">
-        </div>
-        <div class="champ">
-          <label>Le (date)</label>
-          <input type="date" id="date-sig-3">
-        </div>
-      </div>
-    </div>
-
-    <div class="alerte vert">
-      ✅ En soumettant ce dossier, le responsable légal certifie l'exactitude des informations fournies et accepte le règlement intérieur du club ADN Muay-Thaï 2.0.
-    </div>
-
-    <button class="btn-envoyer" id="btn-envoyer" onclick="envoyerDossier()">
-      <span id="btn-txt">✅ Valider mon inscription</span>
-      <span class="loader" id="loader"></span>
-    </button>
-
-    <div class="alerte or" style="margin-top:14px">
-      📌 Après validation, envoyez par mail à <strong>accueil@adn-muay-thai.org</strong> :<br>
-      📸 Photo d'identité &nbsp;·&nbsp; 🏥 Certificat médical (– 6 mois) &nbsp;·&nbsp; 🏆 Compétiteurs : ECG + fond d'œil (– 6 mois)
-    </div>
-
-    <div class="nav-bas">
-      <button class="btn-nav" onclick="allerOnglet(1)">← Retour</button>
-    </div>
-  </div>
-
-</div><!-- fin #app -->
-
-<!-- SUCCÈS -->
-<div id="succes">
-  <div class="succes-carte">
-    <span class="icone">🥊</span>
-    <h2>Inscription enregistrée !</h2>
-    
-  
-  <div style="margin:16px auto;max-width:440px;background:#f0f7ff;border:2px solid #1a73e8;border-radius:12px;padding:16px;text-align:left;">
-    <div style="font-weight:700;color:#1a3a6b;font-size:14px;margin-bottom:6px;">🎫 Votre N° adhérent</div>
-    <div id="display-num" style="font-size:18px;font-weight:800;color:#1a73e8;letter-spacing:1px;margin-bottom:8px;">—</div>
-    <button onclick="var n=document.getElementById('display-num').textContent;navigator.clipboard.writeText(n).then(function(){this.textContent='✅ Copié !';var b=this;setTimeout(function(){b.textContent='📋 Copier mon N° adhérent'},2000);}.bind(this)).catch(function(){alert('Votre N° : '+n);});"
-      style="display:block;width:100%;padding:8px;background:#e8f0fe;color:#1a3a6b;border:1.5px solid #1a73e8;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;margin-bottom:16px;">
-      📋 Copier mon N° adhérent
-    </button>
-    <div style="font-weight:700;color:#1a3a6b;font-size:14px;margin-bottom:8px;">📎 Déposez vos documents ici</div>
-  <div style="margin:12px auto;max-width:440px;display:flex;flex-direction:column;gap:10px;">
-    <button onclick="(function(){try{var d=getData();genererPDFEnfant(d);}catch(e){alert('Erreur PDF: '+e.message);}})();"
-      style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;background:#1f9d55;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
-      📄 Télécharger la fiche PDF
-    </button>
-    
-  </div>
-    <div style="background:#fff3cd;border:1.5px solid #f0a500;border-radius:8px;padding:8px 10px;margin-bottom:12px;font-size:12px;color:#7a4f00;">
-      ⚠️ <strong>OBLIGATOIRE</strong> — Vos fichiers seront automatiquement nommés avec votre N° adhérent.
-    </div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div>
-        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">📸 Photo d'identité</label>
-        <input type="file" id="file-photo" accept="image/*" style="width:100%;font-size:12px;">
-        <div id="status-photo" style="font-size:11px;margin-top:3px;color:#666;"></div>
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">🏥 Certificat médical</label>
-        <input type="file" id="file-certif" accept="image/*,.pdf" style="width:100%;font-size:12px;">
-        <div id="status-certif" style="font-size:11px;margin-top:3px;color:#666;"></div>
-      </div>
-      <div>
-        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">🪪 Pièce d'identité</label>
-        <input type="file" id="file-identite" accept="image/*,.pdf" style="width:100%;font-size:12px;">
-        <div id="status-identite" style="font-size:11px;margin-top:3px;color:#666;"></div>
-      </div>
-    </div>
-    <button onclick="uploadDocuments()" id="btn-upload"
-      style="display:block;width:100%;margin-top:14px;padding:12px;background:#1a73e8;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
-      📤 Envoyer mes documents
-    </button>
-    <div id="upload-global-status" style="font-size:12px;margin-top:8px;text-align:center;"></div>
-  </div>
-
-  <script>
-  var CLOUD_NAME = 'rd28lj5e';
-  var UPLOAD_PRESET = 'adn_documents';
-
-  function uploadDocuments(){
-    var num = document.getElementById('display-num').textContent.trim();
-    if(!num || num === '—'){
-      alert('N° adhérent non disponible. Veuillez réessayer.');
-      return;
-    }
-    var numSafe = num.replace(/\//g, '-').replace(/[^a-zA-Z0-9\-_]/g, '');
-    var fichiers = [
-      {id:'file-photo', suffix:'photo', statusId:'status-photo'},
-      {id:'file-certif', suffix:'certif', statusId:'status-certif'},
-      {id:'file-identite', suffix:'identite', statusId:'status-identite'},
-    ];
-    var btn = document.getElementById('btn-upload');
-    btn.disabled = true;
-    btn.textContent = '⏳ Envoi en cours...';
-    var promesses = [];
-    fichiers.forEach(function(f){
-      var input = document.getElementById(f.id);
-      if(!input || !input.files || !input.files[0]) return;
-      var file = input.files[0];
-      var publicId = 'adn/' + numSafe + '_' + f.suffix;
-      var fd = new FormData();
-      fd.append('file', file);
-      fd.append('upload_preset', UPLOAD_PRESET);
-      fd.append('public_id', publicId);
-      fd.append('folder', 'adn_adherents');
-      document.getElementById(f.statusId).textContent = '⏳ Envoi...';
-      document.getElementById(f.statusId).style.color = '#1a73e8';
-      var p = fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload', {
-        method: 'POST',
-        body: fd
-      }).then(function(r){ return r.json(); }).then(function(data){
-        if(data.secure_url){
-          document.getElementById(f.statusId).textContent = '✅ Envoyé !';
-          document.getElementById(f.statusId).style.color = '#1f9d55';
-        } else {
-          document.getElementById(f.statusId).textContent = '❌ Erreur';
-          document.getElementById(f.statusId).style.color = '#e53e3e';
-        }
-      }).catch(function(){
-        document.getElementById(f.statusId).textContent = '❌ Erreur réseau';
-        document.getElementById(f.statusId).style.color = '#e53e3e';
-      });
-      promesses.push(p);
-    });
-    if(promesses.length === 0){
-      alert('Veuillez sélectionner au moins un document.');
-      btn.disabled = false;
-      btn.textContent = '📤 Envoyer mes documents';
-      return;
-    }
-    Promise.all(promesses).then(function(){
-      btn.disabled = false;
-      btn.textContent = '📤 Envoyer mes documents';
-      document.getElementById('upload-global-status').textContent = '✅ Documents envoyés au club !';
-      document.getElementById('upload-global-status').style.color = '#1f9d55';
-    });
-  }
-  
-
-function telechargerPDFEnfant(){
-  try{
-    var d = typeof getData === 'function' ? getData() : {};
-    genererPDFEnfant(d);
-  } catch(e){
-    alert('Erreur PDF : ' + e.message);
-  }
-}
-
-function envoyerMailClubEnfant(){
-  var nomEnf = document.getElementById('enfant-nom') ? document.getElementById('enfant-nom').value : '';
-  var prenomEnf = document.getElementById('enfant-prenom') ? document.getElementById('enfant-prenom').value : '';
-  var num = document.getElementById('display-num') ? document.getElementById('display-num').textContent : '';
-  var numSafe = num === '—' ? '' : num;
-  var sujet = encodeURIComponent('Fiche inscription enfant — ' + prenomEnf + ' ' + nomEnf + (numSafe?' — N°'+numSafe:''));
-  var corps = encodeURIComponent(
-    'Bonjour,\n\n' +
-    'Je vous transmets la fiche d\'inscription de mon enfant.\n\n' +
-    'Nom : ' + nomEnf + '\n' +
-    'Prénom : ' + prenomEnf + '\n' +
-    'N° adhérent : ' + numSafe + '\n\n' +
-    'Cordialement.'
-  );
-  window.location.href = 'mailto:accueil@adn-muay-thai.org?subject=' + sujet + '&body=' + corps;
-}
-</script>
-    <p>Bienvenue dans la famille <strong>ADN Muay-Thaï 2.0</strong> !<br><br>
-    Le dossier de <strong id="succes-nom"></strong> a bien été transmis au club.<br><br>
-    📌 <strong>Prochaines étapes :</strong><br>
-    Envoyez par mail à <strong>accueil@adn-muay-thai.org</strong> :<br>
-    📸 Photo d'identité · 🏥 Certificat médical (moins de 6 mois)</p>
-    <br>
-    <p style="font-size:12px;color:var(--texte-muted)">📞 <strong>0692 37 48 16</strong> · ✉️ <strong>accueil@adn-muay-thai.org</strong></p>
-    <button class="btn-fermer" onclick="resetForm()">Nouvelle inscription</button>
-  </div>
-</div>
-
 <script>
 /* ============================================================
    CONFIG FIREBASE
@@ -1901,23 +958,7 @@ function allerOngletProtege(i){
   return true;
 }
 
-function allerOnglet(i){
-  var onglets = document.querySelectorAll('.onglet');
-  var sections = document.querySelectorAll('.section');
-  for(var a=0;a<onglets.length;a++){
-    onglets[a].classList.toggle('actif', a===i);
-  }
-  for(var b=0;b<sections.length;b++){
-    if(b===i){
-      sections[b].style.cssText='display:block!important';
-      sections[b].classList.add('actif');
-    } else {
-      sections[b].style.cssText='display:none!important';
-      sections[b].classList.remove('actif');
-    }
-  }
-  window.scrollTo({top:0,behavior:'smooth'});
-}
+
 
 /* ============================================================
    CALCUL ÂGE
@@ -2337,5 +1378,748 @@ function envoyerMailClubEnfant(){
 }
 
 </script>
+
+  <div class="onglets">
+    <button class="onglet actif" onclick="allerOnglet(0)" id="ong-0">
+      <span class="ico">📋</span>Inscription
+    </button>
+    <button class="onglet" onclick="allerOngletProtege(1)" id="ong-1">
+      <span class="ico">🏥</span>Santé AFMT
+    </button>
+    <button class="onglet" onclick="allerOngletProtege(2)" id="ong-2">
+      <span class="ico">👨‍👩‍👧</span>Parents &amp; Enfant
+    </button>
+  </div>
+
+  <!-- ================================================================
+       ONGLET 1 — INSCRIPTION
+       ================================================================ -->
+  <div class="section actif" id="tab-0">
+
+    <div class="carte">
+      <div class="carte-titre">🏛 A — Cadre réservé à l'association</div>
+      <div class="champ" style="margin-bottom:12px;">
+        <label>N° Adhérent <span style="font-size:0.8em;color:#888;">(généré automatiquement)</span></label>
+        <input type="text" id="num-adherent" readonly style="background:#f0f4ff;color:#1a3a6b;font-weight:bold;font-size:1.05em;letter-spacing:1px;" placeholder="JJ/MM/AAAA-Initiales">
+      </div>
+      <div class="g2">
+        <div class="champ">
+          <label>Type de demande <span class="req">*</span></label>
+          <div class="radio-groupe horizontal">
+            <label class="radio-opt"><input type="radio" name="type-demande" value="Nouvelle inscription" checked> Nouvelle inscription</label>
+            <label class="radio-opt"><input type="radio" name="type-demande" value="Renouvellement"> Renouvellement</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Cotisation</label>
+          <select id="cotisation-statut">
+            <option value="— Sans cotisation —">— Sans cotisation —</option>
+            <option value="⚠️ En attente">⚠️ En attente</option>
+            <option value="✅ Réglée">✅ Réglée</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">📱 1 — Communication interne (obligatoire)</div>
+      <div class="note-carte">L'adhésion implique l'intégration aux groupes WhatsApp et Messenger du club.</div>
+      <div class="champ" style="margin-bottom:14px">
+        <label class="check-opt">
+          <input type="checkbox" id="comm-accept">
+          J'accepte d'être intégré(e) aux groupes WhatsApp et Messenger du club (Conformité RGPD)
+        </label>
+      </div>
+      <div class="g2">
+        <div class="champ">
+          <label>N° téléphone boxeur (WhatsApp)</label>
+          <input type="tel" id="comm-tel-enfant" placeholder="0692 00 00 00" oninput="syncChamps()">
+        </div>
+        <div class="champ">
+          <label>Profil Facebook/Messenger boxeur</label>
+          <input type="text" id="comm-fb-enfant" placeholder="Nom du profil">
+        </div>
+        <div class="champ">
+          <label>N° téléphone parent/représentant</label>
+          <input type="tel" id="resp-tel" placeholder="0692 00 00 00" oninput="syncChamps()">
+        </div>
+        <div class="champ">
+          <label>Profil Facebook/Messenger parent</label>
+          <input type="text" id="comm-fb-parent" placeholder="Nom du profil">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">📅 2 — Créneaux horaires &amp; lieu d'entraînement</div>
+      <div class="note-carte">Gymnase des Avirons — Cochez la ou les sections souhaitées :</div>
+      <div class="check-groupe">
+        <label class="check-opt"><input type="checkbox" value="Vendredi 18h00–19h00 — Section Jeunes (dès 8 ans)"> Vendredi 18h00–19h00 — Section Jeunes (dès 8 ans)</label>
+        <label class="check-opt"><input type="checkbox" value="Lundi 19h00–21h00 — Débutants &amp; Compétiteurs"> Lundi 19h00–21h00 — Débutants &amp; Compétiteurs</label>
+        <label class="check-opt"><input type="checkbox" value="Mercredi 20h00–21h30 — Cours spécial compétiteur"> Mercredi 20h00–21h30 — Cours spécial compétiteur (validation coach requise)</label>
+        <label class="check-opt"><input type="checkbox" value="Vendredi 19h00–21h00 — Débutants &amp; Compétiteurs"> Vendredi 19h00–21h00 — Débutants &amp; Compétiteurs</label>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🥊 3 — Équipements individuels requis</div>
+      <div class="note-carte">
+        <strong>Obligatoire pour TOUS :</strong> short de boxe-thaï, protège-dents, coudières, protège-tibias.<br>
+        Compétiteurs : casque homologué, genouillères, chevillères.
+      </div>
+      <div class="check-groupe">
+        <label class="check-opt"><input type="checkbox" value="Dispose de tout l'équipement"> Je dispose déjà de la totalité de mes équipements conformes</label>
+        <label class="check-opt"><input type="checkbox" value="Équipement partiel — commande groupée partielle"> J'ai une partie de mon équipement et souhaite compléter via la commande groupée</label>
+        <label class="check-opt"><input type="checkbox" value="Commande groupée complète"> Je souhaite être intégré(e) à la commande groupée complète du club</label>
+      </div>
+      <div class="champ" style="margin-top:12px">
+        <label>Précisez ce qu'il vous manque</label>
+        <input type="text" id="equip-manque" placeholder="Ex : protège-dents, protège-tibias...">
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🎯 4 — Profil athlétique &amp; objectifs</div>
+      <div class="g2">
+        <div class="champ">
+          <label>Catégorie d'âge <span class="req">*</span></label>
+          <div class="radio-groupe">
+            <label class="radio-opt"><input type="radio" name="cat-age" value="Enfant (8–11 ans)"> Enfant (8–11 ans)</label>
+            <label class="radio-opt"><input type="radio" name="cat-age" value="Ado (12–17 ans)"> Ado (12–17 ans)</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Niveau visé <span class="req">*</span></label>
+          <div class="radio-groupe">
+            <label class="radio-opt"><input type="radio" name="niveau" value="Pratique loisir / Entretien de la forme"> Pratique loisir / Entretien de la forme</label>
+            <label class="radio-opt"><input type="radio" name="niveau" value="Championnat de la Réunion (Assaut / Combat)"> Championnat de la Réunion (Assaut / Combat)</label>
+            <label class="radio-opt"><input type="radio" name="niveau" value="Niveau international / Stages extérieurs"> Niveau international / Stages extérieurs (Maurice, Thaïlande)</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Objectif sportif pour la saison</label>
+          <input type="text" id="objectif" placeholder="Ex : progresser, passer une compétition...">
+        </div>
+        <div class="champ">
+          <label>Poids actuel (kg)</label>
+          <input type="number" id="poids" placeholder="Ex : 35">
+        </div>
+        <div class="champ">
+          <label>Taille (cm)</label>
+          <input type="number" id="taille" placeholder="Ex : 140">
+        </div>
+        <div class="champ">
+          <label>Catégorie de poids</label>
+          <input type="text" id="cat-poids" placeholder="Ex : -35 kg">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">👤 5 — État civil &amp; coordonnées</div>
+      <div class="g2">
+        <div class="champ">
+          <label>Nom de famille <span class="req">*</span></label>
+          <input type="text" id="enfant-nom" placeholder="NOM" oninput="genererNumAdherent();syncChamps()" style="text-transform:uppercase">
+        </div>
+        <div class="champ">
+          <label>Prénom <span class="req">*</span></label>
+          <input type="text" id="enfant-prenom" placeholder="Prénom" oninput="genererNumAdherent();syncChamps()">
+        </div>
+        
+<div class="champ gc">
+          <label>Date de naissance <span class="req">*</span></label>
+          <div class="date-trio">
+            <select id="ddn-j" onchange="calculerAge();genererNumAdherent();syncChamps()">
+              <option value="">Jour</option>
+              <script>for(let j=1;j<=31;j++){document.write(`<option value="${String(j).padStart(2,'0')}">${String(j).padStart(2,'0')}</option>`)}</script>
+            </select>
+            <select id="ddn-m" onchange="calculerAge();genererNumAdherent();syncChamps()">
+              <option value="">Mois</option>
+              <option value="01">Janvier</option><option value="02">Février</option>
+              <option value="03">Mars</option><option value="04">Avril</option>
+              <option value="05">Mai</option><option value="06">Juin</option>
+              <option value="07">Juillet</option><option value="08">Août</option>
+              <option value="09">Septembre</option><option value="10">Octobre</option>
+              <option value="11">Novembre</option><option value="12">Décembre</option>
+            </select>
+            <select id="ddn-a" onchange="calculerAge();genererNumAdherent();syncChamps()">
+              <option value="">Année</option>
+              <script>for(let a=2025;a>=2008;a--){document.write(`<option value="${a}">${a}</option>`)}</script>
+            </select>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Âge (calculé automatiquement)</label>
+          <input type="text" id="enfant-age" readonly class="auto" placeholder="Sélectionnez la date de naissance">
+        </div>
+        <div class="champ">
+          <label>Sexe</label>
+          <select id="enfant-sexe" onchange="syncChamps()">
+            <option value="">-- Choisir --</option>
+            <option value="Masculin">Masculin</option>
+            <option value="Féminin">Féminin</option>
+          </select>
+        </div>
+        <div class="champ gc">
+          <label>Adresse postale complète <span class="req">*</span></label>
+          <input type="text" id="enfant-adresse" placeholder="Adresse complète">
+        </div>
+        <div class="champ">
+          <label>Code postal</label>
+          <input type="text" id="enfant-cp" placeholder="97xxx">
+        </div>
+        <div class="champ">
+          <label>Ville</label>
+          <input type="text" id="enfant-ville" placeholder="Ville">
+        </div>
+        <div class="champ">
+          <label>Téléphone enfant</label>
+          <input type="tel" id="enfant-tel" placeholder="0692 00 00 00">
+        </div>
+        <div class="champ">
+          <label>Email <span class="req">*</span></label>
+          <input type="email" id="enfant-email" placeholder="email@exemple.com">
+        </div>
+        <div class="champ">
+          <label>Scolarité — établissement &amp; classe</label>
+          <input type="text" id="scolarite" placeholder="Ex : Collège des Avirons, 5ème B">
+        </div>
+        <div class="champ">
+          <label>Nationalité</label>
+          <input type="text" id="nationalite" value="Française">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🏅 6 — Antécédents sportifs</div>
+      <div class="g2">
+        <div class="champ">
+          <label>A-t-il/elle déjà pratiqué un sport de combat ?</label>
+          <div class="radio-groupe horizontal">
+            <label class="radio-opt"><input type="radio" name="combat" value="NON"> NON</label>
+            <label class="radio-opt"><input type="radio" name="combat" value="OUI"> OUI</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Si oui, discipline et niveau</label>
+          <input type="text" id="combat-detail" placeholder="Ex : Judo, débutant...">
+        </div>
+        <div class="champ">
+          <label>Autre sport en club ?</label>
+          <div class="radio-groupe horizontal">
+            <label class="radio-opt"><input type="radio" name="autre-sport" value="NON"> NON</label>
+            <label class="radio-opt"><input type="radio" name="autre-sport" value="OUI"> OUI</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Si oui, quel sport et niveau ?</label>
+          <input type="text" id="autre-sport-detail" placeholder="Ex : Football, école de foot...">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">💳 7 — Tarification &amp; conditions de règlement</div>
+      <div class="prix-bloc">
+        <div class="prix-montant">200 €</div>
+        <div class="prix-detail">
+          Cotisation annuelle — saison complète<br>
+          Adhésion club 10 € + Licence AFMT 50 € + Cotisation 140 €<br>
+          Un t-shirt du club offert selon les stocks disponibles
+        </div>
+      </div>
+      <div class="champ">
+        <label>Moyen de paiement <span class="req">*</span></label>
+        <div class="radio-groupe">
+          <label class="radio-opt"><input type="radio" name="paiement" value="Chèque(s)"> Par chèque(s) bancaire(s)</label>
+          <label class="radio-opt"><input type="radio" name="paiement" value="Virement bancaire"> Par virement bancaire</label>
+          <label class="radio-opt"><input type="radio" name="paiement" value="Prélèvement SEPA"> Par prélèvement automatique SEPA</label>
+        </div>
+      </div>
+      <div class="alerte or" style="margin-top:14px">
+        💶 Paiement en espèces : à déposer directement au <strong>Crédit Agricole le plus proche</strong> sur le compte du club. Un RIB vous sera fourni sur demande.
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">📸 8 — Droits &amp; autorisations</div>
+      <div class="champ">
+        <label>Droit à l'image <span class="req">*</span></label>
+        <div class="radio-groupe">
+          <label class="radio-opt"><input type="radio" name="image" value="Autorisé"> J'AUTORISE l'association à utiliser les photos/vidéos dans le cadre strict de la promotion du club</label>
+          <label class="radio-opt"><input type="radio" name="image" value="Refusé"> Je REFUSE l'utilisation des photos/vidéos</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">✍️ 9 — Validation &amp; signature</div>
+      <div class="champ" style="margin-bottom:14px">
+        <label class="check-opt">
+          <input type="checkbox" id="certif-honneur">
+          Je certifie sur l'honneur l'exactitude des renseignements et m'engage à respecter le règlement intérieur d'ADN Muay-Thaï 2.0 <span class="req">*</span>
+        </label>
+      </div>
+      <div class="g2">
+        <div class="champ">
+          <label>Nom &amp; prénom du responsable légal <span class="req">*</span></label>
+          <input type="text" id="resp-nom-complet" placeholder="NOM Prénom" oninput="syncChamps()">
+        </div>
+        <div class="champ">
+          <label>Lien avec l'enfant</label>
+          <select id="resp-lien" onchange="syncChamps()">
+            <option value="Père">Père</option>
+            <option value="Mère">Mère</option>
+            <option value="Tuteur légal">Tuteur légal</option>
+            <option value="Autre">Autre</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label>Signature numérique (nom et prénom) <span class="req">*</span></label>
+          <input type="text" id="signature-1" placeholder="Saisissez votre nom complet">
+        </div>
+        <div class="champ">
+          <label>Fait à</label>
+          <input type="text" id="fait-a-1" value="Les Avirons">
+        </div>
+        <div class="champ">
+          <label>Le (date)</label>
+          <input type="date" id="date-sig-1">
+        </div>
+      </div>
+    </div>
+
+    <div class="alerte or">
+      📎 <strong>Documents à envoyer par mail après inscription :</strong><br>
+      📸 Photo d'identité (format numérique accepté — depuis votre Galerie ou Google Drive)<br>
+      🏥 Certificat médical annuel (conforme AFMT — moins de 6 mois)
+    </div>
+
+    <div class="nav-bas">
+      
+<button class="btn-nav primaire" onclick="
+  try {
+    var r = validerOnglet0();
+    if(r){
+      if(typeof syncChamps==='function') syncChamps();
+      var onglets=document.querySelectorAll('.onglet');
+      var sections=document.querySelectorAll('.section');
+      for(var a=0;a<onglets.length;a++) onglets[a].classList.toggle('actif',a===1);
+      for(var b=0;b<sections.length;b++){
+        if(b===1){sections[b].style.cssText='display:block!important';sections[b].classList.add('actif');}
+        else{sections[b].style.cssText='display:none!important';sections[b].classList.remove('actif');}
+      }
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+  } catch(e) {
+    alert('ERREUR: ' + e.message);
+  }
+">Suivant : Santé AFMT →</button>
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       ONGLET 2 — SANTÉ AFMT
+       ================================================================ -->
+  <div class="section" id="tab-1">
+
+    <div class="alerte rouge">
+      📋 <strong>Important :</strong> Ce questionnaire dispense le mineur de certificat médical <strong>À CONDITION</strong> de répondre NON à toutes les questions. Si une seule case OUI est cochée, un certificat médical de moins de 6 mois sera obligatoirement exigé.
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">👤 1 — Identification du mineur (rempli automatiquement)</div>
+      <div class="g3">
+        <div class="champ">
+          <label>Nom</label>
+          <input type="text" id="s2-nom" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Prénom</label>
+          <input type="text" id="s2-prenom" readonly class="auto" placeholder="Automatique">
+        </div>
+        
+<div class="champ">
+          <label>Date de naissance</label>
+          <input type="text" id="s2-ddn" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Âge</label>
+          <input type="text" id="s2-age" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Sexe</label>
+          <input type="text" id="s2-sexe" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Tél. responsable</label>
+          <input type="text" id="s2-tel" readonly class="auto" placeholder="Automatique">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🔬 2 — État de santé durant les 12 derniers mois</div>
+      <div class="note-carte">Cochez <strong>OUI</strong> ou <strong>NON</strong> pour chacune des questions. En l'absence de réponse, NON sera retenu.</div>
+      <div style="overflow-x:auto">
+        <table class="tableau-sante">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>OUI</th>
+              <th>NON</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-sante"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🏋️ Données physiques</div>
+      <div class="g3">
+        <div class="champ">
+          <label>Taille (cm)</label>
+          <input type="number" id="s2-taille" placeholder="Ex : 140">
+        </div>
+        <div class="champ">
+          <label>Poids (kg)</label>
+          <input type="number" id="s2-poids" placeholder="Ex : 35">
+        </div>
+        <div class="champ">
+          <label>Catégorie de poids</label>
+          <input type="text" id="s2-cat-poids" placeholder="Ex : -35 kg">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">✍️ 3 — Attestation du responsable légal</div>
+      <div class="g2">
+        <div class="champ gc">
+          <label>Je soussigné(e) — Nom &amp; prénom du responsable <span class="req">*</span></label>
+          <input type="text" id="s2-resp" readonly class="auto" placeholder="Automatique — rempli depuis l'onglet 1">
+        </div>
+        <div class="champ gc">
+          <label>Résultat du questionnaire <span class="req">*</span></label>
+          <div class="radio-groupe">
+            <label class="radio-opt"><input type="radio" name="resultat-sante" value="TOUTES LES CASES SONT NON"> ✅ TOUTES LES CASES SONT « NON » — je dispense mon enfant de fournir un certificat médical</label>
+            <label class="radio-opt"><input type="radio" name="resultat-sante" value="AU MOINS UNE CASE EST OUI"> ⚠️ AU MOINS UNE CASE EST « OUI » — je m'engage à fournir un certificat médical d'aptitude conforme AFMT</label>
+          </div>
+        </div>
+        <div class="champ">
+          <label>Signature numérique <span class="req">*</span></label>
+          <input type="text" id="s2-signature" placeholder="Saisissez votre nom complet">
+        </div>
+        <div class="champ">
+          <label>Fait à</label>
+          <input type="text" id="s2-fait-a" value="Les Avirons">
+        </div>
+        <div class="champ">
+          <label>Le (date)</label>
+          <input type="date" id="date-sig-2">
+        </div>
+      </div>
+      <div class="alerte rouge" style="margin-top:14px">
+        ⚠️ Toute fausse déclaration engage la responsabilité du représentant légal et invalide la licence fédérale émise par ADN Muay-Thaï 2.0.
+      </div>
+    </div>
+
+    <div class="nav-bas">
+      <button class="btn-nav" onclick="allerOnglet(0)">← Retour</button>
+      <button class="btn-nav primaire" onclick="allerOnglet(2)">Suivant : Parents &amp; Enfant →</button>
+    </div>
+  </div>
+
+
+  <!-- ================================================================
+       ONGLET 3 — PARENTS & ENFANT
+       ================================================================ -->
+  <div class="section" id="tab-2">
+
+    <div class="alerte bleu">
+      💡 Ce questionnaire nous permet de mieux connaître votre enfant et d'adapter notre pédagogie. Remplissez-le <strong>avec votre enfant</strong>.
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">👤 1 — Identification (rempli automatiquement)</div>
+      <div class="g3">
+        <div class="champ">
+          <label>Nom de l'enfant</label>
+          <input type="text" id="s3-nom" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Prénom</label>
+          <input type="text" id="s3-prenom" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Date de naissance</label>
+          <input type="text" id="s3-ddn" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Âge</label>
+          <input type="text" id="s3-age" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Responsable légal</label>
+          <input type="text" id="s3-resp" readonly class="auto" placeholder="Automatique">
+        </div>
+        <div class="champ">
+          <label>Lien avec l'enfant</label>
+          <input type="text" id="s3-lien" readonly class="auto" placeholder="Automatique">
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">💡 2 — Attentes &amp; motivations (avec l'enfant)</div>
+      <div class="champ">
+        <label>Pourquoi votre enfant souhaite-t-il pratiquer le Muay-Thaï ? <em style="color:var(--texte-muted);font-size:11px">(plusieurs choix possibles)</em></label>
+        <div class="check-groupe" style="margin-top:8px">
+          <label class="check-opt"><input type="checkbox" value="Découvrir un nouveau sport"> Découvrir un nouveau sport</label>
+          <label class="check-opt"><input type="checkbox" value="Apprendre à se défendre"> Apprendre à se défendre</label>
+          <label class="check-opt"><input type="checkbox" value="Canaliser son énergie"> Canaliser son énergie</label>
+          <label class="check-opt"><input type="checkbox" value="Gagner en confiance en soi"> Gagner en confiance en soi</label>
+          <label class="check-opt"><input type="checkbox" value="Faire de la compétition à terme"> Faire de la compétition (à terme)</label>
+          <label class="check-opt"><input type="checkbox" value="Rejoindre des copains"> Rejoindre des copains déjà membres</label>
+        </div>
+      </div>
+      <div class="champ" style="margin-top:12px">
+        <label>A-t-il déjà pratiqué un sport en club ?</label>
+        <input type="text" id="s3-sport-avant" placeholder="Ex : Judo, Football...">
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🧠 3 — Comportement &amp; socialisation</div>
+      <div class="champ">
+        <label>Tempérament de votre enfant en groupe :</label>
+        <div class="check-groupe" style="margin-top:8px">
+          <label class="check-opt"><input type="checkbox" value="Plutôt timide / réservé"> Plutôt timide / réservé</label>
+          <label class="check-opt"><input type="checkbox" value="Dynamique / énergique"> Dynamique / énergique</label>
+          <label class="check-opt"><input type="checkbox" value="Très compétiteur"> Très compétiteur</label>
+          <label class="check-opt"><input type="checkbox" value="Distrait / a du mal à se concentrer"> Distrait / a du mal à se concentrer</label>
+        </div>
+      </div>
+      <div class="champ" style="margin-top:12px">
+        <label>Particularités que le coach doit connaître (peurs, difficultés, besoin d'attention...)</label>
+        <textarea id="s3-particularites" placeholder="Toute information utile pour l'encadrement..."></textarea>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🏥 4 — Santé &amp; aptitudes physiques</div>
+      <div class="check-groupe">
+        <label class="check-opt"><input type="checkbox" value="Porte des lunettes"> 👓 Votre enfant porte des lunettes</label>
+        <label class="check-opt"><input type="checkbox" value="Porte un appareil dentaire"> 🦷 Votre enfant porte un appareil dentaire</label>
+      </div>
+      <div class="champ" style="margin-top:12px">
+        <label>Problèmes de santé chroniques (asthme, allergies, douleurs...)</label>
+        <textarea id="s3-sante-chrono" placeholder="Décrivez tout problème de santé important..."></textarea>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">🤝 5 — Accompagnement &amp; vie du club (ADN Family)</div>
+      <div class="champ">
+        <label>Seriez-vous prêt(e) à donner un coup de main ponctuel au cours de la saison ?</label>
+        <div class="check-groupe" style="margin-top:8px">
+          <label class="check-opt"><input type="checkbox" value="Transport compétitions/stages"> Oui, pour le transport lors des déplacements (compétitions / stages)</label>
+          <label class="check-opt"><input type="checkbox" value="Organisation événements"> Oui, pour aider à l'organisation d'événements du club</label>
+          <label class="check-opt"><input type="checkbox" value="Compétences particulières (photos, vidéos, secourisme, sponsoring)"> Oui, je dispose de compétences particulières (photos, vidéos, secourisme, sponsoring...)</label>
+          <label class="check-opt"><input type="checkbox" value="Non disponible"> Non, mon emploi du temps ne me le permet pas pour le moment</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="carte">
+      <div class="carte-titre">✍️ 6 — Signature du parent / responsable légal</div>
+      <div class="g2">
+        <div class="champ">
+          <label>Signature numérique <span class="req">*</span></label>
+          <input type="text" id="s3-signature" placeholder="Saisissez votre nom complet">
+        </div>
+        <div class="champ">
+          <label>Le (date)</label>
+          <input type="date" id="date-sig-3">
+        </div>
+      </div>
+    </div>
+
+    <div class="alerte vert">
+      ✅ En soumettant ce dossier, le responsable légal certifie l'exactitude des informations fournies et accepte le règlement intérieur du club ADN Muay-Thaï 2.0.
+    </div>
+
+    <button class="btn-envoyer" id="btn-envoyer" onclick="envoyerDossier()">
+      <span id="btn-txt">✅ Valider mon inscription</span>
+      <span class="loader" id="loader"></span>
+    </button>
+
+    <div class="alerte or" style="margin-top:14px">
+      📌 Après validation, envoyez par mail à <strong>accueil@adn-muay-thai.org</strong> :<br>
+      📸 Photo d'identité &nbsp;·&nbsp; 🏥 Certificat médical (– 6 mois) &nbsp;·&nbsp; 🏆 Compétiteurs : ECG + fond d'œil (– 6 mois)
+    </div>
+
+    <div class="nav-bas">
+      <button class="btn-nav" onclick="allerOnglet(1)">← Retour</button>
+    </div>
+  </div>
+
+</div><!-- fin #app -->
+
+<!-- SUCCÈS -->
+<div id="succes">
+  <div class="succes-carte">
+    <span class="icone">🥊</span>
+    <h2>Inscription enregistrée !</h2>
+    
+  
+  <div style="margin:16px auto;max-width:440px;background:#f0f7ff;border:2px solid #1a73e8;border-radius:12px;padding:16px;text-align:left;">
+    <div style="font-weight:700;color:#1a3a6b;font-size:14px;margin-bottom:6px;">🎫 Votre N° adhérent</div>
+    <div id="display-num" style="font-size:18px;font-weight:800;color:#1a73e8;letter-spacing:1px;margin-bottom:8px;">—</div>
+    <button onclick="var n=document.getElementById('display-num').textContent;navigator.clipboard.writeText(n).then(function(){this.textContent='✅ Copié !';var b=this;setTimeout(function(){b.textContent='📋 Copier mon N° adhérent'},2000);}.bind(this)).catch(function(){alert('Votre N° : '+n);});"
+      style="display:block;width:100%;padding:8px;background:#e8f0fe;color:#1a3a6b;border:1.5px solid #1a73e8;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;margin-bottom:16px;">
+      📋 Copier mon N° adhérent
+    </button>
+    <div style="font-weight:700;color:#1a3a6b;font-size:14px;margin-bottom:8px;">📎 Déposez vos documents ici</div>
+  <div style="margin:12px auto;max-width:440px;display:flex;flex-direction:column;gap:10px;">
+    <button onclick="(function(){try{var d=getData();genererPDFEnfant(d);}catch(e){alert('Erreur PDF: '+e.message);}})();"
+      style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 16px;background:#1f9d55;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
+      📄 Télécharger la fiche PDF
+    </button>
+    
+  </div>
+    <div style="background:#fff3cd;border:1.5px solid #f0a500;border-radius:8px;padding:8px 10px;margin-bottom:12px;font-size:12px;color:#7a4f00;">
+      ⚠️ <strong>OBLIGATOIRE</strong> — Vos fichiers seront automatiquement nommés avec votre N° adhérent.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div>
+        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">📸 Photo d'identité</label>
+        <input type="file" id="file-photo" accept="image/*" style="width:100%;font-size:12px;">
+        <div id="status-photo" style="font-size:11px;margin-top:3px;color:#666;"></div>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">🏥 Certificat médical</label>
+        <input type="file" id="file-certif" accept="image/*,.pdf" style="width:100%;font-size:12px;">
+        <div id="status-certif" style="font-size:11px;margin-top:3px;color:#666;"></div>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:700;color:#1a3a6b;display:block;margin-bottom:4px;">🪪 Pièce d'identité</label>
+        <input type="file" id="file-identite" accept="image/*,.pdf" style="width:100%;font-size:12px;">
+        <div id="status-identite" style="font-size:11px;margin-top:3px;color:#666;"></div>
+      </div>
+    </div>
+    <button onclick="uploadDocuments()" id="btn-upload"
+      style="display:block;width:100%;margin-top:14px;padding:12px;background:#1a73e8;color:#fff;border:none;border-radius:10px;font-weight:700;font-size:14px;cursor:pointer;">
+      📤 Envoyer mes documents
+    </button>
+    <div id="upload-global-status" style="font-size:12px;margin-top:8px;text-align:center;"></div>
+  </div>
+
+  <script>
+  var CLOUD_NAME = 'rd28lj5e';
+  var UPLOAD_PRESET = 'adn_documents';
+
+  function uploadDocuments(){
+    var num = document.getElementById('display-num').textContent.trim();
+    if(!num || num === '—'){
+      alert('N° adhérent non disponible. Veuillez réessayer.');
+      return;
+    }
+    var numSafe = num.replace(/\//g, '-').replace(/[^a-zA-Z0-9\-_]/g, '');
+    var fichiers = [
+      {id:'file-photo', suffix:'photo', statusId:'status-photo'},
+      {id:'file-certif', suffix:'certif', statusId:'status-certif'},
+      {id:'file-identite', suffix:'identite', statusId:'status-identite'},
+    ];
+    var btn = document.getElementById('btn-upload');
+    btn.disabled = true;
+    btn.textContent = '⏳ Envoi en cours...';
+    var promesses = [];
+    fichiers.forEach(function(f){
+      var input = document.getElementById(f.id);
+      if(!input || !input.files || !input.files[0]) return;
+      var file = input.files[0];
+      var publicId = 'adn/' + numSafe + '_' + f.suffix;
+      var fd = new FormData();
+      fd.append('file', file);
+      fd.append('upload_preset', UPLOAD_PRESET);
+      fd.append('public_id', publicId);
+      fd.append('folder', 'adn_adherents');
+      document.getElementById(f.statusId).textContent = '⏳ Envoi...';
+      document.getElementById(f.statusId).style.color = '#1a73e8';
+      var p = fetch('https://api.cloudinary.com/v1_1/' + CLOUD_NAME + '/auto/upload', {
+        method: 'POST',
+        body: fd
+      }).then(function(r){ return r.json(); }).then(function(data){
+        if(data.secure_url){
+          document.getElementById(f.statusId).textContent = '✅ Envoyé !';
+          document.getElementById(f.statusId).style.color = '#1f9d55';
+        } else {
+          document.getElementById(f.statusId).textContent = '❌ Erreur';
+          document.getElementById(f.statusId).style.color = '#e53e3e';
+        }
+      }).catch(function(){
+        document.getElementById(f.statusId).textContent = '❌ Erreur réseau';
+        document.getElementById(f.statusId).style.color = '#e53e3e';
+      });
+      promesses.push(p);
+    });
+    if(promesses.length === 0){
+      alert('Veuillez sélectionner au moins un document.');
+      btn.disabled = false;
+      btn.textContent = '📤 Envoyer mes documents';
+      return;
+    }
+    Promise.all(promesses).then(function(){
+      btn.disabled = false;
+      btn.textContent = '📤 Envoyer mes documents';
+      document.getElementById('upload-global-status').textContent = '✅ Documents envoyés au club !';
+      document.getElementById('upload-global-status').style.color = '#1f9d55';
+    });
+  }
+  
+
+function telechargerPDFEnfant(){
+  try{
+    var d = typeof getData === 'function' ? getData() : {};
+    genererPDFEnfant(d);
+  } catch(e){
+    alert('Erreur PDF : ' + e.message);
+  }
+}
+
+function envoyerMailClubEnfant(){
+  var nomEnf = document.getElementById('enfant-nom') ? document.getElementById('enfant-nom').value : '';
+  var prenomEnf = document.getElementById('enfant-prenom') ? document.getElementById('enfant-prenom').value : '';
+  var num = document.getElementById('display-num') ? document.getElementById('display-num').textContent : '';
+  var numSafe = num === '—' ? '' : num;
+  var sujet = encodeURIComponent('Fiche inscription enfant — ' + prenomEnf + ' ' + nomEnf + (numSafe?' — N°'+numSafe:''));
+  var corps = encodeURIComponent(
+    'Bonjour,\n\n' +
+    'Je vous transmets la fiche d\'inscription de mon enfant.\n\n' +
+    'Nom : ' + nomEnf + '\n' +
+    'Prénom : ' + prenomEnf + '\n' +
+    'N° adhérent : ' + numSafe + '\n\n' +
+    'Cordialement.'
+  );
+  window.location.href = 'mailto:accueil@adn-muay-thai.org?subject=' + sujet + '&body=' + corps;
+}
+</script>
+    <p>Bienvenue dans la famille <strong>ADN Muay-Thaï 2.0</strong> !<br><br>
+    Le dossier de <strong id="succes-nom"></strong> a bien été transmis au club.<br><br>
+    📌 <strong>Prochaines étapes :</strong><br>
+    Envoyez par mail à <strong>accueil@adn-muay-thai.org</strong> :<br>
+    📸 Photo d'identité · 🏥 Certificat médical (moins de 6 mois)</p>
+    <br>
+    <p style="font-size:12px;color:var(--texte-muted)">📞 <strong>0692 37 48 16</strong> · ✉️ <strong>accueil@adn-muay-thai.org</strong></p>
+    <button class="btn-fermer" onclick="resetForm()">Nouvelle inscription</button>
+  </div>
+</div>
+
+
 </body>
 </html>
