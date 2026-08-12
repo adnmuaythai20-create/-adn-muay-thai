@@ -1965,6 +1965,31 @@ function resetForm(){
   initDates();
   allerOnglet(0);
 }
+function telechargerPDFEnfant(){
+  try{
+    var d = typeof getData === 'function' ? getData() : {};
+    genererPDFEnfant(d);
+  } catch(e){
+    alert('Erreur PDF : ' + e.message);
+  }
+}
+function envoyerMailClubEnfant(){
+  var nomEnf = document.getElementById('enfant-nom') ? document.getElementById('enfant-nom').value : '';
+  var prenomEnf = document.getElementById('enfant-prenom') ? document.getElementById('enfant-prenom').value : '';
+  var num = document.getElementById('display-num') ? document.getElementById('display-num').textContent : '';
+  var numSafe = num === '—' ? '' : num;
+  var sujet = encodeURIComponent('Fiche inscription enfant — ' + prenomEnf + ' ' + nomEnf + (numSafe?' — N°'+numSafe:''));
+  var corps = encodeURIComponent(
+    'Bonjour,\n\n' +
+    'Je vous transmets la fiche d\'inscription de mon enfant.\n\n' +
+    'Nom : ' + nomEnf + '\n' +
+    'Prénom : ' + prenomEnf + '\n' +
+    'N° adhérent : ' + numSafe + '\n\n' +
+    'Cordialement.'
+  );
+  window.location.href = 'mailto:accueil@adn-muay-thai.org?subject=' + sujet + '&body=' + corps;
+}
+
 </script>
 </body>
 </html>

@@ -564,19 +564,30 @@ function sendForm(email_dest,titre,nom){
   var b=encodeURIComponent('Bonjour,\n\nVeuillez trouver ci-joint mon '+titre+'.\n\n[Joindre le PDF téléchargé via le bouton "Télécharger en PDF"]\n\nCordialement,\n'+(nom||''));
   window.location.href='mailto:'+email_dest+'?subject='+s+'&body='+b;
 }
-function exportPDF(){window.print();}
-function resetForm(){if(!confirm('Réinitialiser tous les champs ?'))return;document.querySelectorAll('input,select,textarea').forEach(function(e){if(e.type==='checkbox'||e.type==='radio')e.checked=false;else e.value='';});}
-function genNum(){
-  var p=document.getElementById('i_prenom').value.trim();
-  var n=document.getElementById('i_nom').value.trim();
-  if(p&&n){
-    var d=new Date();
-    var jj=String(d.getDate()).padStart(2,'0');
-    var mm=String(d.getMonth()+1).padStart(2,'0');
-    var aa=d.getFullYear();
-    var ini=(p[0]||'')+(n[0]||'');
-    document.getElementById('i_num').value=jj+'/'+mm+'/'+aa+'-'+ini.toUpperCase();
-  }
+function exportPDF(){
+  window.print();
+}
+function telechargerPDF(){
+  window.print();
+}
+function envoyerMailClub(){
+  var nom = document.getElementById('i_nom') ? document.getElementById('i_nom').value : '';
+  var prenom = document.getElementById('i_prenom') ? document.getElementById('i_prenom').value : '';
+  var num = document.getElementById('i_num') ? document.getElementById('i_num').value : '';
+  var tel = document.getElementById('i_tel') ? document.getElementById('i_tel').value : '';
+  var email = document.getElementById('i_email') ? document.getElementById('i_email').value : '';
+  var sujet = encodeURIComponent('Fiche inscription — ' + prenom + ' ' + nom + ' — N°' + num);
+  var corps = encodeURIComponent(
+    'Bonjour,\n\n' +
+    'Je vous transmets ma fiche d\'inscription ADN Muay-Thaï 2.0.\n\n' +
+    'Nom : ' + nom + '\n' +
+    'Prénom : ' + prenom + '\n' +
+    'N° adhérent : ' + num + '\n' +
+    'Téléphone : ' + tel + '\n' +
+    'Email : ' + email + '\n\n' +
+    'Cordialement.'
+  );
+  window.location.href = 'mailto:accueil@adn-muay-thai.org?subject=' + sujet + '&body=' + corps;
 }
 
 function submitForm(formspreeUrl, formId, successId){
