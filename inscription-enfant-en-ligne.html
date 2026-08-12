@@ -1759,7 +1759,7 @@ function syncChamps(){
 /* ============================================================
    COLLECTE DONNÉES
    ============================================================ */
-function getData(){
+window.getData = function getData(){
   const santeReponses={};
   QUESTIONS_SANTE.forEach((_,i)=>{
     const n=i+1;
@@ -1822,7 +1822,7 @@ function getData(){
 /* ============================================================
    GÉNÉRATION PDF
    ============================================================ */
-function genererPDFEnfant(d){
+window.genererPDFEnfant = function genererPDFEnfant(d){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
   let y = 15;
