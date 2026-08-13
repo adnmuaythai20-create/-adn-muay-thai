@@ -23,8 +23,6 @@ function validerCode(){
 document.addEventListener('DOMContentLoaded', function(){
   var inp = document.getElementById('input-code');
   if(inp) inp.addEventListener('keypress', function(e){ if(e.key==='Enter') validerCode(); });
-  // Initialiser les sections
-  allerOnglet(0);
 });
 </script>
 
@@ -1383,10 +1381,10 @@ function envoyerMailClubEnfant(){
     <button class="onglet actif" onclick="allerOnglet(0)" id="ong-0">
       <span class="ico">📋</span>Inscription
     </button>
-    <button class="onglet" onclick="allerOngletProtege(1)" id="ong-1">
+    <button class="onglet" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var i=0;i<s.length;i++)s[i].style.cssText=i===1?'display:block!important':'display:none!important';for(var j=0;j<o.length;j++)o[j].classList.toggle('actif',j===1);window.scrollTo({top:0,behavior:'smooth'});})()" id="ong-1">
       <span class="ico">🏥</span>Santé AFMT
     </button>
-    <button class="onglet" onclick="allerOngletProtege(2)" id="ong-2">
+    <button class="onglet" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var i=0;i<s.length;i++)s[i].style.cssText=i===2?'display:block!important':'display:none!important';for(var j=0;j<o.length;j++)o[j].classList.toggle('actif',j===2);window.scrollTo({top:0,behavior:'smooth'});})()" id="ong-2">
       <span class="ico">👨‍👩‍👧</span>Parents &amp; Enfant
     </button>
   </div>
