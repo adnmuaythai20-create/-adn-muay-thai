@@ -1699,35 +1699,10 @@ function envoyerMailClubEnfant(){
 
     <div class="nav-bas">
       
-<button class="btn-nav primaire" onclick="(function(){
-  var erreurs=[];
-  function chk(n){return !!document.querySelector('input[name=&quot;'+n+'&quot;]:checked');}
-  function val(i){var e=document.getElementById(i);return e?e.value.trim():'';}
-  if(!chk('type-demande'))erreurs.push(&quot;Type de demande&quot;);
-  if(!chk('cat-age'))erreurs.push(&quot;Catégorie d’âge&quot;);
-  if(!chk('niveau'))erreurs.push(&quot;Niveau visé&quot;);
-  if(!val('enfant-nom'))erreurs.push(&quot;Nom de famille&quot;);
-  if(!val('enfant-prenom'))erreurs.push(&quot;Prénom&quot;);
-  if(!val('ddn-j')||!val('ddn-m')||!val('ddn-a'))erreurs.push(&quot;Date de naissance&quot;);
-  if(!val('enfant-adresse'))erreurs.push(&quot;Adresse postale&quot;);
-  if(!chk('paiement'))erreurs.push(&quot;Moyen de paiement&quot;);
-  if(!chk('image'))erreurs.push(&quot;Droit à l’image&quot;);
-  if(!val('resp-nom-complet'))erreurs.push(&quot;Nom du responsable légal&quot;);
-  var em=val('enfant-email');
-  if(!em){erreurs.push(&quot;Email obligatoire&quot;);}
-  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){erreurs.push(&quot;Email invalide&quot;);}
-  if(!val('signature-1'))erreurs.push(&quot;Signature numérique&quot;);
-  if(erreurs.length>0){alert('⚠️ Champs obligatoires manquants :
+<button class="btn-nav primaire" onclick="(function(){var er=[];function chk(n){return !!document.querySelector('input[name='+JSON.stringify(n)+']:checked');}function val(i){var e=document.getElementById(i);return e?e.value.trim():'';}if(!chk('type-demande'))er.push('Type de demande');if(!chk('cat-age'))er.push('Categorie age');if(!chk('niveau'))er.push('Niveau vise');if(!val('enfant-nom'))er.push('Nom de famille');if(!val('enfant-prenom'))er.push('Prenom');if(!val('ddn-j')||!val('ddn-m')||!val('ddn-a'))er.push('Date de naissance');if(!val('enfant-adresse'))er.push('Adresse postale');if(!chk('paiement'))er.push('Moyen de paiement');if(!chk('image'))er.push('Droit a image');if(!val('resp-nom-complet'))er.push('Nom responsable legal');var em=val('enfant-email');if(!em){er.push('Email obligatoire');}else if(em.indexOf('@')<0){er.push('Email invalide');}if(!val('signature-1'))er.push('Signature numerique');if(er.length>0){alert('Champs manquants :
 
-• '+erreurs.join('
-• '));return;}
-  if(typeof syncChamps==='function')syncChamps();
-  var s=document.querySelectorAll('.section');
-  var o=document.querySelectorAll('.onglet');
-  for(var i=0;i<s.length;i++){s[i].style.cssText=i===1?'display:block!important':'display:none!important';}
-  for(var j=0;j<o.length;j++){o[j].classList.toggle('actif',j===1);}
-  window.scrollTo({top:0,behavior:'smooth'});
-})();">Suivant : Santé AFMT →</button>
+- '+er.join('
+- '));return;}if(typeof syncChamps==='function')syncChamps();var s=document.querySelectorAll('.section');var o=document.querySelectorAll('.onglet');for(var i=0;i<s.length;i++){s[i].style.cssText=i===1?'display:block!important':'display:none!important';}for(var j=0;j<o.length;j++){o[j].classList.toggle('actif',j===1);}window.scrollTo({top:0,behavior:'smooth'});})();">Suivant : Santé AFMT →</button>
     </div>
   </div>
 
