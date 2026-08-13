@@ -1699,7 +1699,35 @@ function envoyerMailClubEnfant(){
 
     <div class="nav-bas">
       
-<button class="btn-nav primaire" onclick="if(typeof validerOnglet0==='function'&&validerOnglet0()){if(typeof syncChamps==='function')syncChamps();if(typeof allerOnglet==='function')allerOnglet(1);}else if(typeof validerOnglet0!=='function'){alert('Erreur: fonctions non chargées');}">Suivant : Santé AFMT →</button>
+<button class="btn-nav primaire" onclick="(function(){
+  var erreurs=[];
+  function chk(n){return !!document.querySelector('input[name=&quot;'+n+'&quot;]:checked');}
+  function val(i){var e=document.getElementById(i);return e?e.value.trim():'';}
+  if(!chk('type-demande'))erreurs.push(&quot;Type de demande&quot;);
+  if(!chk('cat-age'))erreurs.push(&quot;Catégorie d’âge&quot;);
+  if(!chk('niveau'))erreurs.push(&quot;Niveau visé&quot;);
+  if(!val('enfant-nom'))erreurs.push(&quot;Nom de famille&quot;);
+  if(!val('enfant-prenom'))erreurs.push(&quot;Prénom&quot;);
+  if(!val('ddn-j')||!val('ddn-m')||!val('ddn-a'))erreurs.push(&quot;Date de naissance&quot;);
+  if(!val('enfant-adresse'))erreurs.push(&quot;Adresse postale&quot;);
+  if(!chk('paiement'))erreurs.push(&quot;Moyen de paiement&quot;);
+  if(!chk('image'))erreurs.push(&quot;Droit à l’image&quot;);
+  if(!val('resp-nom-complet'))erreurs.push(&quot;Nom du responsable légal&quot;);
+  var em=val('enfant-email');
+  if(!em){erreurs.push(&quot;Email obligatoire&quot;);}
+  else if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){erreurs.push(&quot;Email invalide&quot;);}
+  if(!val('signature-1'))erreurs.push(&quot;Signature numérique&quot;);
+  if(erreurs.length>0){alert('⚠️ Champs obligatoires manquants :
+
+• '+erreurs.join('
+• '));return;}
+  if(typeof syncChamps==='function')syncChamps();
+  var s=document.querySelectorAll('.section');
+  var o=document.querySelectorAll('.onglet');
+  for(var i=0;i<s.length;i++){s[i].style.cssText=i===1?'display:block!important':'display:none!important';}
+  for(var j=0;j<o.length;j++){o[j].classList.toggle('actif',j===1);}
+  window.scrollTo({top:0,behavior:'smooth'});
+})();">Suivant : Santé AFMT →</button>
     </div>
   </div>
 
