@@ -1813,8 +1813,8 @@ function envoyerMailClubEnfant(){
     </div>
 
     <div class="nav-bas">
-      <button class="btn-nav" onclick="allerOnglet(0)">← Retour</button>
-      <button class="btn-nav primaire" onclick="allerOnglet(2)">Suivant : Parents &amp; Enfant →</button>
+      <button class="btn-nav" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var x=0;x<s.length;x++)s[x].style.cssText=x===0?'display:block!important':'display:none!important';for(var y=0;y<o.length;y++)o[y].classList.toggle('actif',y===0);window.scrollTo({top:0,behavior:'smooth'});})()">← Retour</button>
+      <button class="btn-nav primaire" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var x=0;x<s.length;x++)s[x].style.cssText=x===2?'display:block!important':'display:none!important';for(var y=0;y<o.length;y++)o[y].classList.toggle('actif',y===2);window.scrollTo({top:0,behavior:'smooth'});})()">Suivant : Parents &amp; Enfant →</button>
     </div>
   </div>
 
@@ -1948,7 +1948,7 @@ function envoyerMailClubEnfant(){
     </div>
 
     <div class="nav-bas">
-      <button class="btn-nav" onclick="allerOnglet(1)">← Retour</button>
+      <button class="btn-nav" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var x=0;x<s.length;x++)s[x].style.cssText=x===1?'display:block!important':'display:none!important';for(var y=0;y<o.length;y++)o[y].classList.toggle('actif',y===1);window.scrollTo({top:0,behavior:'smooth'});})()">← Retour</button>
     </div>
   </div>
 
