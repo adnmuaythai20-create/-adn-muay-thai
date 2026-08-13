@@ -447,6 +447,15 @@ body{
   
 <!-- ===== ONGLETS ===== -->
 <script>
+function allerOnglet(i){
+  var s = document.querySelectorAll('.section');
+  var o = document.querySelectorAll('.onglet');
+  for(var x=0;x<s.length;x++) s[x].style.cssText = x===i?'display:block!important':'display:none!important';
+  for(var y=0;y<o.length;y++) o[y].classList.toggle('actif', y===i);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+
 /* ============================================================
    CONFIG FIREBASE
    ============================================================ */
@@ -839,10 +848,10 @@ function envoyerMailClubEnfant(){
     <button class="onglet actif" onclick="allerOnglet(0)" id="ong-0">
       <span class="ico">📋</span>Inscription
     </button>
-    <button class="onglet" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var i=0;i<s.length;i++)s[i].style.cssText=i===1?'display:block!important':'display:none!important';for(var j=0;j<o.length;j++)o[j].classList.toggle('actif',j===1);window.scrollTo({top:0,behavior:'smooth'});})()" id="ong-1">
+    <button class="onglet" id="ong-1" style="opacity:0.5;cursor:default;pointer-events:none;">
       <span class="ico">🏥</span>Santé AFMT
     </button>
-    <button class="onglet" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var i=0;i<s.length;i++)s[i].style.cssText=i===2?'display:block!important':'display:none!important';for(var j=0;j<o.length;j++)o[j].classList.toggle('actif',j===2);window.scrollTo({top:0,behavior:'smooth'});})()" id="ong-2">
+    <button class="onglet" id="ong-2" style="opacity:0.5;cursor:default;pointer-events:none;">
       <span class="ico">👨‍👩‍👧</span>Parents &amp; Enfant
     </button>
   </div>
@@ -1587,6 +1596,11 @@ document.addEventListener('DOMContentLoaded', function(){
     for(var i=0;i<s.length;i++) s[i].style.cssText = i===1?'display:block!important':'display:none!important';
     for(var j=0;j<o.length;j++) o[j].classList.toggle('actif', j===1);
     window.scrollTo({top:0, behavior:'smooth'});
+    // Activer les boutons onglets
+    var o1=document.getElementById('ong-1');
+    var o2=document.getElementById('ong-2');
+    if(o1) o1.style.pointerEvents='auto';
+    if(o1) o1.style.opacity='1';
   });
 });
 </script>
