@@ -1578,10 +1578,7 @@ document.addEventListener('DOMContentLoaded', function(){
     else if(em.indexOf('@')<0){ er.push('Email invalide'); }
     if(!val('signature-1')) er.push('Signature numérique');
     if(er.length > 0){
-      alert('⚠️ Champs obligatoires manquants :
-
-• ' + er.join('
-• '));
+      alert('Champs manquants : ' + er.join(', '));
       return;
     }
     if(typeof syncChamps === 'function') syncChamps();
