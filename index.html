@@ -1449,9 +1449,15 @@ function copyMsg(){const m=getFinalMsg();(navigator.clipboard?navigator.clipboar
 function openGroup(plat){
   const m=buildMsg();try{navigator.clipboard&&navigator.clipboard.writeText(m);}catch(e){}
   let link="";
-  if(plat==="wa"){link=msgDest==="fam"?ROOT.settings.waFam:ROOT.settings.waBox; if(!link)link="https://wa.me/?text="+encodeURIComponent(m);}
-  else{link=msgDest==="fam"?ROOT.settings.msFam:ROOT.settings.msBox; if(!link)link="https://www.messenger.com/";}
-  toast("Message copié — collez-le dans le groupe.");
+  if(plat==="wa"){
+    // WhatsApp s'ouvre avec le message déjà pré-rempli : l'utilisateur choisit le groupe et envoie (pas de copier-coller)
+    link="https://wa.me/?text="+encodeURIComponent(m);
+    toast("WhatsApp s'ouvre avec le message — choisissez le groupe puis Envoyer.");
+  } else {
+    // Messenger ne permet pas le pré-remplissage : on copie et on ouvre
+    link=msgDest==="fam"?ROOT.settings.msFam:ROOT.settings.msBox; if(!link)link="https://www.messenger.com/";
+    toast("Message copié — collez-le dans le groupe.");
+  }
   window.open(link,"_blank","noopener");
 }
 
