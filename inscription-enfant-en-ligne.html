@@ -814,12 +814,15 @@ async function envoyerDossier(){
         if(!root.seasons['2026/2027'].members) root.seasons['2026/2027'].members = [];
         // Ajouter le membre enfant
         try{ genererNumAdherent(); }catch(e){}
+        // Catégorie appli : "Enfant (8-11)" et "Ado (12-17)" -> "jeunes"
+        var mapCatApp = {'Enfant (8–11 ans)':'jeunes','Ado (12–17 ans)':'jeunes'};
+        var catApp = mapCatApp[d.catAge] || 'jeunes';
         const membreEnfant = {
           id: 'ENF_' + Date.now(),
           num: (document.getElementById('num-adherent') ? document.getElementById('num-adherent').value : ''),
           nom: d.nom, prenom: d.prenom,
           ddn: d.dateNaissance, age: d.age,
-          cat: d.catAge, niveau: d.niveau,
+          cat: catApp, niveau: d.niveau,
           tel: d.tel, email: d.adresse_email||'',
           adresse: d.adresse, cp: d.cp, ville: d.ville,
           paiement: d.paiement, droitImage: d.droitImage,
