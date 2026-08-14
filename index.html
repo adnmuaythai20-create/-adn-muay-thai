@@ -1346,7 +1346,7 @@ const TEMPLATES=[
   {id:"actu",t:"📰 Actualité du club",d:"Infos & nouveautés",
    body:"📰 ACTUALITÉ ADN MUAY-THAÏ 2.0\n\n[Titre de l'actualité]\n\n[Détails ici...]\n\n📆 [Date si besoin]\n\nPour toute question : 0692 37 48 16 🥊"},
   {id:"fiches",t:"📋 Fiches d'inscription",d:"Envoi des formulaires en ligne",
-   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne :\n\n📄 Adhérent Public :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent-public.html\n\n📄 Adhérent En Ligne :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent-en-ligne.html\n\n🥊 Enfant Public :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-enfant-public.html\n\n🥊 Enfant En Ligne :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-enfant-en-ligne.html\n\n🔑 Code d'accès fiches en ligne : ADN2026\n\n📌 Après envoi, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ bientôt ! 🥊\nADN Muay-Thaï 2.0"}
+   body:"📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d'inscription sont disponibles en ligne :\n\n📄 Adhérent En Ligne :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-adherent-en-ligne.html\n\n🥊 Enfant En Ligne :\nhttps://adnmuaythai20-create.github.io/-adn-muay-thai/inscription-enfant-en-ligne.html\n\n🔑 Code d'accès fiches en ligne : ADN2026\n\n📌 Après envoi, joignez par mail :\n• Photo d'identité\n• Certificat médical (- de 6 mois)\n• Compétiteurs : ECG + fond d'œil\n\n📧 accueil@adn-muay-thai.org\n📞 0692 37 48 16\n\nÀ bientôt ! 🥊\nADN Muay-Thaï 2.0"}
 ];
 let selTpl=TEMPLATES[0].id, msgDest="box", msgCustom=null;
 function pgMessages(m){
@@ -1531,9 +1531,7 @@ function sendInscriptionMail(){
 function shareEspaceAdherent(plat, groupe){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var msg='ADN MUAY-THAI 2.0 - Inscriptions Saison 2026/2027\n\nBonjour !\n\nPour vous inscrire, cliquez sur le lien correspondant :\n\n';
-  msg+='📄 Adhérent Public : '+BASE+'inscription-adherent-public.html\n';
   msg+='📄 Adhérent En Ligne : '+BASE+'inscription-adherent-en-ligne.html\n';
-  msg+='🥊 Enfant Public : '+BASE+'inscription-enfant-public.html\n';
   msg+='🥊 Enfant En Ligne : '+BASE+'inscription-enfant-en-ligne.html\n\n';
   msg+='Code acces (fiches en ligne) : ADN2026\n\nRemplissez depuis votre telephone !\nQuestions : 0692 37 48 16';
   try{if(navigator.clipboard)navigator.clipboard.writeText(msg);}catch(e){}
@@ -1547,18 +1545,14 @@ function shareEspaceAdherent(plat, groupe){
 function copyEspaceLink(){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var t='ADN MUAY-THAI 2.0 - Inscriptions Saison 2026/2027\n\nCode acces : ADN2026\n\n';
-  t+='1. Adhérent Public : '+BASE+'inscription-adherent-public.html\n';
-  t+='2. Adhérent En Ligne : '+BASE+'inscription-adherent-en-ligne.html\n';
-  t+='3. Enfant Public : '+BASE+'inscription-enfant-public.html\n';
-  t+='4. Enfant En Ligne : '+BASE+'inscription-enfant-en-ligne.html';
+  t+='1. Adhérent En Ligne : '+BASE+'inscription-adherent-en-ligne.html\n';
+  t+='2. Enfant En Ligne : '+BASE+'inscription-enfant-en-ligne.html';
   try{if(navigator.clipboard)navigator.clipboard.writeText(t).then(function(){toast('✅ 2 liens copiés !')});}catch(e){toast('Copiez manuellement les liens.');}
 }
 function shareInscriptions(plat, groupe){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var msg='📋 ADN MUAY-THAÏ 2.0 — Inscriptions Saison 2026/2027\n\n🥊 Bonjour à tous !\n\nLes formulaires d\'inscription sont disponibles en ligne :\n\n';
-  msg+='📄 Inscription Adhérent Public :\n'+BASE+'inscription-adherent-public.html\n\n';
   msg+='📄 Inscription Adhérent En Ligne :\n'+BASE+'inscription-adherent-en-ligne.html\n\n';
-  msg+='🥊 Inscription Enfant Public :\n'+BASE+'inscription-enfant-public.html\n\n';
   msg+='🥊 Inscription Enfant En Ligne :\n'+BASE+'inscription-enfant-en-ligne.html\n\n';
   msg+='Code accès (fiches en ligne) : ADN2026\n\n';
   msg+='📌 Après envoi, joignez par mail : photo d\'identité + certificat médical\n';
@@ -1576,9 +1570,7 @@ function shareInscriptions(plat, groupe){
 function copyInscriptionLinks(){
   var BASE='https://adnmuaythai20-create.github.io/-adn-muay-thai/';
   var txt='📋 Fiches d\'inscription ADN Muay-Thaï 2.0 :\n';
-  txt+='• Adhérent Public : '+BASE+'inscription-adherent-public.html\n';
   txt+='• Adhérent En Ligne : '+BASE+'inscription-adherent-en-ligne.html\n';
-  txt+='• Enfant Public : '+BASE+'inscription-enfant-public.html\n';
   txt+='• Enfant En Ligne : '+BASE+'inscription-enfant-en-ligne.html';
   try{navigator.clipboard&&navigator.clipboard.writeText(txt).then(function(){toast('✅ Liens copiés ! Collez-les où vous voulez.');});}catch(e){toast('Copiez manuellement les liens.');}
 }
