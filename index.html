@@ -363,7 +363,6 @@ const TABS=[
   {id:"dash",   lab:"🏠 Bord",     full:"Tableau de bord"},
   {id:"membres", lab:"👥 Adhérents", full:"Adhérents"},
   {id:"presence",lab:"✅ Présence",  full:"Présence"},
-  {id:"pointage",lab:"📲 Borne",    full:"Pointage (borne)"},
   {id:"stats",   lab:"📊 Stats",    full:"Statistiques"},
   {id:"planning",lab:"📅 Planning", full:"Planning"},
   {id:"musique", lab:"🎵 Musique",  full:"Musique"},
@@ -383,7 +382,7 @@ function go(id){CUR=id;renderNav();render();window.scrollTo({top:0,behavior:'smo
 function render(){
   const m=document.getElementById('main');
   m.className="page";
-  ({dash:pgDash,membres:pgMembres,presence:pgPresence,pointage:pgPointage,stats:pgStats,
+  ({dash:pgDash,membres:pgMembres,presence:pgPresenceMerged,pointage:pgPointage,stats:pgStats,
     planning:pgPlanning,musique:pgMusique,messages:pgMessages,data:pgData,inscriptions:pgInscriptions,dossiers:pgDossiers}[CUR])(m);
 }
 function sectionTitle(pill,txt,extra=""){
@@ -645,6 +644,18 @@ function pgPresence(m){
    </div>
    <div class="card" style="margin-top:16px"><h3>Dernières séances</h3><div id="seshist"></div></div>`;
   loadPres();renderHist();
+}
+/* Vue fusionnée : pointage manuel du coach + mode borne, dans un seul onglet Présence */
+function pgPresenceMerged(m){
+  pgPresence(m);
+  var sep=document.createElement('div');
+  sep.style.marginTop='26px';
+  sep.style.paddingTop='4px';
+  sep.style.borderTop='2px dashed #d0d7e2';
+  m.appendChild(sep);
+  var wrap=document.createElement('div');
+  m.appendChild(wrap);
+  pgPointage(wrap);
 }
 function presKey(){return presDate+"||"+presCren;}
 function loadPres(){
