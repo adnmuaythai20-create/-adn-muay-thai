@@ -565,6 +565,36 @@ function allerOngletProtege(i){
   return true;
 }
 
+/* Validation onglet 2 — Santé AFMT */
+function validerOnglet1(){
+  var erreurs = [];
+  if(!document.querySelector('input[name="resultat-sante"]:checked'))
+    erreurs.push("Résultat du questionnaire santé");
+  var sig2 = document.getElementById('s2-signature');
+  if(!sig2 || !sig2.value.trim())
+    erreurs.push("Signature numérique (onglet Santé AFMT)");
+  if(erreurs.length > 0){
+    alert('⚠️ Onglet Santé AFMT — champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
+    return false;
+  }
+  return true;
+}
+
+/* Validation onglet 3 — Parents & Enfant */
+function validerOnglet2(){
+  var erreurs = [];
+  var sig3 = document.getElementById('s3-signature');
+  if(!sig3 || !sig3.value.trim())
+    erreurs.push("Signature du parent / responsable légal");
+  if(erreurs.length > 0){
+    alert('⚠️ Onglet Parents & Enfant — champs obligatoires manquants :\n\n• ' + erreurs.join('\n• '));
+    return false;
+  }
+  return true;
+}
+window.validerOnglet1 = validerOnglet1;
+window.validerOnglet2 = validerOnglet2;
+
 
 
 /* ============================================================
@@ -740,6 +770,8 @@ async function envoyerDossier(){
     alert('⚠️ Veuillez renseigner le responsable légal et signer (Onglet 1, section 9).');
     allerOnglet(0);return;
   }
+  if(!validerOnglet1()){ allerOnglet(1); return; }
+  if(!validerOnglet2()){ allerOnglet(2); return; }
   const btn=document.getElementById('btn-envoyer');
   const loader=document.getElementById('loader');
   const txt=document.getElementById('btn-txt');
@@ -1302,7 +1334,7 @@ function envoyerMailClubEnfant(){
 
     <div class="nav-bas">
       <button class="btn-nav" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var x=0;x<s.length;x++)s[x].style.cssText=x===0?'display:block!important':'display:none!important';for(var y=0;y<o.length;y++)o[y].classList.toggle('actif',y===0);window.scrollTo({top:0,behavior:'smooth'});})()">← Retour</button>
-      <button class="btn-nav primaire" onclick="(function(){var s=document.querySelectorAll('.section'),o=document.querySelectorAll('.onglet');for(var x=0;x<s.length;x++)s[x].style.cssText=x===2?'display:block!important':'display:none!important';for(var y=0;y<o.length;y++)o[y].classList.toggle('actif',y===2);window.scrollTo({top:0,behavior:'smooth'});})()">Suivant : Parents &amp; Enfant →</button>
+      <button class="btn-nav primaire" onclick="if(validerOnglet1()){allerOnglet(2);}">Suivant : Parents &amp; Enfant →</button>
     </div>
   </div>
 
