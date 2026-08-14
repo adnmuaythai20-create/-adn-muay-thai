@@ -718,7 +718,21 @@ function doPresConfirm(id){
   loadPres();
   toast("✅ Présence enregistrée !");
 }
-function presAll(v){presSet=new Set(v?DB.members.map(x=>x.id):[]);loadPres();}
+function presAll(v){
+  // Membres réellement affichés dans la liste (mêmes exclusions que loadPres)
+  var mem=DB.members.filter(function(x){
+    if(x.coach)return false;
+    if(x.bureau&&x.cat!=='competiteurs')return false;
+    return true;
+  });
+  var ids=v?mem.map(function(x){return x.id;}):[];
+  // Enregistrer la séance pour que loadPres retrouve le bon état
+  var i=DB.sessions.findIndex(function(s){return s.date===presDate&&s.cren===presCren;});
+  var obj={id:i>=0?DB.sessions[i].id:uid(),date:presDate,cren:presCren,present:ids.slice()};
+  if(i>=0)DB.sessions[i]=obj;else DB.sessions.push(obj);
+  save();
+  loadPres();
+}
 function savePres(){
   if(!DB.members.length){toast("Aucun adhérent à pointer.");return;}
   const i=DB.sessions.findIndex(s=>s.date===presDate&&s.cren===presCren);
