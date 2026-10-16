@@ -1,0 +1,25 @@
+{
+  "name": "ADN Muay-Thaï 2.0",
+  "short_name": "ADN MT 2.0",
+  "description": "Application de gestion ADN Muay-Thaï",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#c8a84b",
+  "orientation": "portrait-primary",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
